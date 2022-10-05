@@ -1,8 +1,17 @@
-<script>
+<script lang="ts">
     import Button from "$lib/Button.svelte";
+    let dialog: HTMLDialogElement;
+
+    const newGame = () => {
+        dialog.showModal();
+    };
 </script>
 
 <main class="container">
+    <dialog bind:this={dialog}>
+        Hello Dialog <button on:click={() => dialog.close()}>Close</button>
+    </dialog>
+
     <h1 id="title">MineSweeper</h1>
     <h3 id="creator">By SFG</h3>
 
@@ -26,7 +35,7 @@
 
     <div class="play-buttons-container">
         <button class="continue" disabled>Continue Game</button>
-        <button class="play">Start New Game</button>
+        <button class="play" on:click={newGame}>New Game</button>
     </div>
 </main>
 
