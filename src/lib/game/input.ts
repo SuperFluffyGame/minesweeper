@@ -1,11 +1,15 @@
 import { CellState, type Game } from "./new";
 
 export const openCell = (game: Game, index: number) => {
+    const cell = game.board[index];
+    if (cell.state === CellState.Flagged) {
+        return;
+    }
+
     let x = index % game.width;
     let y = Math.floor(index / game.height);
 
-    game.board[index].state = CellState.Opened;
-    const cell = game.board[index];
+    cell.state = CellState.Opened;
     if (cell.isMine === false && cell.numNeighborMines === 0) {
         for (let i = 0; i < 9; i++) {
             const offsetX = Math.floor(i / 3) - 1;
@@ -26,5 +30,14 @@ export const openCell = (game: Game, index: number) => {
                 openCell(game, index);
             }
         }
+    }
+};
+
+export const flagCell = (game: Game, index: number) => {
+    let cell = game.board[index];
+    if (cell.state === CellState.Closed) {
+        cell.state = CellState.Flagged;
+    } else if (cell.state === CellState.Flagged) {
+        cell.state = CellState.Closed;
     }
 };
