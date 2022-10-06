@@ -1,7 +1,7 @@
 import { randomInt } from "../utils";
 import { game as gameStore } from "../stores";
 
-export enum CellState {
+export const enum CellState {
     Opened = "opened",
     Closed = "closed",
     Flagged = "flagged",
@@ -12,12 +12,19 @@ export interface Cell {
     numNeighborMines: number;
     isMine: boolean;
 }
+export const enum GameState {
+    Playing = "playing",
+    Won = "won",
+    Lost = "lost",
+}
 
 export interface Game {
     board: Cell[];
     width: number;
     height: number;
     numMines: number;
+    firstMove: boolean;
+    state: GameState;
 }
 
 function newBoard({ width, height, numMines }: BoardSize): Cell[] {
@@ -25,51 +32,13 @@ function newBoard({ width, height, numMines }: BoardSize): Cell[] {
 
     let minePlaces = Array<number>(width * height).fill(0);
 
-    // fill board with mines
-    function setMine() {
-        const x = randomInt(0, width);
-        const y = randomInt(0, height);
-
-        const prevSpot = minePlaces[y * width + x];
-        if (prevSpot === 0) {
-            minePlaces[y * width + x] = 1;
-        } else {
-            setMine();
-        }
-    }
-    for (let i = 0; i < numMines; i++) {
-        setMine();
-    }
-
     // cell position
     for (let i = 0; i < width; i++) {
         for (let j = 0; j < height; j++) {
-            let numNeighborMines = 0;
-            // calc num neighbor mines
-            for (let k = 0; k < 9; k++) {
-                const offsetX = Math.floor(k / 3) - 1;
-                const offsetY = (k % 3) - 1;
-
-                const neighborX = i + offsetX;
-                const neighborY = j + offsetY;
-                if (
-                    neighborX < 0 ||
-                    neighborX >= width ||
-                    neighborY < 0 ||
-                    neighborY >= height
-                ) {
-                    continue;
-                }
-
-                const index = neighborY * width + neighborX;
-                if (minePlaces[index] === 1) {
-                    numNeighborMines += 1;
-                }
-            }
             const index = j * width + i;
             cells[index] = {
                 state: CellState.Closed,
-                numNeighborMines,
+                numNeighborMines: 0,
                 isMine: minePlaces[index] === 1 ? true : false,
             };
         }
@@ -109,8 +78,58 @@ export const newGame = (boardSize: BoardSize) => {
         width: boardSize.width,
         height: boardSize.height,
         numMines: boardSize.numMines,
+        firstMove: true,
+        state: GameState.Playing,
     };
 
+    for (let i = 0; i < boardSize.numMines; i++) {
+        setNewMine(game);
+    }
+
     // localStorage.MINESWEEPER_SAVE_GAME = JSON.stringify(game);
+    recalcMineNeighbors(game);
     gameStore.set(game);
+};
+
+export const setNewMine = (game: Game) => {
+    const x = randomInt(0, game.width);
+    const y = randomInt(0, game.height);
+
+    const prevSpot = game.board[y * game.width + x].isMine;
+    if (!prevSpot) {
+        game.board[y * game.width + x].isMine = true;
+    } else {
+        setNewMine(game);
+    }
+};
+
+export const recalcMineNeighbors = (game: Game) => {
+    for (let x = 0; x < game?.width; x++) {
+        for (let y = 0; y < game?.height; y++) {
+            let numNeighborMines = 0;
+            // calc num neighbor mines
+            for (let k = 0; k < 9; k++) {
+                const offsetX = Math.floor(k / 3) - 1;
+                const offsetY = (k % 3) - 1;
+
+                const neighborX = x + offsetX;
+                const neighborY = y + offsetY;
+                if (
+                    neighborX < 0 ||
+                    neighborX >= game.width ||
+                    neighborY < 0 ||
+                    neighborY >= game.height
+                ) {
+                    continue;
+                }
+
+                const neighboreIndex = neighborY * game.width + neighborX;
+                if (game.board[neighboreIndex].isMine) {
+                    numNeighborMines += 1;
+                }
+            }
+            const index = y * game.width + x;
+            game.board[index].numNeighborMines = numNeighborMines;
+        }
+    }
 };

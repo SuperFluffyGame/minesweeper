@@ -10,7 +10,8 @@
 <style>
     .wrapper {
         display: flex;
-        align-items: center;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 </style>

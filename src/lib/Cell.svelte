@@ -75,7 +75,7 @@
     {#if cell.isMine}
         M
     {:else}
-        {cell.numNeighborMines}
+        {cell.numNeighborMines === 0 ? "" : cell.numNeighborMines}
     {/if}
     <div class="cover" />
     {#if cell.state === CellState.Flagged}

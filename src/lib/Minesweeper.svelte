@@ -16,6 +16,10 @@
     {:else}
         OH NO
     {/if}
+
+    <div class="state">
+        {$game?.state}
+    </div>
 </div>
 
 <style>
