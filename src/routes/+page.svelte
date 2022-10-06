@@ -1,5 +1,9 @@
 <script lang="ts">
-    import { BoardSizes, newGame } from "$lib/game/new";
+    import {
+        BoardSizes,
+        newGame,
+        type PossibleBoardSizes,
+    } from "$lib/game/new";
     import { isGameSaved } from "$lib/game/checks";
     import { onMount } from "svelte";
     import { goto } from "$app/navigation";
@@ -9,7 +13,7 @@
         gameSaved = isGameSaved();
     });
 
-    let selectedBoardSize: 8 | 12 | 16 = 8;
+    let selectedBoardSize: PossibleBoardSizes = 8;
     let dialog: HTMLDialogElement;
 
     const newGameClick = () => {
@@ -36,7 +40,7 @@
         <p>
             You have a game saved, creating a new game will delete the old one.
         </p>
-        <div class="play-buttons-container">
+        <div class="buttons-container">
             <button on:click={() => dialog.close()}>Close</button>
             <button on:click={newGameModalClick}>Continue</button>
         </div>
@@ -82,7 +86,7 @@
         </div>
     </div>
 
-    <div class="play-buttons-container">
+    <div class="buttons-container">
         <button
             class="continue"
             disabled={!gameSaved}
@@ -150,40 +154,5 @@
     }
     input[type="radio"]:checked {
         border: 0.25rem solid var(--blue6);
-    }
-
-    .play-buttons-container {
-        margin-top: 2rem;
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-        /* width: max(30vw, 20rem); */
-    }
-    @media screen and (max-width: 500px) {
-        .play-buttons-container {
-            flex-direction: column;
-        }
-    }
-    .play-buttons-container > button {
-        flex: 1 1 0;
-        width: 15rem;
-    }
-
-    .continue-modal {
-        /* display: flex; */
-
-        align-items: center;
-        flex-direction: column;
-
-        color: whitesmoke;
-        border-color: var(--black1);
-        background-color: var(--black4);
-        border-radius: var(--radius);
-    }
-    .continue-modal::backdrop {
-        background-color: rgba(0, 0, 0, 0.3);
-    }
-    .continue-modal:modal {
-        display: flex;
     }
 </style>

@@ -65,3 +65,40 @@ button:disabled {
     border: 0.2rem solid var(--black5);
     cursor: not-allowed;
 }
+
+dialog {
+    /* display: flex; */
+
+    align-items: center;
+    flex-direction: column;
+
+    color: whitesmoke;
+    border-color: var(--black1);
+    background-color: var(--black4);
+    border-radius: var(--radius);
+}
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+dialog:modal {
+    display: flex;
+}
+
+.buttons-container {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    /* min-width: 10rem; */
+    /* width: max(30vw, 20rem); */
+}
+
+@media screen and (max-width: 500px) {
+    .buttons-container {
+        flex-direction: column;
+    }
+}
+.buttons-container > button {
+    flex: 1 1 0;
+    width: 15rem;
+}

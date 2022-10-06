@@ -46,7 +46,7 @@ function newBoard({ width, height, numMines }: BoardSize): Cell[] {
 
     return cells;
 }
-
+export type PossibleBoardSizes = 8 | 12 | 16;
 export class BoardSizes {
     static [8]: BoardSize = {
         width: 8,

@@ -14,18 +14,17 @@
             <Cell {cell} index={i} />
         {/each}
     {:else}
-        OH NO
+        Loading...
     {/if}
-
-    <div class="state">
-        {$game?.state}
-    </div>
+</div>
+<div class="state">
+    {$game?.state}
 </div>
 
 <style>
     .board {
         display: grid;
-        width: 35rem;
+        width: 50rem;
         aspect-ratio: 1;
         user-select: none;
         border: 0.1px solid var(--black1);
