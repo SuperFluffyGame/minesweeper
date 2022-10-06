@@ -5,12 +5,12 @@ import type { Game } from "./game/new";
 export let game: Writable<Game | null>;
 
 if (typeof window !== "undefined") {
-    game = writable(JSON.parse(localStorage.MINESWEEPER_SAVE_GAME));
+    game = writable(loadBoard());
 } else {
     game = writable(null);
 }
-game.subscribe(v => {
-    if (typeof window !== "undefined") {
+game.subscribe((v) => {
+    if (typeof window !== "undefined" && v != null) {
         localStorage.MINESWEEPER_SAVE_GAME = JSON.stringify(v);
     }
 });

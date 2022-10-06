@@ -1,4 +1,5 @@
 import { randomInt } from "../utils";
+import { game as gameStore } from "../stores";
 
 export enum CellState {
     Opened = "opened",
@@ -51,6 +52,14 @@ function newBoard({ width, height, numMines }: BoardSize): Cell[] {
 
                 const neighborX = i + offsetX;
                 const neighborY = j + offsetY;
+                if (
+                    neighborX < 0 ||
+                    neighborX >= width ||
+                    neighborY < 0 ||
+                    neighborY >= height
+                ) {
+                    continue;
+                }
 
                 const index = neighborY * width + neighborX;
                 if (minePlaces[index] === 1) {
@@ -102,5 +111,6 @@ export const newGame = (boardSize: BoardSize) => {
         numMines: boardSize.numMines,
     };
 
-    localStorage.MINESWEEPER_SAVE_GAME = JSON.stringify(game);
+    // localStorage.MINESWEEPER_SAVE_GAME = JSON.stringify(game);
+    gameStore.set(game);
 };
