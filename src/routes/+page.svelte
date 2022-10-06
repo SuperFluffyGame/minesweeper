@@ -1,15 +1,45 @@
 <script lang="ts">
-    import Button from "$lib/Button.svelte";
+    import { BoardSizes, newGame } from "$lib/game/new";
+    import { isGameSaved } from "$lib/game/checks";
+    import { onMount } from "svelte";
+    import { goto } from "$app/navigation";
+
+    let gameSaved = false;
+    onMount(() => {
+        gameSaved = isGameSaved();
+    });
+
+    let selectedBoardSize: 8 | 12 | 16 = 8;
     let dialog: HTMLDialogElement;
 
-    const newGame = () => {
-        dialog.showModal();
+    const newGameClick = () => {
+        if (gameSaved) {
+            dialog.showModal();
+            return;
+        }
+        newGameModalClick();
+    };
+
+    const newGameModalClick = () => {
+        newGame(BoardSizes[selectedBoardSize]);
+        goto("/game");
+    };
+
+    const continueGameClick = () => {
+        goto("/game");
     };
 </script>
 
 <main class="container">
-    <dialog bind:this={dialog}>
-        Hello Dialog <button on:click={() => dialog.close()}>Close</button>
+    <dialog bind:this={dialog} class="continue-modal">
+        <h2>Are you sure?</h2>
+        <p>
+            You have a game saved, creating a new game will delete the old one.
+        </p>
+        <div class="play-buttons-container">
+            <button on:click={() => dialog.close()}>Close</button>
+            <button on:click={newGameModalClick}>Continue</button>
+        </div>
     </dialog>
 
     <h1 id="title">MineSweeper</h1>
@@ -19,30 +49,50 @@
         <div class="size-select">
             <p>8 x 8</p>
             <p>10 Mines</p>
-            <input type="radio" name="size" id="8" value="8" checked />
+            <input
+                type="radio"
+                name="size"
+                id="8"
+                value={8}
+                checked
+                bind:group={selectedBoardSize}
+            />
         </div>
         <div class="size-select">
             <p>12 x 12</p>
             <p>20 Mines</p>
-            <input type="radio" name="size" id="12" value="12" />
+            <input
+                type="radio"
+                name="size"
+                id="12"
+                value={12}
+                bind:group={selectedBoardSize}
+            />
         </div>
         <div class="size-select">
             <p>16 x 16</p>
             <p>40 Mines</p>
-            <input type="radio" name="size" id="16" value="16" />
+            <input
+                type="radio"
+                name="size"
+                id="16"
+                value={16}
+                bind:group={selectedBoardSize}
+            />
         </div>
     </div>
 
     <div class="play-buttons-container">
-        <button class="continue" disabled>Continue Game</button>
-        <button class="play" on:click={newGame}>New Game</button>
+        <button
+            class="continue"
+            disabled={!gameSaved}
+            on:click={continueGameClick}>Continue Game</button
+        >
+        <button class="play" on:click={newGameClick}>New Game</button>
     </div>
 </main>
 
 <style>
-    p {
-        margin: 0;
-    }
     #title {
         margin-bottom: 0;
         letter-spacing: 0.2rem;
@@ -117,5 +167,23 @@
     .play-buttons-container > button {
         flex: 1 1 0;
         width: 15rem;
+    }
+
+    .continue-modal {
+        /* display: flex; */
+
+        align-items: center;
+        flex-direction: column;
+
+        color: whitesmoke;
+        border-color: var(--black1);
+        background-color: var(--black4);
+        border-radius: var(--radius);
+    }
+    .continue-modal::backdrop {
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    .continue-modal:modal {
+        display: flex;
     }
 </style>
