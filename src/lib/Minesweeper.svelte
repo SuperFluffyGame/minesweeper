@@ -17,14 +17,11 @@
         Loading...
     {/if}
 </div>
-<div class="state">
-    {$game?.state}
-</div>
 
 <style>
     .board {
         display: grid;
-        width: 50rem;
+        width: min(90vh, 90vw);
         aspect-ratio: 1;
         user-select: none;
         border: 0.1px solid var(--black1);
