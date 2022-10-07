@@ -26,11 +26,11 @@
 
     const newGameModalClick = () => {
         newGame(BoardSizes[selectedBoardSize]);
-        goto("/game");
+        goto("./game");
     };
 
     const continueGameClick = () => {
-        goto("/game");
+        goto("./game");
     };
 </script>
 

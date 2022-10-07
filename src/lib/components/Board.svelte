@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Cell from "$lib/Cell.svelte";
+    import Cell from "$lib/components/Cell.svelte";
     import { game } from "$lib/stores";
 </script>
 
@@ -22,7 +22,7 @@
     .board {
         display: grid;
         width: min(90vh, 90vw);
-        aspect-ratio: 1;
+        /* aspect-ratio: 1; */
         user-select: none;
         border: 0.1px solid var(--black1);
         border-radius: var(--radius);

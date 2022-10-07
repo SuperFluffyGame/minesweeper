@@ -53,6 +53,13 @@ export const openCell = (game: Game, index: number) => {
     // if mine was opened, lose the game
     if (cell.isMine) {
         game.state = GameState.Lost;
+        game.lostToCell = index;
+        for (let i = 0; i < game.width * game.height; i++) {
+            let c = game.board[i];
+            if (c.isMine) {
+                c.state = CellState.Opened;
+            }
+        }
     }
 
     // if all non mine tiles have been opened, win!

@@ -25,6 +25,7 @@ export interface Game {
     numMines: number;
     firstMove: boolean;
     state: GameState;
+    lostToCell: number;
 }
 
 function newBoard({ width, height, numMines }: BoardSize): Cell[] {
@@ -80,6 +81,7 @@ export const newGame = (boardSize: BoardSize) => {
         numMines: boardSize.numMines,
         firstMove: true,
         state: GameState.Playing,
+        lostToCell: -1,
     };
 
     for (let i = 0; i < boardSize.numMines; i++) {
