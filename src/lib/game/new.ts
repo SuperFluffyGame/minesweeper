@@ -88,7 +88,6 @@ export const newGame = (boardSize: BoardSize) => {
         setNewMine(game);
     }
 
-    // localStorage.MINESWEEPER_SAVE_GAME = JSON.stringify(game);
     recalcMineNeighbors(game);
     gameStore.set(game);
 };

@@ -7,6 +7,8 @@
     import { isGameSaved } from "$lib/game/checks";
     import { onMount } from "svelte";
     import { goto } from "$app/navigation";
+    import { version } from "$lib/stores";
+    import SaveGame from "$lib/components/SaveGame.svelte";
 
     let gameSaved = false;
     onMount(() => {
@@ -32,85 +34,136 @@
     const continueGameClick = () => {
         goto("./game");
     };
+
+    const customGameClick = () => {
+        goto("./custom");
+    };
 </script>
 
 <main class="container">
-    <dialog bind:this={dialog} class="continue-modal">
-        <h2>Are you sure?</h2>
-        <p>
-            You have a game saved, creating a new game will delete the old one.
-        </p>
+    <aside class="sidebar">
+        <header>
+            <h1 id="title">MineSweeper</h1>
+            <h3 id="creator">By SFG and TMH</h3>
+        </header>
+        <hr />
+        <!-- <p>No Saved Games</p> -->
+        <SaveGame slot={1} />
+        <SaveGame slot={1} />
+    </aside>
+    <div class="creation-menu">
+        <dialog bind:this={dialog} class="continue-modal">
+            <h2>Are you sure?</h2>
+            <p>
+                You have a game saved, creating a new game will delete the old
+                one.
+            </p>
+            <div class="buttons-container">
+                <button on:click={() => dialog.close()}>Close</button>
+                <button on:click={newGameModalClick}>Continue</button>
+            </div>
+        </dialog>
+
+        <div class="size-select-container">
+            <div class="size-select">
+                <p>8 x 8</p>
+                <p>10 Mines</p>
+                <input
+                    type="radio"
+                    name="size"
+                    id="8"
+                    value={8}
+                    checked
+                    bind:group={selectedBoardSize}
+                />
+            </div>
+            <div class="size-select">
+                <p>12 x 12</p>
+                <p>20 Mines</p>
+                <input
+                    type="radio"
+                    name="size"
+                    id="12"
+                    value={12}
+                    bind:group={selectedBoardSize}
+                />
+            </div>
+            <div class="size-select">
+                <p>16 x 16</p>
+                <p>40 Mines</p>
+                <input
+                    type="radio"
+                    name="size"
+                    id="16"
+                    value={16}
+                    bind:group={selectedBoardSize}
+                />
+            </div>
+        </div>
+
         <div class="buttons-container">
-            <button on:click={() => dialog.close()}>Close</button>
-            <button on:click={newGameModalClick}>Continue</button>
+            <button
+                class="continue"
+                disabled={!gameSaved}
+                on:click={continueGameClick}>Continue Game</button
+            >
+            <button class="play" on:click={newGameClick}>New Game</button>
+            <button class="custom-game" on:click={customGameClick}
+                >Custom Game</button
+            >
         </div>
-    </dialog>
 
-    <h1 id="title">MineSweeper</h1>
-    <h3 id="creator">By SFG</h3>
-
-    <div class="size-select-container">
-        <div class="size-select">
-            <p>8 x 8</p>
-            <p>10 Mines</p>
-            <input
-                type="radio"
-                name="size"
-                id="8"
-                value={8}
-                checked
-                bind:group={selectedBoardSize}
-            />
-        </div>
-        <div class="size-select">
-            <p>12 x 12</p>
-            <p>20 Mines</p>
-            <input
-                type="radio"
-                name="size"
-                id="12"
-                value={12}
-                bind:group={selectedBoardSize}
-            />
-        </div>
-        <div class="size-select">
-            <p>16 x 16</p>
-            <p>40 Mines</p>
-            <input
-                type="radio"
-                name="size"
-                id="16"
-                value={16}
-                bind:group={selectedBoardSize}
-            />
-        </div>
-    </div>
-
-    <div class="buttons-container">
-        <button
-            class="continue"
-            disabled={!gameSaved}
-            on:click={continueGameClick}>Continue Game</button
-        >
-        <button class="play" on:click={newGameClick}>New Game</button>
+        <footer class="version">{version}</footer>
     </div>
 </main>
 
 <style>
-    #title {
-        margin-bottom: 0;
-        letter-spacing: 0.2rem;
-        font-size: 3rem;
+    header {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        margin: 0.5rem;
     }
-    #creator {
-        margin-top: 0;
-        font-size: 1.5rem;
-        color: var(--black9);
+    header > * {
+        margin: 0;
     }
     .container {
         display: flex;
+    }
+    .sidebar {
+        width: 17.5rem;
+        background-color: var(--black2);
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .sidebar > hr {
+        width: 100%;
+    }
+
+    #title {
+        margin-bottom: 0;
+        letter-spacing: 0.2rem;
+        font-size: 2rem;
+    }
+    #creator {
+        margin-top: 0;
+        /* font-size: 1.5rem; */
+        color: var(--black9);
+    }
+    .version {
+        margin: 0;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        color: var(--black9);
+        font-family: monospace;
+    }
+    .creation-menu {
+        display: flex;
         flex-direction: column;
         align-items: center;
+        flex-grow: 1;
     }
 
     .size-select-container {

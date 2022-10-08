@@ -1,6 +1,8 @@
 <script lang="ts">
     import { CellState } from "$lib/game/new";
     import { game } from "../stores";
+
+    export let showMines: boolean = false;
 </script>
 
 <div
@@ -12,11 +14,11 @@
     {#if $game}
         {#each $game.board as cell, i}
             <div
-                class:mine={cell.isMine}
                 class:cell
-                class:empty={!cell.isMine}
-                class:open={cell.state === CellState.Opened && !cell.isMine}
-                class:clicked-mine={$game.lostToCell === i}
+                class:mine={cell.isMine}
+                class:empty={!cell.isMine || (cell.isMine && !showMines)}
+                class:open={cell.state === CellState.Opened}
+                class:clicked-mine={$game.lostToCell === i && showMines}
             />{/each}
     {:else}
         Loading...

@@ -1,5 +1,5 @@
 import { writable, type Writable } from "svelte/store";
-import { loadBoard } from "./game/load";
+import { loadBoard, MINESWEEPER_SAVE_GAME } from "./game/load";
 import type { Game } from "./game/new";
 
 export let game: Writable<Game | null>;
@@ -9,8 +9,10 @@ if (typeof window !== "undefined") {
 } else {
     game = writable(null);
 }
-game.subscribe((v) => {
+game.subscribe(v => {
     if (typeof window !== "undefined" && v != null) {
-        localStorage.MINESWEEPER_SAVE_GAME = JSON.stringify(v);
+        localStorage[MINESWEEPER_SAVE_GAME] = JSON.stringify(v);
     }
 });
+
+export const version = "v0.0.1";

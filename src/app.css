@@ -18,7 +18,8 @@
 
     --radius: 0.5rem;
 }
-html, body {
+html,
+body {
     padding: 0;
     margin: 0;
 }
@@ -40,7 +41,7 @@ body > * {
     flex: 1 1 0;
 }
 
-button {
+button:not(.unstyled) {
     font-size: 1.2rem;
     background-color: var(--black6);
     border: 0.2rem solid var(--black5);
@@ -52,15 +53,15 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+button:hover:not(.unstyled) {
     background-color: var(--black5);
 }
 
-button:active {
+button:active:not(.unstyled) {
     border: 0.2rem solid var(--black6);
 }
 
-button:disabled {
+button:disabled:not(.unstyled) {
     background-color: var(--black4);
     border: 0.2rem solid var(--black5);
     cursor: not-allowed;
