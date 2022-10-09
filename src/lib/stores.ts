@@ -1,18 +1,36 @@
 import { writable, type Writable } from "svelte/store";
-import { loadBoard, MINESWEEPER_SAVE_GAME } from "./game/load";
+import { loadGame, MINESWEEPER_SAVE_SLOTS, saveGame } from "./game/save";
 import type { Game } from "./game/new";
 
-export let game: Writable<Game | null>;
+export let game: Writable<Game | null> = writable(null);
 
-if (typeof window !== "undefined") {
-    game = writable(loadBoard());
-} else {
-    game = writable(null);
-}
-game.subscribe(v => {
-    if (typeof window !== "undefined" && v != null) {
-        localStorage[MINESWEEPER_SAVE_GAME] = JSON.stringify(v);
+game.subscribe(g => {
+    if (typeof window !== "undefined" && g != null) {
+        let i: number;
+        currentGameIndex.subscribe(v => (i = v));
+
+        saveGame(i!, g);
+    }
+});
+
+export let currentGameIndex = writable(0);
+currentGameIndex.subscribe(i => {
+    if (typeof window !== "undefined" && i != null) {
+        game.set(loadGame(i));
     }
 });
 
 export const version = "v0.0.1";
+
+export let used_save_slots: Writable<number[] | null> = writable(null);
+used_save_slots.subscribe(v => {
+    if (typeof window !== "undefined" && v != null) {
+        localStorage[MINESWEEPER_SAVE_SLOTS] = JSON.stringify(v);
+    }
+});
+
+if (typeof window !== "undefined") {
+    used_save_slots.set(
+        JSON.parse(localStorage[MINESWEEPER_SAVE_SLOTS] ?? "[]")
+    );
+}

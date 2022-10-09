@@ -2,5 +2,5 @@
     import "../app.css";
 </script>
 
-<title>Hello Svelte</title>
+<title>MineSweeper</title>
 <slot />

@@ -1,10 +1,11 @@
 ## Immediate Todo
 
-1. Move calculation of neighbor mines to separate function
-2. on first move make sure it isn't a mine
+1. Redo setMine function to not me recursive
+1. Move calculation of neighbor mines to separate function [DONE]
+1. on first move make sure it isn't a mine [DONE]
     - if it is, remove it, set a new mine and recalculate neighbors
-3. game end detection and modal
-4. fancy styling? (instead of just borders)
+1. game end detection and modal [DONE]
+1. fancy styling? (instead of just borders)
 
 ## Later Todo
 

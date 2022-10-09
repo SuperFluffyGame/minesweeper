@@ -11,7 +11,7 @@
     import { game } from "$lib/stores";
     import { onMount } from "svelte";
     import MiniBoard from "$lib/components/MiniBoard.svelte";
-    import { MINESWEEPER_SAVE_GAME } from "$lib/game/load";
+    import { deleteGame, MINESWEEPER_SAVE_GAME } from "$lib/game/save";
     let modalEl: HTMLDialogElement;
 
     game.subscribe(g => {
@@ -28,7 +28,6 @@
 
     const newGameModalClick = () => {
         newGame(BoardSizes[$game!.width as PossibleBoardSizes]);
-        localStorage.removeItem(MINESWEEPER_SAVE_GAME);
         modalEl.close();
     };
 
@@ -70,7 +69,7 @@
                 >
             </div>
         </div>
-        <div class="mini-board"><MiniBoard /></div>
+        <!-- <div class="mini-board"><MiniBoard game={$game} /></div> -->
     </dialog>
 </main>
 

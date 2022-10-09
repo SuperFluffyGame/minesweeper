@@ -7,22 +7,23 @@
     import { isGameSaved } from "$lib/game/checks";
     import { onMount } from "svelte";
     import { goto } from "$app/navigation";
-    import { version } from "$lib/stores";
+    import { used_save_slots, version } from "$lib/stores";
     import SaveGame from "$lib/components/SaveGame.svelte";
+    import SidebarLayout from "$lib/components/SidebarLayout.svelte";
 
     let gameSaved = false;
     onMount(() => {
         gameSaved = isGameSaved();
     });
 
-    let selectedBoardSize: PossibleBoardSizes = 8;
+    let selectedBoardSize: PossibleBoardSizes = 12;
     let dialog: HTMLDialogElement;
 
     const newGameClick = () => {
-        if (gameSaved) {
-            dialog.showModal();
-            return;
-        }
+        // if (gameSaved) {
+        //     dialog.showModal();
+        //     return;
+        // }
         newGameModalClick();
     };
 
@@ -40,18 +41,20 @@
     };
 </script>
 
-<main class="container">
-    <aside class="sidebar">
-        <header>
-            <h1 id="title">MineSweeper</h1>
-            <h3 id="creator">By SFG and TMH</h3>
-        </header>
-        <hr />
-        <!-- <p>No Saved Games</p> -->
-        <SaveGame slot={1} />
-        <SaveGame slot={1} />
-    </aside>
-    <div class="creation-menu">
+<SidebarLayout>
+    <div slot="sidebar" class="savegames">
+        <!-- <SaveGame slot={1} />
+        <SaveGame slot={1} /> -->
+        {#if $used_save_slots}
+            {#each $used_save_slots as saveSlotIndex, i}
+                <SaveGame slot={saveSlotIndex} />
+            {/each}
+            {#if $used_save_slots.length === 0}
+                <p>No Saved Games</p>
+            {/if}
+        {/if}
+    </div>
+    <!-- <div slot="content" class="creation-menu">
         <dialog bind:this={dialog} class="continue-modal">
             <h2>Are you sure?</h2>
             <p>
@@ -112,54 +115,28 @@
                 >Custom Game</button
             >
         </div>
-
-        <footer class="version">{version}</footer>
+    </div> -->
+    <div class="content2" slot="content">
+        <section class="presets">
+            <h2>Standard</h2>
+            <button on:click={newGameClick}>New Game</button>
+        </section>
     </div>
-</main>
+</SidebarLayout>
 
 <style>
-    header {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        margin: 0.5rem;
+    .content2 {
+        margin: 1rem;
     }
-    header > * {
+    .presets > h2 {
         margin: 0;
     }
-    .container {
-        display: flex;
-    }
-    .sidebar {
-        width: 17.5rem;
-        background-color: var(--black2);
+    .savegames {
         display: flex;
         flex-direction: column;
-        align-items: stretch;
+        overflow-y: scroll;
     }
-    .sidebar > hr {
-        width: 100%;
-    }
-
-    #title {
-        margin-bottom: 0;
-        letter-spacing: 0.2rem;
-        font-size: 2rem;
-    }
-    #creator {
-        margin-top: 0;
-        /* font-size: 1.5rem; */
-        color: var(--black9);
-    }
-    .version {
-        margin: 0;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        color: var(--black9);
-        font-family: monospace;
-    }
-    .creation-menu {
+    /* .creation-menu {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -207,5 +184,8 @@
     }
     input[type="radio"]:checked {
         border: 0.25rem solid var(--blue6);
+    } */
+    p {
+        text-align: center;
     }
 </style>

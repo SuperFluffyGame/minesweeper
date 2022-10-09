@@ -74,9 +74,6 @@
     .opened > .cover {
         opacity: 0;
     }
-    /* .flagged > .cover {
-        background-color: coral;
-    } */
 
     img {
         height: 80%;

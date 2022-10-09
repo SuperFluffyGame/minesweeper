@@ -1,17 +1,51 @@
 <script lang="ts">
+    import { deleteGame, loadGame } from "$lib/game/save";
+    import type { Game } from "$lib/game/new";
+    import { onMount } from "svelte";
     import MiniBoard from "./MiniBoard.svelte";
+    import { currentGameIndex, used_save_slots } from "$lib/stores";
+    import { goto } from "$app/navigation";
 
     export let slot: number;
+
+    let game: Game | null;
+    let name: string = `Save Game ${slot}`;
+    onMount(() => {
+        game = loadGame(slot);
+        name = game!.title;
+    });
+
+    const deleteClick = () => {
+        used_save_slots.update(v => {
+            v!.splice(v!.indexOf(slot), 1);
+            return v;
+        });
+        deleteGame(slot);
+    };
+    const playClick = () => {
+        currentGameIndex.set(slot);
+        goto("./game");
+    };
 </script>
 
 <div class="wrapper">
-    <div class="miniboard"><MiniBoard /></div>
+    <div class="miniboard">
+        {#if game}
+            <MiniBoard {game} />
+        {:else}
+            Loading...
+        {/if}
+    </div>
     <div class="info">
-        <p class="title">Save Game {slot}</p>
-        <p class="size">8x8</p>
+        <p class="name">
+            {name}
+        </p>
+
+        <!-- <p class="title">Save Game {slot}</p> -->
+        <p class="size">{game?.width}x{game?.height}</p>
     </div>
     <div class="right">
-        <button class="delete unstyled">
+        <button class="delete unstyled" on:click={deleteClick}>
             <img
                 alt="delete"
                 src="delete.svg"
@@ -20,7 +54,7 @@
                 draggable="false"
             />
         </button>
-        <button class="play unstyled">
+        <button class="play unstyled" on:click={playClick}>
             <img
                 alt="play"
                 src="play.svg"
@@ -41,17 +75,15 @@
     }
     .wrapper {
         margin: 0.5rem;
-        /* padding: 0.5rem; */
         display: flex;
         align-items: center;
-        /* width: 100%; */
-        /* border: 1px solid red; */
+
         height: 3rem;
     }
     .miniboard {
         height: 100%;
         aspect-ratio: 1;
-        margin-right: 1rem;
+        margin-right: 0.5rem;
     }
 
     button {
@@ -63,6 +95,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: background-color 75ms linear;
     }
     button:hover {
         background-color: rgba(255, 255, 255, 0.05);
@@ -72,7 +105,6 @@
     }
     img {
         width: 100%;
-        /* aspect-ratio: 1; */
     }
 
     .right {
@@ -81,4 +113,20 @@
         display: flex;
         justify-content: right;
     }
+    .info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* p input.name {
+        color: whitesmoke;
+        border: 0.1rem solid var(--black4);
+        border-radius: calc(var(--radius) / 2);
+        background-color: transparent;
+        outline: none;
+        font-size: inherit;
+        --padding: 0.25rem;
+        width: calc(100% - var(--padding) * 2);
+        padding: var(--padding);
+    } */
 </style>

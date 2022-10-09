@@ -1,5 +1,10 @@
 import { randomInt } from "../utils";
-import { game as gameStore } from "../stores";
+import {
+    currentGameIndex,
+    game as gameStore,
+    used_save_slots,
+} from "../stores";
+import { MINESWEEPER_SAVE_SLOTS, saveGame } from "./save";
 
 export const enum CellState {
     Opened = "opened",
@@ -26,6 +31,7 @@ export interface Game {
     firstMove: boolean;
     state: GameState;
     lostToCell: number;
+    title: string;
 }
 
 function newBoard({ width, height, numMines }: BoardSize): Cell[] {
@@ -82,6 +88,7 @@ export const newGame = (boardSize: BoardSize) => {
         firstMove: true,
         state: GameState.Playing,
         lostToCell: -1,
+        title: "Save Game ",
     };
 
     for (let i = 0; i < boardSize.numMines; i++) {
@@ -89,7 +96,23 @@ export const newGame = (boardSize: BoardSize) => {
     }
 
     recalcMineNeighbors(game);
-    gameStore.set(game);
+    let availSlots: number[] = localStorage[MINESWEEPER_SAVE_SLOTS];
+    let lowestSlot: number;
+    for (let i = 0; ; i++) {
+        if (availSlots.indexOf(i) === -1) {
+            lowestSlot = i;
+            break;
+        }
+    }
+    game.title += lowestSlot;
+    saveGame(lowestSlot, game);
+    currentGameIndex.set(lowestSlot);
+    used_save_slots.update(v => {
+        v?.push?.(lowestSlot);
+        return v;
+    });
+
+    // gameStore.set(game);
 };
 
 export const setNewMine = (game: Game) => {
@@ -124,8 +147,8 @@ export const recalcMineNeighbors = (game: Game) => {
                     continue;
                 }
 
-                const neighboreIndex = neighborY * game.width + neighborX;
-                if (game.board[neighboreIndex].isMine) {
+                const neighborIndex = neighborY * game.width + neighborX;
+                if (game.board[neighborIndex].isMine) {
                     numNeighborMines += 1;
                 }
             }
