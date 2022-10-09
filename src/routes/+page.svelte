@@ -13,24 +13,8 @@
     let dialog: HTMLDialogElement;
 
     const newGameClick = () => {
-        // if (gameSaved) {
-        //     dialog.showModal();
-        //     return;
-        // }
-        newGameModalClick();
-    };
-
-    const newGameModalClick = () => {
         newGame(BoardSizes[selectedBoardSize]);
         goto("./game");
-    };
-
-    const continueGameClick = () => {
-        goto("./game");
-    };
-
-    const customGameClick = () => {
-        goto("./custom");
     };
 </script>
 
@@ -39,7 +23,7 @@
         <!-- <SaveGame slot={1} />
         <SaveGame slot={1} /> -->
         {#if $used_save_slots}
-            {#each $used_save_slots as saveSlotIndex, i}
+            {#each $used_save_slots as saveSlotIndex}
                 <SaveGame slot={saveSlotIndex} />
             {/each}
             {#if $used_save_slots.length === 0}

@@ -8,12 +8,11 @@
 
     export let slot: number;
 
-    let game: Game | null;
-    let name: string = `Save Game ${slot}`;
-    onMount(() => {
-        game = loadGame(slot);
-        name = game!.title;
-    });
+    $: game = loadGame(slot);
+    $: name = `Save Game ${slot}`;
+    // onMount(() => {
+    //     name = game!.title;
+    // });
 
     const deleteClick = () => {
         used_save_slots.update(v => {
