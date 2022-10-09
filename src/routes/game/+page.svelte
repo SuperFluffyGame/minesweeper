@@ -4,14 +4,12 @@
         BoardSizes,
         GameState,
         newGame,
-        type BoardSize,
         type PossibleBoardSizes,
     } from "$lib/game/new";
     import Board from "$lib/components/Board.svelte";
     import { game } from "$lib/stores";
+    import { MINESWEEPER_SAVE_GAME } from "$lib/game/save";
     import { onMount } from "svelte";
-    import MiniBoard from "$lib/components/MiniBoard.svelte";
-    import { deleteGame, MINESWEEPER_SAVE_GAME } from "$lib/game/save";
     let modalEl: HTMLDialogElement;
 
     game.subscribe(g => {
@@ -21,8 +19,10 @@
     });
 
     onMount(() => {
-        if ($game!.state !== GameState.Playing) {
-            modalEl?.showModal?.();
+        if ($game === null) {
+            goto("../");
+        } else if ($game.state !== GameState.Playing) {
+            modalEl.showModal();
         }
     });
 

@@ -42,7 +42,7 @@
         </p>
 
         <!-- <p class="title">Save Game {slot}</p> -->
-        <p class="size">{game?.width}x{game?.height}</p>
+        <p class="size">{game?.width}x{game?.height} ({game?.state})</p>
     </div>
     <div class="right">
         <button class="delete unstyled" on:click={deleteClick}>

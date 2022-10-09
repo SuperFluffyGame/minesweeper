@@ -1,9 +1,5 @@
 import { randomInt } from "../utils";
-import {
-    currentGameIndex,
-    game as gameStore,
-    used_save_slots,
-} from "../stores";
+import { currentGameIndex, used_save_slots } from "../stores";
 import { MINESWEEPER_SAVE_SLOTS, saveGame } from "./save";
 
 export const enum CellState {
@@ -82,9 +78,7 @@ export const newGame = (boardSize: BoardSize) => {
 
     const game: Game = {
         board,
-        width: boardSize.width,
-        height: boardSize.height,
-        numMines: boardSize.numMines,
+        ...boardSize,
         firstMove: true,
         state: GameState.Playing,
         lostToCell: -1,

@@ -4,17 +4,10 @@
         newGame,
         type PossibleBoardSizes,
     } from "$lib/game/new";
-    import { isGameSaved } from "$lib/game/checks";
-    import { onMount } from "svelte";
     import { goto } from "$app/navigation";
-    import { used_save_slots, version } from "$lib/stores";
+    import { used_save_slots } from "$lib/stores";
     import SaveGame from "$lib/components/SaveGame.svelte";
     import SidebarLayout from "$lib/components/SidebarLayout.svelte";
-
-    let gameSaved = false;
-    onMount(() => {
-        gameSaved = isGameSaved();
-    });
 
     let selectedBoardSize: PossibleBoardSizes = 12;
     let dialog: HTMLDialogElement;

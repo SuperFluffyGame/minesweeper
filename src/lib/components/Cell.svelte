@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { onMount } from "svelte";
     import { openCell, flagCell } from "../game/input";
     import type { Cell } from "../game/new";
     import { game } from "../stores";

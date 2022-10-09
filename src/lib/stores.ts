@@ -13,7 +13,7 @@ game.subscribe(g => {
     }
 });
 
-export let currentGameIndex = writable(0);
+export let currentGameIndex = writable(-1);
 currentGameIndex.subscribe(i => {
     if (typeof window !== "undefined" && i != null) {
         game.set(loadGame(i));
