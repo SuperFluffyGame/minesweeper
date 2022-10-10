@@ -16,11 +16,11 @@
     {#each game.board as cell, i}
         <div
             class:cell
-            class:mine={cell.type === CellType.Mine}
-            class:empty={!(cell.type === CellType.Mine) ||
-                (cell.type === CellType.Mine && !showMines)}
-            class:flag={cell.state === CellState.Flagged && !showMines}
             class:open={cell.state === CellState.Opened}
+            class:empty={cell.type !== CellType.Mine ||
+                (cell.type === CellType.Mine && !showMines)}
+            class:mine={cell.type === CellType.Mine && showMines}
+            class:flag={cell.state === CellState.Flagged && !showMines}
             class:clicked-mine={game.lostToCell === i && showMines}
         />
     {/each}
@@ -34,14 +34,14 @@
         aspect-ratio: 1;
     }
 
-    .mine {
-        background-color: red;
-    }
     .empty {
         background-color: navy;
     }
     .open {
         background-color: blue;
+    }
+    .mine {
+        background-color: red;
     }
 
     .clicked-mine {
