@@ -2,20 +2,29 @@ import { writable, type Writable } from "svelte/store";
 import { loadGame, MINESWEEPER_SAVE_SLOTS, saveGame } from "./game/save";
 import type { Game } from "./game/new";
 
-export let game: Writable<Game | null> = writable(null);
+// function forceableStore<T>(initalValue: T) {
+//     let store = writable(initalValue);
+//     return {
+//         ...store,
+//         forceSet: (value: T) => {
+//             store.set(undefined!);
+//             store.set(value);
+//         },
+//     };
+// }
 
+export let game: Writable<Game | null> = writable(null);
 game.subscribe(g => {
     if (typeof window !== "undefined" && g != null) {
         let i: number;
         currentGameIndex.subscribe(v => (i = v));
-
         saveGame(i!, g);
     }
 });
 
 export let currentGameIndex = writable(-1);
 currentGameIndex.subscribe(i => {
-    if (typeof window !== "undefined" && i != null) {
+    if (typeof window !== "undefined" && i != null && i != -1) {
         game.set(loadGame(i));
     }
 });

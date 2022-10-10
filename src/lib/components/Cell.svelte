@@ -38,14 +38,14 @@
         {cell.numNeighborMines}
     {/if}
     {#if cell.state !== CellState.Opened}
-        <div class="cover" transition:fade={{ duration: 100 }} />
+        <div class="cover" transition:fade|local={{ duration: 100 }} />
     {/if}
     {#if cell.state === CellState.Flagged}
         <img
             src={redFlagJpg}
             alt="F"
             class="flag"
-            transition:fade={{ duration: 100 }}
+            transition:fade|local={{ duration: 100 }}
         />
     {/if}
 </div>

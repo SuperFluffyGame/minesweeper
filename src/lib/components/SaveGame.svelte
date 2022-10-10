@@ -94,6 +94,8 @@
         align-items: center;
         justify-content: center;
         transition: background-color 75ms linear;
+
+        padding: 0;
     }
     button:hover {
         background-color: rgba(255, 255, 255, 0.05);

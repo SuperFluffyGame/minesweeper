@@ -1,6 +1,6 @@
-import { randomInt } from "../utils";
-import { currentGameIndex, used_save_slots } from "../stores";
-import { MINESWEEPER_SAVE_SLOTS, saveGame } from "./save";
+import { randomInt } from "$lib/utils";
+import { currentGameIndex, used_save_slots } from "$lib/stores";
+import { MINESWEEPER_SAVE_SLOTS, saveGame } from "$lib/game/save";
 
 export const enum CellState {
     Opened = "opened",
@@ -100,6 +100,7 @@ export const newGame = (boardSize: BoardSize) => {
     }
     game.title += lowestSlot;
     saveGame(lowestSlot, game);
+    currentGameIndex.set(-1);
     currentGameIndex.set(lowestSlot);
     used_save_slots.update(v => {
         v?.push?.(lowestSlot);

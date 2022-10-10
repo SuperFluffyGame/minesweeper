@@ -9,6 +9,7 @@ export const loadGame = (i: number): Game | null => {
 };
 
 export const saveGame = (i: number, game: Game) => {
+    deleteGame(i);
     localStorage[MINESWEEPER_SAVE_GAME + `_${i}`] = JSON.stringify(game);
 };
 
