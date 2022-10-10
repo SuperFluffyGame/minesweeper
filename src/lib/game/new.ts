@@ -3,15 +3,20 @@ import { currentGameIndex, used_save_slots } from "$lib/stores";
 import { MINESWEEPER_SAVE_SLOTS, saveGame } from "$lib/game/save";
 
 export const enum CellState {
-    Opened = "opened",
     Closed = "closed",
+    Opened = "opened",
     Flagged = "flagged",
+}
+
+export const enum CellType {
+    Empty = "empty",
+    Mine = "mine",
 }
 
 export interface Cell {
     state: CellState;
     numNeighborMines: number;
-    isMine: boolean;
+    type: CellType;
 }
 export const enum GameState {
     Playing = "playing",
@@ -33,8 +38,6 @@ export interface Game {
 function newBoard({ width, height, numMines }: BoardSize): Cell[] {
     let cells = Array<Cell>(width * height);
 
-    let minePlaces = Array<number>(width * height).fill(0);
-
     // cell position
     for (let i = 0; i < width; i++) {
         for (let j = 0; j < height; j++) {
@@ -42,7 +45,7 @@ function newBoard({ width, height, numMines }: BoardSize): Cell[] {
             cells[index] = {
                 state: CellState.Closed,
                 numNeighborMines: 0,
-                isMine: minePlaces[index] === 1 ? true : false,
+                type: CellType.Empty,
             };
         }
     }
@@ -111,15 +114,15 @@ export const newGame = (boardSize: BoardSize) => {
 };
 
 export const setNewMine = (game: Game) => {
-    const x = randomInt(0, game.width);
-    const y = randomInt(0, game.height);
-
-    const prevSpot = game.board[y * game.width + x].isMine;
-    if (!prevSpot) {
-        game.board[y * game.width + x].isMine = true;
-    } else {
-        setNewMine(game);
+    const availCells: number[] = [];
+    for (let i = 0; i < game.width * game.height; i++) {
+        if (game.board[i].type === CellType.Empty) {
+            availCells.push(i);
+        }
     }
+
+    const cellIndex = availCells[randomInt(0, availCells.length)];
+    game.board[cellIndex].type = CellType.Mine;
 };
 
 export const recalcMineNeighbors = (game: Game) => {
@@ -143,7 +146,7 @@ export const recalcMineNeighbors = (game: Game) => {
                 }
 
                 const neighborIndex = neighborY * game.width + neighborX;
-                if (game.board[neighborIndex].isMine) {
+                if (game.board[neighborIndex].type === CellType.Mine) {
                     numNeighborMines += 1;
                 }
             }

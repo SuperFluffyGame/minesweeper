@@ -5,7 +5,7 @@
     import { fade } from "svelte/transition";
 
     import { openCell, flagCell } from "../game/input";
-    import { type Cell, CellState } from "../game/new";
+    import { type Cell, CellState, CellType } from "../game/new";
     import { game } from "../stores";
 
     export let cell: Cell;
@@ -32,20 +32,20 @@
     on:click={clickCell}
     on:contextmenu|preventDefault={rightClickCell}
 >
-    {#if cell.isMine}
+    {#if cell.type === CellType.Mine}
         <img alt="M" src={redMineJpg} />
     {:else if cell.numNeighborMines !== 0}
         {cell.numNeighborMines}
     {/if}
     {#if cell.state !== CellState.Opened}
-        <div class="cover" transition:fade|local={{ duration: 100 }} />
+        <div class="cover" out:fade|local={{ duration: 100 }} />
     {/if}
     {#if cell.state === CellState.Flagged}
         <img
             src={redFlagJpg}
             alt="F"
             class="flag"
-            transition:fade|local={{ duration: 100 }}
+            in:fade|local={{ duration: 100 }}
         />
     {/if}
 </div>
@@ -63,10 +63,6 @@
         align-items: center;
 
         font-family: monospace;
-
-        cursor: pointer;
-
-        isolation: isolate;
         overflow: hidden;
 
         font-size: 2rem;
@@ -74,6 +70,7 @@
 
     .cover {
         background-color: var(--blue2);
+        cursor: pointer;
 
         position: absolute;
         margin: 0;

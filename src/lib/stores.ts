@@ -1,4 +1,4 @@
-import { writable, type Writable } from "svelte/store";
+import { get, writable, type Writable } from "svelte/store";
 import { loadGame, MINESWEEPER_SAVE_SLOTS, saveGame } from "./game/save";
 import type { Game } from "./game/new";
 
@@ -18,8 +18,7 @@ export const version = "v0.0.2";
 export let game: Writable<Game | null> = writable(null);
 game.subscribe(g => {
     if (typeof window !== "undefined" && g != null) {
-        let i: number;
-        currentGameIndex.subscribe(v => (i = v));
+        let i: number = get(currentGameIndex);
         saveGame(i!, g);
     }
 });

@@ -1,5 +1,6 @@
 import {
     CellState,
+    CellType,
     GameState,
     recalcMineNeighbors,
     setNewMine,
@@ -22,13 +23,13 @@ export const openCell = (game: Game, index: number) => {
 
     cell.state = CellState.Opened;
     // if its first move and you clicked a mine, move it somewhere else
-    if (cell.isMine && game.firstMove) {
+    if (cell.type === CellType.Mine && game.firstMove) {
         setNewMine(game);
-        cell.isMine = false;
+        cell.type = CellType.Empty;
         recalcMineNeighbors(game);
     }
     // if it has 0 neighbors, open them all
-    if (!cell.isMine && cell.numNeighborMines === 0) {
+    if (!(cell.type === CellType.Mine) && cell.numNeighborMines === 0) {
         for (let i = 0; i < 9; i++) {
             const offsetX = Math.floor(i / 3) - 1;
             const offsetY = (i % 3) - 1;
@@ -51,12 +52,12 @@ export const openCell = (game: Game, index: number) => {
     }
 
     // if mine was opened, lose the game
-    if (cell.isMine) {
+    if (cell.type === CellType.Mine) {
         game.state = GameState.Lost;
         game.lostToCell = index;
         for (let i = 0; i < game.width * game.height; i++) {
             let c = game.board[i];
-            if (c.isMine) {
+            if (c.type === CellType.Mine) {
                 c.state = CellState.Opened;
             }
         }
@@ -65,7 +66,10 @@ export const openCell = (game: Game, index: number) => {
     // if all non mine tiles have been opened, win!
     let allMinesOpened = true;
     for (let i = 0; i < game.width * game.height; i++) {
-        if (!game.board[i].isMine && game.board[i].state !== CellState.Opened) {
+        if (
+            !(game.board[i].type === CellType.Mine) &&
+            game.board[i].state !== CellState.Opened
+        ) {
             allMinesOpened = false;
         }
     }

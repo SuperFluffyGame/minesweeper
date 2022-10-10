@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { CellState } from "$lib/game/new";
+    import { CellState, CellType } from "$lib/game/new";
     import type { Game } from "$lib/game/new";
 
     export let showMines: boolean = false;
@@ -16,8 +16,9 @@
     {#each game.board as cell, i}
         <div
             class:cell
-            class:mine={cell.isMine}
-            class:empty={!cell.isMine || (cell.isMine && !showMines)}
+            class:mine={cell.type === CellType.Mine}
+            class:empty={!(cell.type === CellType.Mine) ||
+                (cell.type === CellType.Mine && !showMines)}
             class:flag={cell.state === CellState.Flagged && !showMines}
             class:open={cell.state === CellState.Opened}
             class:clicked-mine={game.lostToCell === i && showMines}
