@@ -16,14 +16,16 @@ fs.cpSync("./build", MINESWEEPER_DEV_PATH, {
     recursive: true,
 });
 
-// const previousCWD = process.cwd();
-// process.chdir(WEBSITE_PATH);
-
 try {
-    execSync(`git add .`);
-    execSync(`git commit -m "deploy minesweeper dev"`);
-    execSync(`git push`);
+    execSync(`git add .`, {
+        cwd: WEBSITE_PATH,
+    });
+    execSync(`git commit -m "deploy minesweeper dev"`, {
+        cwd: WEBSITE_PATH,
+    });
+    execSync(`git push`, {
+        cwd: WEBSITE_PATH,
+    });
 } catch (e) {
     console.error(e.toString());
 }
-// process.chdir(previousCWD);
