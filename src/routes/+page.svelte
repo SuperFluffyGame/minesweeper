@@ -8,13 +8,14 @@
     import { used_save_slots } from "$lib/stores";
     import SaveGame from "$lib/components/SaveGame.svelte";
     import SidebarLayout from "$lib/components/SidebarLayout.svelte";
+    import { base } from "$app/paths";
 
     let selectedBoardSize: PossibleBoardSizes = 12;
     let dialog: HTMLDialogElement;
 
     const newGameClick = () => {
         newGame(BoardSizes[selectedBoardSize]);
-        goto("./game");
+        goto(`${base}/game`);
     };
 </script>
 

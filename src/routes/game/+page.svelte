@@ -10,6 +10,7 @@
     import { game } from "$lib/stores";
     import { MINESWEEPER_SAVE_GAME } from "$lib/game/save";
     import { onMount } from "svelte";
+    import { base } from "$app/paths";
     let modalEl: HTMLDialogElement;
 
     game.subscribe(g => {
@@ -20,7 +21,7 @@
 
     onMount(() => {
         if ($game === null) {
-            goto("../");
+            goto(`${base}`);
         } else if ($game.state !== GameState.Playing) {
             modalEl.showModal();
         }
@@ -33,7 +34,7 @@
 
     const gotoMenuClick = () => {
         localStorage.removeItem(MINESWEEPER_SAVE_GAME);
-        goto("../");
+        goto(`${base}`);
         modalEl.close();
     };
 </script>

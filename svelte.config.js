@@ -8,6 +8,10 @@ const config = {
     preprocess: preprocess(),
 
     kit: {
+        paths: {
+            assets: "",
+            base: "/minesweeper",
+        },
         adapter: adapter(),
     },
 };

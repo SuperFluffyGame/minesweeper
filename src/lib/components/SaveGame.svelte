@@ -1,18 +1,17 @@
 <script lang="ts">
+    import deleteSvg from "$lib/assets/delete.svg";
+    import playSvg from "$lib/assets/play.svg";
+
     import { deleteGame, loadGame } from "$lib/game/save";
-    import type { Game } from "$lib/game/new";
-    import { onMount } from "svelte";
     import MiniBoard from "./MiniBoard.svelte";
     import { currentGameIndex, used_save_slots } from "$lib/stores";
     import { goto } from "$app/navigation";
+    import { base } from "$app/paths";
 
     export let slot: number;
 
     $: game = loadGame(slot);
     $: name = `Save Game ${slot}`;
-    // onMount(() => {
-    //     name = game!.title;
-    // });
 
     const deleteClick = () => {
         used_save_slots.update(v => {
@@ -23,7 +22,7 @@
     };
     const playClick = () => {
         currentGameIndex.set(slot);
-        goto("./game");
+        goto(`${base}/game`);
     };
 </script>
 
@@ -47,7 +46,7 @@
         <button class="delete unstyled" on:click={deleteClick}>
             <img
                 alt="delete"
-                src="delete.svg"
+                src={deleteSvg}
                 class="delete"
                 style:stroke="whitesmoke"
                 draggable="false"
@@ -56,7 +55,7 @@
         <button class="play unstyled" on:click={playClick}>
             <img
                 alt="play"
-                src="play.svg"
+                src={playSvg}
                 class="delete"
                 style:stroke="whitesmoke"
                 draggable="false"

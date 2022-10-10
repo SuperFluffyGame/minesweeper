@@ -2,5 +2,7 @@
     import "../app.css";
 </script>
 
-<title>MineSweeper</title>
+<svelte:head>
+    <title>MineSweeper</title>
+</svelte:head>
 <slot />
