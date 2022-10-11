@@ -113,7 +113,7 @@
     .savegames {
         display: flex;
         flex-direction: column;
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 
     /* .creation-menu {

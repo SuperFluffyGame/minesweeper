@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { version } from "$lib/stores";
 </script>
 
@@ -12,7 +12,7 @@
         <slot name="sidebar" />
     </aside>
 
-    <slot name="content" />
+    <slot name="content" class="content" />
     <footer class="version">{version}</footer>
 </main>
 
