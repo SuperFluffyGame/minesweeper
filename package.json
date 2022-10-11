@@ -25,6 +25,7 @@
 		"@sveltejs/adapter-static": "^1.0.0-next.44",
 		"svelte-particles": "^2.3.3",
 		"tsparticles": "^2.3.4",
-		"tsparticles-engine": "^2.3.3"
+		"tsparticles-engine": "^2.3.3",
+		"tsparticles-preset-fire": "^2.3.3"
 	}
 }

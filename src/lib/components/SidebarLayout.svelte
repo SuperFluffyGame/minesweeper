@@ -1,5 +1,22 @@
 <script lang="ts">
     import { version } from "$lib/stores";
+    // import { onMount } from "svelte";
+    // import { loadFull } from "tsparticles";
+    // import { loadFirePreset } from "tsparticles-preset-fire";
+
+    // const particleOptions = {
+    //     preset: "fire",
+    // };
+
+    // let ParticlesComponent: any;
+    // onMount(async () => {
+    //     const module = await import("svelte-particles");
+    //     ParticlesComponent = module.default;
+    // });
+
+    // let particlesInit = async (engine: any) => {
+    //     await loadFirePreset(engine);
+    // };
 </script>
 
 <main class="wrapper">
@@ -11,6 +28,13 @@
         <hr />
         <slot name="sidebar" />
     </aside>
+
+    <!-- <svelte:component
+        this={ParticlesComponent}
+        {particlesInit}
+        options={particleOptions}
+        id="tsparticles"
+    /> -->
 
     <slot name="content" class="content" />
     <footer class="version">{version}</footer>
