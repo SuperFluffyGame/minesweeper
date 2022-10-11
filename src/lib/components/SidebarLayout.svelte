@@ -54,8 +54,15 @@
         right: 0;
         color: var(--black9);
         font-family: monospace;
+        font-size: 1.25rem;
     }
     .wrapper {
         display: flex;
+    }
+
+    hr {
+        border: none;
+        border-block: 1px solid var(--black9);
+        width: 100%;
     }
 </style>

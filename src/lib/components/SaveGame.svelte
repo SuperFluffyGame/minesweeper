@@ -2,22 +2,19 @@
     import deleteSvg from "$lib/assets/delete.svg";
     import playSvg from "$lib/assets/play.svg";
 
-    import { deleteGame, loadGame } from "$lib/game/save";
+    import { deleteGame } from "$lib/game/save";
     import MiniBoard from "./MiniBoard.svelte";
-    import { currentGameIndex, used_save_slots } from "$lib/stores";
+    import { currentGameIndex } from "$lib/stores";
     import { goto } from "$app/navigation";
     import { base } from "$app/paths";
+    import { loadLocalStorageGame } from "$lib/game/localStorage";
 
     export let slot: number;
 
-    $: game = loadGame(slot);
+    $: game = loadLocalStorageGame(slot);
     $: name = `Save Game ${slot}`;
 
     const deleteClick = () => {
-        used_save_slots.update(v => {
-            v!.splice(v!.indexOf(slot), 1);
-            return v;
-        });
         deleteGame(slot);
     };
     const playClick = () => {

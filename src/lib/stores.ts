@@ -1,5 +1,9 @@
 import { get, writable, type Writable } from "svelte/store";
-import { loadGame, MINESWEEPER_SAVE_SLOTS, saveGame } from "./game/save";
+import {
+    loadLocalStorageGame,
+    MINESWEEPER_SAVE_SLOTS,
+    saveLocalStorageGame,
+} from "./game/localStorage";
 import type { Game } from "./game/new";
 
 export const version = "v0.0.2";
@@ -19,14 +23,14 @@ export let game: Writable<Game | null> = writable(null);
 game.subscribe(g => {
     if (typeof window !== "undefined" && g != null) {
         let i: number = get(currentGameIndex);
-        saveGame(i!, g);
+        saveLocalStorageGame(i!, g);
     }
 });
 
 export let currentGameIndex = writable(-1);
 currentGameIndex.subscribe(i => {
     if (typeof window !== "undefined" && i != null && i != -1) {
-        game.set(loadGame(i));
+        game.set(loadLocalStorageGame(i));
     }
 });
 

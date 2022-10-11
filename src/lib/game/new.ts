@@ -1,6 +1,9 @@
 import { randomInt } from "$lib/utils";
 import { currentGameIndex, used_save_slots } from "$lib/stores";
-import { MINESWEEPER_SAVE_SLOTS, saveGame } from "$lib/game/save";
+import {
+    MINESWEEPER_SAVE_SLOTS,
+    saveLocalStorageGame,
+} from "$lib/game/localStorage";
 
 export const enum CellState {
     Closed = "closed",
@@ -35,23 +38,6 @@ export interface Game {
     title: string;
 }
 
-function newBoard({ width, height, numMines }: BoardSize): Cell[] {
-    let cells = Array<Cell>(width * height);
-
-    // cell position
-    for (let i = 0; i < width; i++) {
-        for (let j = 0; j < height; j++) {
-            const index = j * width + i;
-            cells[index] = {
-                state: CellState.Closed,
-                numNeighborMines: 0,
-                type: CellType.Empty,
-            };
-        }
-    }
-
-    return cells;
-}
 export type PossibleBoardSizes = 8 | 12 | 16;
 export class BoardSizes {
     static [8]: BoardSize = {
@@ -77,7 +63,14 @@ export interface BoardSize {
 }
 
 export const newGame = (boardSize: BoardSize) => {
-    const board = newBoard(boardSize);
+    const board = Array<Cell>(boardSize.width * boardSize.height);
+    for (let i = 0; i < boardSize.height * boardSize.width; i++) {
+        board[i] = {
+            state: CellState.Closed,
+            numNeighborMines: 0,
+            type: CellType.Empty,
+        };
+    }
 
     const game: Game = {
         board,
@@ -91,26 +84,26 @@ export const newGame = (boardSize: BoardSize) => {
     for (let i = 0; i < boardSize.numMines; i++) {
         setNewMine(game);
     }
-
     recalcMineNeighbors(game);
-    let availSlots: number[] = localStorage[MINESWEEPER_SAVE_SLOTS];
-    let lowestSlot: number;
-    for (let i = 0; ; i++) {
-        if (availSlots.indexOf(i) === -1) {
-            lowestSlot = i;
-            break;
-        }
-    }
-    game.title += lowestSlot;
-    saveGame(lowestSlot, game);
-    currentGameIndex.set(-1);
-    currentGameIndex.set(lowestSlot);
-    used_save_slots.update(v => {
-        v?.push?.(lowestSlot);
-        return v;
-    });
 
+    // let availSlots: number[] = localStorage[MINESWEEPER_SAVE_SLOTS];
+    // let lowestSlot: number;
+    // for (let i = 0; ; i++) {
+    //     if (availSlots.indexOf(i) === -1) {
+    //         lowestSlot = i;
+    //         break;
+    //     }
+    // }
+    // game.title += lowestSlot;
+    // saveLocalStorageGame(lowestSlot, game);
+    // currentGameIndex.set(-1);
+    // currentGameIndex.set(lowestSlot);
+    // used_save_slots.update(v => {
+    //     v?.push?.(lowestSlot);
+    //     return v;
+    // });
     // gameStore.set(game);
+    return game;
 };
 
 export const setNewMine = (game: Game) => {

@@ -8,10 +8,11 @@
     } from "$lib/game/new";
     import Board from "$lib/components/Board.svelte";
     import { currentGameIndex, game } from "$lib/stores";
-    import { deleteGame, MINESWEEPER_SAVE_GAME } from "$lib/game/save";
+    import { deleteGame, loadGame } from "$lib/game/save";
     import { onMount } from "svelte";
     import { base } from "$app/paths";
     import MiniBoard from "$lib/components/MiniBoard.svelte";
+    import Checkbox from "$lib/components/Checkbox.svelte";
     let modalEl: HTMLDialogElement;
 
     game.subscribe(g => {
@@ -28,14 +29,16 @@
         }
     });
 
+    let keepGame: boolean;
+
     const newGameModalClick = () => {
-        deleteGame($currentGameIndex);
-        newGame(BoardSizes[$game!.width as PossibleBoardSizes]);
+        if (!keepGame) deleteGame($currentGameIndex);
+        loadGame(newGame(BoardSizes[$game!.width as PossibleBoardSizes]));
         modalEl.close();
     };
 
     const gotoMenuClick = () => {
-        localStorage.removeItem(MINESWEEPER_SAVE_GAME);
+        if (!keepGame) deleteGame($currentGameIndex);
         goto(`${base}`);
         modalEl.close();
     };
@@ -62,6 +65,11 @@
                     board with {$game.numMines} mines.
                 </p>
             {/if}
+
+            <div class="keep-game-wrapper">
+                <p>Keep Game</p>
+                <Checkbox bind:checked={keepGame} />
+            </div>
 
             <div class="buttons-container-vertical">
                 <button class="goto-menu" on:click={gotoMenuClick}
@@ -112,5 +120,15 @@
     .mini-board {
         flex-grow: 1;
         min-width: 10rem;
+    }
+
+    .keep-game-wrapper {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        margin: 0.5rem;
+    }
+    .keep-game-wrapper > p {
+        margin: 0;
     }
 </style>

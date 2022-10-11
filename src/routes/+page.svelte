@@ -9,12 +9,13 @@
     import SaveGame from "$lib/components/SaveGame.svelte";
     import SidebarLayout from "$lib/components/SidebarLayout.svelte";
     import { base } from "$app/paths";
+    import { loadGame } from "$lib/game/save";
 
     let selectedBoardSize: PossibleBoardSizes = 12;
     let dialog: HTMLDialogElement;
 
     const newGameClick = () => {
-        newGame(BoardSizes[selectedBoardSize]);
+        loadGame(newGame(BoardSizes[selectedBoardSize]));
         goto(`${base}/game`);
     };
 </script>
@@ -114,6 +115,7 @@
         flex-direction: column;
         overflow-y: scroll;
     }
+
     /* .creation-menu {
         display: flex;
         flex-direction: column;
