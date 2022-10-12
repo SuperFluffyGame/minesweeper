@@ -39,9 +39,21 @@
             <h2>Standard</h2>
             <!-- <hr /> -->
             <button on:click={newGameClick}>New Game</button>
-            <button class="test1">Button Testing</button>
-            <button class="test2">Button Testing</button>
-            <button class="test3">Button Testing</button>
+
+            <h3>Button Styles</h3>
+            <div class="test-buttons">
+                <button>Button Testing</button>
+                <button disabled>Button Testing</button>
+
+                <button class="test1">Button Testing</button>
+                <button disabled class="test1">Button Testing</button>
+
+                <button class="test2">Button Testing</button>
+                <button disabled class="test2">Button Testing</button>
+
+                <button class="test3">Button Testing</button>
+                <button disabled class="test3">Button Testing</button>
+            </div>
         </section>
         <section class="custom">
             <h2>Custom</h2>
@@ -50,6 +62,14 @@
 </SidebarLayout>
 
 <style lang="less">
+    .test-buttons {
+        margin-block: 1rem;
+        display: grid;
+        grid-auto-flow: column;
+        gap: 1rem 0.5rem;
+        grid-template-rows: repeat(2, 1fr);
+    }
+    @disabled-opacity: 0.7;
     .test1 {
         --shadow-amount: 5px;
         --push-amount: 3px;
@@ -57,15 +77,20 @@
         background-color: transparent;
         color: whitesmoke;
         box-shadow: 0 var(--shadow-amount) 2px rgba(0, 0, 0, 0.5);
-        transition: transform 100ms ease-in-out, box-shadow 100ms ease-in-out;
+        transition: transform 100ms ease-in-out, box-shadow 100ms ease-in-out,
+            background-color 75ms linear;
 
-        &:hover {
-            background-color: rgba(0, 0, 0, 0.1);
+        &:hover:not(:disabled) {
+            background-color: rgba(255, 255, 255, 0.075);
         }
-        &:active {
+        &:active:not(:disabled) {
             transform: translateY(var(--push-amount));
             box-shadow: 0 calc(var(--shadow-amount) - var(--push-amount)) 2px
                 rgba(0, 0, 0, 0.5);
+        }
+        &:disabled {
+            filter: brightness(75%);
+            box-shadow: none;
         }
     }
 
@@ -73,18 +98,30 @@
         background-color: transparent;
         border-color: darkcyan;
 
-        &:hover {
-            background-color: rgba(0, 0, 0, 0.1);
+        &:hover:not(:disabled) {
+            background-color: rgba(255, 255, 255, 0.05);
         }
-        &:active {
-            background-color: rgba(0, 0, 0, 0.25);
+        &:active:not(:disabled) {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        &:disabled {
+            filter: brightness(75%);
+            box-shadow: none;
         }
     }
     .test3 {
         background-color: transparent;
+        border-color: var(--black6);
 
-        &:hover {
-            background-color: rgba(0, 0, 0, 0.1);
+        &:hover:not(:disabled) {
+            background-color: rgba(255, 255, 255, 0.075);
+        }
+        &:active:not(:disabled) {
+            border-color: var(--black7);
+        }
+        &:disabled {
+            filter: brightness(75%);
+            box-shadow: none;
         }
     }
 
@@ -98,8 +135,8 @@
         margin: 0;
     }
     .savegames {
-        display: flex;
-        flex-direction: column;
+        // display: flex;
+        // flex-direction: column;
         overflow-y: auto;
     }
 

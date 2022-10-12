@@ -42,9 +42,10 @@
 
 <style>
     header {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
+        /* display: flex; */
+        /* align-items: center; */
+        /* flex-direction: column; */
+        text-align: center;
         margin: 0.5rem;
     }
     header > * {
@@ -54,11 +55,12 @@
         width: 17.5rem;
         height: 100vh;
         background-color: var(--black2);
-        display: flex;
-        flex-direction: column;
+        /* display: flex;
+        flex-direction: column; */
     }
     .sidebar > hr {
         width: 100%;
+        margin-block: 1.25rem;
     }
 
     #title {
@@ -86,7 +88,7 @@
 
     hr {
         border: none;
-        border-block: 1px solid var(--black9);
+        border-block: 1px solid darkcyan;
         width: 100%;
     }
 </style>

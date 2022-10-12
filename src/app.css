@@ -38,8 +38,8 @@ html {
 
 body {
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
 }
 body > * {
     flex: 1 1 0;
@@ -70,6 +70,10 @@ button:disabled:not(.unstyled) {
     border: 0.2rem solid var(--black5);
     cursor: not-allowed;
 }
+
+/* button:focus:not(.unstyled) {
+    outline: 2px solid blue;
+} */
 
 dialog {
     align-items: center;
