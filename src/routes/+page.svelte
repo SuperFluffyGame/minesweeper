@@ -39,7 +39,9 @@
             <h2>Standard</h2>
             <!-- <hr /> -->
             <button on:click={newGameClick}>New Game</button>
-            <button class=" border-gradient">Button Testing</button>
+            <button class="test1">Button Testing</button>
+            <button class="test2">Button Testing</button>
+            <button class="test3">Button Testing</button>
         </section>
         <section class="custom">
             <h2>Custom</h2>
@@ -47,8 +49,8 @@
     </div>
 </SidebarLayout>
 
-<style>
-    .border-gradient {
+<style lang="less">
+    .test1 {
         --shadow-amount: 5px;
         --push-amount: 3px;
         border-color: darkcyan;
@@ -56,14 +58,34 @@
         color: whitesmoke;
         box-shadow: 0 var(--shadow-amount) 2px rgba(0, 0, 0, 0.5);
         transition: transform 100ms ease-in-out, box-shadow 100ms ease-in-out;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        &:active {
+            transform: translateY(var(--push-amount));
+            box-shadow: 0 calc(var(--shadow-amount) - var(--push-amount)) 2px
+                rgba(0, 0, 0, 0.5);
+        }
     }
-    .border-gradient:hover {
-        background-color: rgba(0, 0, 0, 0.1);
+
+    .test2 {
+        background-color: transparent;
+        border-color: darkcyan;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        &:active {
+            background-color: rgba(0, 0, 0, 0.25);
+        }
     }
-    .border-gradient:active {
-        transform: translateY(var(--push-amount));
-        box-shadow: 0 calc(var(--shadow-amount) - var(--push-amount)) 2px
-            rgba(0, 0, 0, 0.5);
+    .test3 {
+        background-color: transparent;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
     }
 
     .content {
