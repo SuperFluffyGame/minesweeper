@@ -15,7 +15,7 @@
     import Checkbox from "$lib/components/Checkbox.svelte";
     let modalEl: HTMLDialogElement;
 
-    game.subscribe(g => {
+    game.subscribe((g) => {
         if (g?.state !== GameState.Playing) {
             modalEl?.showModal?.();
         }
@@ -29,7 +29,7 @@
         }
     });
 
-    let keepGame: boolean;
+    let keepGame: boolean = true;
 
     const newGameModalClick = () => {
         if (!keepGame) deleteGame($currentGameIndex);

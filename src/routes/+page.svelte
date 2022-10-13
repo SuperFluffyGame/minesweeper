@@ -10,21 +10,26 @@
     import SidebarLayout from "$lib/components/SidebarLayout.svelte";
     import { base } from "$app/paths";
     import { loadGame } from "$lib/game/save";
-    import PushButton from "$lib/components/PushButton.svelte";
+    import PushButton from "$lib/components/Button.svelte";
+    import Button from "$lib/components/Button.svelte";
 
-    let selectedBoardSize: PossibleBoardSizes = 12;
-    let dialog: HTMLDialogElement;
-
-    const newGameClick = () => {
-        loadGame(newGame(BoardSizes[selectedBoardSize]));
+    const easyClick = () => {
+        newGameClick(8);
+    };
+    const mediumClick = () => {
+        newGameClick(12);
+    };
+    const hardClick = () => {
+        newGameClick(16);
+    };
+    const newGameClick = (boardSize: PossibleBoardSizes) => {
+        loadGame(newGame(BoardSizes[boardSize]));
         goto(`${base}/game`);
     };
 </script>
 
 <SidebarLayout>
     <div slot="sidebar" class="savegames">
-        <!-- <SaveGame slot={1} />
-        <SaveGame slot={1} /> -->
         {#if $used_save_slots}
             {#each $used_save_slots as saveSlotIndex}
                 <SaveGame slot={saveSlotIndex} />
@@ -38,10 +43,47 @@
     <div class="content" slot="content">
         <section class="presets">
             <h2>Standard</h2>
-            <!-- <hr /> -->
-            <PushButton on:click={newGameClick}>New Game</PushButton>
+            <table>
+                <thead>
+                    <th>Difficulty</th>
+                    <th>Size</th>
+                    <th>Mines</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Easy</td>
+                        <td>8x8</td>
+                        <td>10</td>
+                        <td
+                            ><Button size="small" on:click={easyClick}
+                                >Play</Button
+                            ></td
+                        >
+                    </tr>
+                    <tr>
+                        <td>Medium</td>
+                        <td>12x12</td>
+                        <td>20</td>
+                        <td
+                            ><Button size="small" on:click={mediumClick}
+                                >Play</Button
+                            ></td
+                        >
+                    </tr>
+                    <tr>
+                        <td>Hard</td>
+                        <td>16x16</td>
+                        <td>40</td>
+                        <td
+                            ><Button size="small" on:click={hardClick}
+                                >Play</Button
+                            ></td
+                        >
+                    </tr>
+                </tbody>
+            </table>
 
-            <h3>Button Styles</h3>
+            <!-- <h3>Button Styles</h3>
             <div class="test-buttons">
                 <button>Button Testing</button>
                 <button disabled>Button Testing</button>
@@ -54,7 +96,7 @@
 
                 <button class="test3">Button Testing</button>
                 <button disabled class="test3">Button Testing</button>
-            </div>
+            </div> -->
         </section>
         <section class="custom">
             <h2>Custom</h2>
@@ -63,45 +105,75 @@
 </SidebarLayout>
 
 <style lang="less">
-    .test-buttons {
-        margin-block: 1rem;
-        display: grid;
-        // flex-direction: column;
-        // grid-auto-flow: column;
-        gap: 1rem 0.5rem;
-        grid-template-rows: repeat(2, 1fr);
+    table {
+        border-collapse: collapse;
     }
-
-    .test2 {
-        background-color: transparent;
-        border-color: darkcyan !important;
-
-        &:hover:not(:disabled) {
-            background-color: rgba(255, 255, 255, 0.05);
+    @media screen and (max-width: 500px) {
+        table {
+            margin: auto;
         }
-        &:active:not(:disabled) {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        &:disabled {
-            filter: brightness(75%);
-            box-shadow: none;
+        h2 {
+            text-align: center;
         }
     }
-    .test3 {
-        background-color: transparent;
-        border-color: var(--black6);
-
-        &:hover:not(:disabled) {
-            background-color: rgba(255, 255, 255, 0.075);
-        }
-        &:active:not(:disabled) {
-            border-color: var(--black7);
-        }
-        &:disabled {
-            filter: brightness(75%);
-            box-shadow: none;
-        }
+    td,
+    thead {
+        border-bottom: 2px solid var(--black2);
     }
+    td,
+    th {
+        padding: 0.5rem;
+    }
+    td:not(:nth-child(1)) {
+        text-align: center;
+    }
+
+    td:nth-child(4) {
+        padding-inline: 1rem;
+    }
+
+    th {
+        text-align: center;
+    }
+    // .test-buttons {
+    //     margin-block: 1rem;
+    //     display: grid;
+    //     // flex-direction: column;
+    //     // grid-auto-flow: column;
+    //     gap: 1rem 0.5rem;
+    //     grid-template-rows: repeat(2, 1fr);
+    // }
+
+    // .test2 {
+    //     background-color: transparent;
+    //     border-color: darkcyan !important;
+
+    //     &:hover:not(:disabled) {
+    //         background-color: rgba(255, 255, 255, 0.05);
+    //     }
+    //     &:active:not(:disabled) {
+    //         background-color: rgba(255, 255, 255, 0.1);
+    //     }
+    //     &:disabled {
+    //         filter: brightness(75%);
+    //         box-shadow: none;
+    //     }
+    // }
+    // .test3 {
+    //     background-color: transparent;
+    //     border-color: var(--black6);
+
+    //     &:hover:not(:disabled) {
+    //         background-color: rgba(255, 255, 255, 0.075);
+    //     }
+    //     &:active:not(:disabled) {
+    //         border-color: var(--black7);
+    //     }
+    //     &:disabled {
+    //         filter: brightness(75%);
+    //         box-shadow: none;
+    //     }
+    // }
 
     .content {
         margin: 1rem;
