@@ -52,7 +52,7 @@
         margin: 0;
     }
     .sidebar {
-        min-width: 17.5rem;
+        min-width: 20rem;
         min-height: 100%;
         background-color: var(--black2);
         /* display: flex;
@@ -94,9 +94,12 @@
         width: 100%;
     }
 
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 700px) {
         .wrapper {
             flex-direction: column;
         }
+        /* .sidebar {
+            padding-inline: 1rem;
+        } */
     }
 </style>

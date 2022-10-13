@@ -54,11 +54,11 @@
                         <td>Easy</td>
                         <td>8x8</td>
                         <td>10</td>
-                        <td
-                            ><Button size="small" on:click={easyClick}
-                                >Play</Button
-                            ></td
-                        >
+                        <td>
+                            <Button size="small" on:click={easyClick}>
+                                Play
+                            </Button>
+                        </td>
                     </tr>
                     <tr>
                         <td>Medium</td>
@@ -100,6 +100,7 @@
         </section>
         <section class="custom">
             <h2>Custom</h2>
+            <p>TODO!!!</p>
         </section>
     </div>
 </SidebarLayout>
@@ -108,7 +109,7 @@
     table {
         border-collapse: collapse;
     }
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 700px) {
         table {
             margin: auto;
         }
@@ -183,9 +184,11 @@
 
     .savegames {
         overflow-y: auto;
-    }
-
-    p {
-        text-align: center;
+        p {
+            text-align: center;
+        }
+        @media screen and (max-width: 700px) {
+            margin-inline: 2.5rem;
+        }
     }
 </style>
