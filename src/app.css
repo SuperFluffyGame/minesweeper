@@ -35,12 +35,15 @@ html {
 
     /* font-size: calc(max(1vh, 1vw) * 1.25); */
 }
-
+html,
 body {
-    min-height: 100vh;
-    /* display: flex;
-    flex-direction: column; */
+    height: max(100%, 100vh);
 }
+/* body {
+    height: 100vh; 
+    display: flex;
+    flex-direction: column; 
+} */
 body > * {
     flex: 1 1 0;
 }

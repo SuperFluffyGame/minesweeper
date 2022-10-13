@@ -46,7 +46,7 @@
                 <button>Button Testing</button>
                 <button disabled>Button Testing</button>
 
-                <PushButton>Button Testing</PushButton>
+                <PushButton>Button</PushButton>
                 <PushButton disabled>Button Testing</PushButton>
 
                 <button class="test2">Button Testing</button>
@@ -66,14 +66,15 @@
     .test-buttons {
         margin-block: 1rem;
         display: grid;
-        grid-auto-flow: column;
+        // flex-direction: column;
+        // grid-auto-flow: column;
         gap: 1rem 0.5rem;
         grid-template-rows: repeat(2, 1fr);
     }
 
     .test2 {
         background-color: transparent;
-        border-color: darkcyan;
+        border-color: darkcyan !important;
 
         &:hover:not(:disabled) {
             background-color: rgba(255, 255, 255, 0.05);

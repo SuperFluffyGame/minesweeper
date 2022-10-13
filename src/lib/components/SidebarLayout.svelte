@@ -52,8 +52,8 @@
         margin: 0;
     }
     .sidebar {
-        width: 17.5rem;
-        height: 100vh;
+        min-width: 17.5rem;
+        min-height: 100%;
         background-color: var(--black2);
         /* display: flex;
         flex-direction: column; */
@@ -75,7 +75,7 @@
 
     .version {
         margin: 0;
-        position: absolute;
+        position: fixed;
         bottom: 0;
         right: 0;
         color: var(--black9);
@@ -83,12 +83,20 @@
         font-size: 1.25rem;
     }
     .wrapper {
+        min-height: 100%;
         display: flex;
+        /* flex-direction: column; */
     }
 
     hr {
         border: none;
         border-block: 1px solid darkcyan;
         width: 100%;
+    }
+
+    @media screen and (max-width: 500px) {
+        .wrapper {
+            flex-direction: column;
+        }
     }
 </style>

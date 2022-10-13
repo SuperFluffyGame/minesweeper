@@ -1,32 +1,32 @@
 {
-	"name": "minesweeper",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
-	},
-	"devDependencies": {
-		"@sveltejs/adapter-auto": "next",
-		"@sveltejs/adapter-node": "^1.0.0-next.96",
-		"@sveltejs/kit": "next",
-		"svelte": "^3.44.0",
-		"svelte-check": "^2.7.1",
-		"svelte-preprocess": "^4.10.6",
-		"tslib": "^2.3.1",
-		"typescript": "^4.7.4",
-		"vite": "^3.1.0"
-	},
-	"type": "module",
-	"dependencies": {
-		"@sveltejs/adapter-static": "^1.0.0-next.44",
-		"less": "^4.1.3",
-		"svelte-particles": "^2.3.3",
-		"tsparticles": "^2.3.4",
-		"tsparticles-engine": "^2.3.3",
-		"tsparticles-preset-fire": "^2.3.3"
-	}
+    "name": "minesweeper",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "dev": "vite dev",
+        "build": "vite build",
+        "preview": "vite preview",
+        "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+        "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+    },
+    "devDependencies": {
+        "@sveltejs/adapter-auto": "next",
+        "@sveltejs/adapter-node": "^1.0.0-next.96",
+        "@sveltejs/kit": "next",
+        "svelte": "^3.44.0",
+        "svelte-check": "^2.7.1",
+        "svelte-preprocess": "^4.10.6",
+        "tslib": "^2.3.1",
+        "typescript": "^4.7.4",
+        "vite": "^3.1.0",
+        "@sveltejs/adapter-static": "^1.0.0-next.44",
+        "less": "^4.1.3"
+    },
+    "type": "module",
+    "dependencies": {
+        "svelte-particles": "^2.3.3",
+        "tsparticles": "^2.3.4",
+        "tsparticles-engine": "^2.3.3",
+        "tsparticles-preset-fire": "^2.3.3"
+    }
 }
