@@ -23,16 +23,35 @@ export const openCell = (game: Game, index: number) => {
 
     cell.state = CellState.Opened;
     // if its first move and you clicked a mine, move it somewhere else
-    if (cell.type === CellType.Mine && game.firstMove) {
-        setNewMine(game);
-        cell.type = CellType.Empty;
+    if (game.firstMove) {
+        // make it exclude the 3x3 cells around the clicked area, so they don't get set to a mine.
+        const excludedCells = [];
+        for (let i = 0; i < 9; i++) {
+            console.log(cell.type === CellType.Mine);
+            const offsetX = (i % 3) - 1;
+            const offsetY = Math.floor(i / 3) - 1;
+            excludedCells.push((y + offsetY) * game.width + (x + offsetX));
+        }
+        // for each mine in the 3x3 area, reset it and put a new mine somewhere else
+        for (let i = 0; i < 9; i++) {
+            const offsetX = (i % 3) - 1;
+            const offsetY = Math.floor(i / 3) - 1;
+            const index = (y + offsetY) * game.width + (x + offsetX);
+            const surroundingCell = game.board[index];
+            if (surroundingCell?.type === CellType.Mine) {
+                surroundingCell.type = CellType.Empty;
+                setNewMine(game, excludedCells);
+            }
+        }
         recalcMineNeighbors(game);
     }
+    game.firstMove = false;
+
     // if it has 0 neighbors, open them all
-    if (!(cell.type === CellType.Mine) && cell.numNeighborMines === 0) {
+    if (cell.type === CellType.Empty && cell.numNeighborMines === 0) {
         for (let i = 0; i < 9; i++) {
-            const offsetX = Math.floor(i / 3) - 1;
-            const offsetY = (i % 3) - 1;
+            const offsetX = (i % 3) - 1;
+            const offsetY = Math.floor(i / 3) - 1;
             const neighborX = x + offsetX;
             const neighborY = y + offsetY;
             if (
@@ -45,7 +64,7 @@ export const openCell = (game: Game, index: number) => {
                 continue;
             }
             const index = neighborY * game.width + neighborX;
-            if (game.board[index].state === CellState.Closed) {
+            if (game.board?.[index]?.state === CellState.Closed) {
                 openCell(game, index);
             }
         }
@@ -76,7 +95,6 @@ export const openCell = (game: Game, index: number) => {
     if (allMinesOpened) {
         game.state = GameState.Won;
     }
-    game.firstMove = false;
 };
 
 export const flagCell = (game: Game, index: number) => {

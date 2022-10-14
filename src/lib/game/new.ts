@@ -106,7 +106,7 @@ export const newGame = (boardSize: BoardSize) => {
     return game;
 };
 
-export const setNewMine = (game: Game) => {
+export const setNewMine = (game: Game, excludedCells: number[] = []) => {
     const availCells: number[] = [];
     for (let i = 0; i < game.width * game.height; i++) {
         if (game.board[i].type === CellType.Empty) {

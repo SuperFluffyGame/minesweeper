@@ -1,6 +1,9 @@
 ## TODO next
 
 1. make all mines show up, even covered ones, with miniboard showMines
+2. dedicated back button on game screen
+3. "If a mine was in the 3x3 of no mines, just place it elsewhere"
+4. text in cells make better.
 
 ## TODO in no particular order
 
