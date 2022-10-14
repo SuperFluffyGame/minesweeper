@@ -6,7 +6,7 @@ import {
 } from "./game/localStorage";
 import type { Game } from "./game/new";
 
-export const version = "v0.0.2";
+export const version = "v0.2.0";
 
 // function forceableStore<T>(initialValue: T) {
 //     let store = writable(initialValue);

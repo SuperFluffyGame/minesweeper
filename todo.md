@@ -1,3 +1,7 @@
+## TODO next
+
+1. make all mines show up, even covered ones, with miniboard showMines
+
 ## TODO in no particular order
 
 1. Overall Stats
