@@ -42,25 +42,19 @@
 
 <style>
     header {
-        /* display: flex; */
-        /* align-items: center; */
-        /* flex-direction: column; */
         text-align: center;
         margin: 0.5rem;
     }
     header > * {
         margin: 0;
     }
+
     .sidebar {
-        min-width: 20rem;
-        min-height: 100%;
+        height: 100%;
+        overflow-y: auto;
         background-color: var(--black2);
-        /* display: flex;
-        flex-direction: column; */
-    }
-    .sidebar > hr {
-        width: 100%;
-        margin-block: 1.25rem;
+        display: flex;
+        flex-direction: column;
     }
 
     #title {
@@ -82,24 +76,25 @@
         font-family: monospace;
         font-size: 1.25rem;
     }
+
     .wrapper {
-        min-height: 100%;
-        display: flex;
-        /* flex-direction: column; */
+        height: 100vh;
+        display: grid;
+        grid-template-columns: 20rem 1fr;
     }
 
     hr {
         border: none;
         border-block: 1px solid darkcyan;
         width: 100%;
+        margin-block-end: 1rem;
     }
 
     @media screen and (max-width: 700px) {
         .wrapper {
+            display: flex;
             flex-direction: column;
+            height: auto;
         }
-        /* .sidebar {
-            padding-inline: 1rem;
-        } */
     }
 </style>

@@ -179,6 +179,7 @@
         margin: 1rem;
         display: flex;
         flex-direction: column;
+        overflow-y: auto;
     }
 
     .savegames {
@@ -188,6 +189,7 @@
         }
         @media screen and (max-width: 700px) {
             margin-inline: 2.5rem;
+            max-height: 20rem;
         }
     }
 </style>
