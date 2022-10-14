@@ -45,7 +45,7 @@
             src={redFlagJpg}
             alt="F"
             class="flag"
-            in:fade|local={{ duration: 100 }}
+            transition:fade|local={{ duration: 100 }}
         />
     {/if}
 </div>

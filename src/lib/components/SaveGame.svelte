@@ -8,11 +8,16 @@
     import { goto } from "$app/navigation";
     import { base } from "$app/paths";
     import { loadLocalStorageGame } from "$lib/game/localStorage";
+    import { GameState, type Game } from "$lib/game/new";
+    import { onMount } from "svelte";
 
     export let slot: number;
+    let name = `Save Game ${slot}`;
 
-    $: game = loadLocalStorageGame(slot);
-    $: name = `Save Game ${slot}`;
+    let game: Game;
+    onMount(() => {
+        game = loadLocalStorageGame(slot)!;
+    });
 
     const deleteClick = () => {
         deleteGame(slot);
@@ -26,7 +31,7 @@
 <div class="wrapper">
     <div class="miniboard">
         {#if game}
-            <MiniBoard {game} />
+            <MiniBoard {game} showMines={game.state !== GameState.Playing} />
         {:else}
             Loading...
         {/if}
@@ -36,7 +41,6 @@
             {name}
         </p>
 
-        <!-- <p class="title">Save Game {slot}</p> -->
         <p class="size">{game?.width}x{game?.height} ({game?.state})</p>
     </div>
     <div class="right">

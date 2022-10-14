@@ -10,7 +10,6 @@
     import SidebarLayout from "$lib/components/SidebarLayout.svelte";
     import { base } from "$app/paths";
     import { loadGame } from "$lib/game/save";
-    import PushButton from "$lib/components/Button.svelte";
     import Button from "$lib/components/Button.svelte";
 
     const easyClick = () => {
@@ -31,7 +30,7 @@
 <SidebarLayout>
     <div slot="sidebar" class="savegames">
         {#if $used_save_slots}
-            {#each $used_save_slots as saveSlotIndex}
+            {#each $used_save_slots as saveSlotIndex (saveSlotIndex)}
                 <SaveGame slot={saveSlotIndex} />
             {/each}
             {#if $used_save_slots.length === 0}

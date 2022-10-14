@@ -2,7 +2,7 @@
     export let disabled: boolean = false;
     type Type = "old" | "push" | "normal" | "text";
     type Size = "small" | "medium" | "large";
-    export let type: Type = "push";
+    export let type: Type = "normal";
     export let size: Size = "medium";
 </script>
 
@@ -40,6 +40,22 @@
             transform: translateY(var(--push-amount));
             box-shadow: 0 calc(var(--shadow-amount) - var(--push-amount)) 2px
                 rgba(0, 0, 0, 0.5);
+        }
+        &:disabled {
+            filter: brightness(75%);
+            box-shadow: none;
+        }
+    }
+
+    .normal {
+        background-color: transparent;
+        border-color: darkcyan !important;
+
+        &:hover:not(:disabled) {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        &:active:not(:disabled) {
+            background-color: rgba(255, 255, 255, 0.1);
         }
         &:disabled {
             filter: brightness(75%);
