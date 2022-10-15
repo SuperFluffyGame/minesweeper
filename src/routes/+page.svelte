@@ -30,17 +30,21 @@
     let showSaveGameSelect = false;
 
     const setAll = (v: boolean) => {
-        used_save_slots.update(slots => {
-            slots?.forEach((_, i) => {
-                slots[i].selected = v;
-            });
-            return slots;
+        $used_save_slots?.forEach((_, i) => {
+            $used_save_slots![i].selected = v;
         });
     };
     const deleteSelected = () => {
-        $used_save_slots?.forEach(slot => {
-            if (slot.selected) deleteGame(slot.index);
-        });
+        $used_save_slots?.forEach(console.log);
+        while (true) {
+            const indexOfSelected = $used_save_slots!.findIndex(
+                slot => slot.selected
+            );
+            if (indexOfSelected === -1) {
+                break;
+            }
+            deleteGame(indexOfSelected);
+        }
     };
 </script>
 
@@ -54,17 +58,14 @@
             <Button type="text" size="verysmall" on:click={() => setAll(false)}>
                 Deselect All
             </Button>
-            <Button type="text" size="verysmall" on:click={deleteSelected}
-                >Delete Selected</Button
-            >
+            <Button type="text" size="verysmall" on:click={deleteSelected}>
+                Delete Selected
+            </Button>
         </div>
         <div slot="sidebar" class="savegames">
             {#if $used_save_slots}
-                {#each $used_save_slots as saveSlotIndex (saveSlotIndex)}
-                    <SaveGame
-                        slot={saveSlotIndex}
-                        showSelect={showSaveGameSelect}
-                    />
+                {#each $used_save_slots as saveSlot (saveSlot.index)}
+                    <SaveGame slot={saveSlot} showSelect={showSaveGameSelect} />
                 {/each}
                 {#if $used_save_slots.length === 0}
                     <p>No Saved Games</p>

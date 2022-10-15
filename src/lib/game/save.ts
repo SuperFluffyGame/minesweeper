@@ -19,12 +19,12 @@ import type { Game } from "./new";
 // };
 
 export const deleteGame = (i: number) => {
-    used_save_slots.update(v => {
-        v!.splice(
-            v!.findIndex(slot => slot.index === i),
+    used_save_slots.update(slots => {
+        slots!.splice(
+            slots!.findIndex(slot => slot.index === i),
             1
         );
-        return v;
+        return slots;
     });
     deleteLocalStorageGame(i);
 };
