@@ -1,8 +1,6 @@
 ## TODO next
 
-2. make all mines show up, even covered ones, with miniboard showMines [almost]
-3. dedicated back button on game screen
-4. text in cells make better.
+1. text in cells make better.
 
 ## TODO in no particular order
 
@@ -22,3 +20,5 @@
 2. All mines get opened when you click one
 3. "If a mine was in the 3x3 of no mines, just place it elsewhere"
 4. Multiple Select on save games, to delete multiple at a time.
+5. dedicated back button on game screen (made it a clickable title instead)
+6. make all mines show up, even covered ones, with miniboard showMines
