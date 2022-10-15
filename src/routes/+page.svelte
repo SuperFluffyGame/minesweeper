@@ -9,8 +9,9 @@
     import SaveGame from "$lib/components/SaveGame.svelte";
     import SidebarLayout from "$lib/components/SidebarLayout.svelte";
     import { base } from "$app/paths";
-    import { loadGame } from "$lib/game/save";
+    import { deleteGame, loadGame } from "$lib/game/save";
     import Button from "$lib/components/Button.svelte";
+    import Checkbox from "$lib/components/Checkbox.svelte";
 
     const easyClick = () => {
         newGameClick(8);
@@ -25,19 +26,52 @@
         loadGame(newGame(BoardSizes[boardSize]));
         goto(`${base}/game`);
     };
+
+    let showSaveGameSelect = false;
+
+    const setAll = (v: boolean) => {
+        used_save_slots.update(slots => {
+            slots?.forEach((_, i) => {
+                slots[i].selected = v;
+            });
+            return slots;
+        });
+    };
+    const deleteSelected = () => {
+        $used_save_slots?.forEach(slot => {
+            if (slot.selected) deleteGame(slot.index);
+        });
+    };
 </script>
 
 <SidebarLayout>
-    <div slot="sidebar" class="savegames">
-        {#if $used_save_slots}
-            {#each $used_save_slots as saveSlotIndex (saveSlotIndex)}
-                <SaveGame slot={saveSlotIndex} />
-            {/each}
-            {#if $used_save_slots.length === 0}
-                <p>No Saved Games</p>
+    <svelte:fragment slot="sidebar">
+        <div class="mass-select">
+            <Checkbox bind:checked={showSaveGameSelect} borderColor="white" />
+            <Button type="text" size="verysmall" on:click={() => setAll(true)}>
+                Select All
+            </Button>
+            <Button type="text" size="verysmall" on:click={() => setAll(false)}>
+                Deselect All
+            </Button>
+            <Button type="text" size="verysmall" on:click={deleteSelected}
+                >Delete Selected</Button
+            >
+        </div>
+        <div slot="sidebar" class="savegames">
+            {#if $used_save_slots}
+                {#each $used_save_slots as saveSlotIndex (saveSlotIndex)}
+                    <SaveGame
+                        slot={saveSlotIndex}
+                        showSelect={showSaveGameSelect}
+                    />
+                {/each}
+                {#if $used_save_slots.length === 0}
+                    <p>No Saved Games</p>
+                {/if}
             {/if}
-        {/if}
-    </div>
+        </div>
+    </svelte:fragment>
 
     <div class="content" slot="content">
         <section class="presets">
@@ -63,39 +97,24 @@
                         <td>Medium</td>
                         <td>12x12</td>
                         <td>20</td>
-                        <td
-                            ><Button size="small" on:click={mediumClick}
-                                >Play</Button
-                            ></td
-                        >
+                        <td>
+                            <Button size="small" on:click={mediumClick}>
+                                Play
+                            </Button>
+                        </td>
                     </tr>
                     <tr>
                         <td>Hard</td>
                         <td>16x16</td>
                         <td>40</td>
-                        <td
-                            ><Button size="small" on:click={hardClick}
-                                >Play</Button
-                            ></td
-                        >
+                        <td>
+                            <Button size="small" on:click={hardClick}>
+                                Play
+                            </Button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
-
-            <!-- <h3>Button Styles</h3>
-            <div class="test-buttons">
-                <button>Button Testing</button>
-                <button disabled>Button Testing</button>
-
-                <PushButton>Button</PushButton>
-                <PushButton disabled>Button Testing</PushButton>
-
-                <button class="test2">Button Testing</button>
-                <button disabled class="test2">Button Testing</button>
-
-                <button class="test3">Button Testing</button>
-                <button disabled class="test3">Button Testing</button>
-            </div> -->
         </section>
         <section class="custom">
             <h2>Custom</h2>
@@ -135,45 +154,6 @@
     th {
         text-align: center;
     }
-    // .test-buttons {
-    //     margin-block: 1rem;
-    //     display: grid;
-    //     // flex-direction: column;
-    //     // grid-auto-flow: column;
-    //     gap: 1rem 0.5rem;
-    //     grid-template-rows: repeat(2, 1fr);
-    // }
-
-    // .test2 {
-    //     background-color: transparent;
-    //     border-color: darkcyan !important;
-
-    //     &:hover:not(:disabled) {
-    //         background-color: rgba(255, 255, 255, 0.05);
-    //     }
-    //     &:active:not(:disabled) {
-    //         background-color: rgba(255, 255, 255, 0.1);
-    //     }
-    //     &:disabled {
-    //         filter: brightness(75%);
-    //         box-shadow: none;
-    //     }
-    // }
-    // .test3 {
-    //     background-color: transparent;
-    //     border-color: var(--black6);
-
-    //     &:hover:not(:disabled) {
-    //         background-color: rgba(255, 255, 255, 0.075);
-    //     }
-    //     &:active:not(:disabled) {
-    //         border-color: var(--black7);
-    //     }
-    //     &:disabled {
-    //         filter: brightness(75%);
-    //         box-shadow: none;
-    //     }
-    // }
 
     .content {
         margin: 1rem;
@@ -191,5 +171,12 @@
             margin-inline: 2.5rem;
             max-height: 20rem;
         }
+    }
+    .mass-select {
+        display: flex;
+        align-items: center;
+        padding-inline: 0.5rem;
+        margin-block-end: 0.5rem;
+        gap: 0.5rem;
     }
 </style>

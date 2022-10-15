@@ -2,10 +2,17 @@
     import { fade } from "svelte/transition";
     import checkBoxSvg from "$lib/assets/check.svg";
     export let checked: boolean;
+    export let borderColor: string = "black";
+    export let size: number = 1.5;
 </script>
 
-<div class="wrapper">
-    <input type="checkbox" {...$$props} bind:checked />
+<div class="wrapper" style:width="{size}rem" style:height="{size}rem">
+    <input
+        type="checkbox"
+        {...$$props}
+        bind:checked
+        style:border-color={borderColor}
+    />
     {#if checked}
         <img src={checkBoxSvg} alt="" transition:fade={{ duration: 50 }} />
     {/if}
@@ -13,17 +20,21 @@
 
 <style>
     .wrapper {
+        display: inline;
         position: relative;
         display: flex;
+        aspect-ratio: 1;
+        user-select: none;
     }
     input[type="checkbox"] {
         appearance: none;
         margin: 0;
-        width: 1.5rem;
+        width: 100%;
         aspect-ratio: 1;
-        border: 0.1rem solid var(--black2);
-        border-radius: calc(var(--radius) / 2);
         transition: background-color 50ms ease-in-out;
+        cursor: pointer;
+        border: 0.1rem solid;
+        border-radius: calc(var(--radius) / 2);
     }
     input[type="checkbox"]:checked {
         background-color: var(--blue6);

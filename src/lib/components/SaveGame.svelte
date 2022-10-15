@@ -1,29 +1,43 @@
+<!-- <script lang="ts" context="module">
+    let selectedSaveGames = new Set<number>();
+    const updateSelection = (selected: boolean, slot: number) => {
+        if (selected) {
+            selectedSaveGames.add(slot);
+        } else {
+            selectedSaveGames.delete(slot);
+        }
+    };
+</script> -->
 <script lang="ts">
     import deleteSvg from "$lib/assets/delete.svg";
     import playSvg from "$lib/assets/play.svg";
 
     import { deleteGame } from "$lib/game/save";
     import MiniBoard from "./MiniBoard.svelte";
-    import { currentGameIndex } from "$lib/stores";
+    import { currentGameIndex, type SaveSlot } from "$lib/stores";
     import { goto } from "$app/navigation";
     import { base } from "$app/paths";
     import { loadLocalStorageGame } from "$lib/game/localStorage";
     import { GameState, type Game } from "$lib/game/new";
     import { onMount } from "svelte";
+    import Checkbox from "./Checkbox.svelte";
 
-    export let slot: number;
-    let name = `Save Game ${slot}`;
+    export let showSelect: boolean = false;
+    // $: updateSelection(selected, slot);
+
+    export let slot: SaveSlot;
+    let name = `Save Game ${slot.index}`;
 
     let game: Game;
     onMount(() => {
-        game = loadLocalStorageGame(slot)!;
+        game = loadLocalStorageGame(slot.index)!;
     });
 
     const deleteClick = () => {
-        deleteGame(slot);
+        deleteGame(slot.index);
     };
     const playClick = () => {
-        currentGameIndex.set(slot);
+        currentGameIndex.set(slot.index);
         goto(`${base}/game`);
     };
 </script>
@@ -62,6 +76,13 @@
                 draggable="false"
             />
         </button>
+        {#if showSelect}
+            <Checkbox
+                bind:checked={slot.selected}
+                borderColor="white"
+                size={1.25}
+            />
+        {/if}
     </div>
 </div>
 
@@ -113,6 +134,8 @@
         flex-grow: 1;
         display: flex;
         justify-content: right;
+        align-items: center;
+        gap: 0.25rem;
     }
     .info {
         display: flex;

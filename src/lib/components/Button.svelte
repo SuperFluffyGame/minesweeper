@@ -1,14 +1,14 @@
 <script lang="ts">
     export let disabled: boolean = false;
     type Type = "old" | "push" | "normal" | "text";
-    type Size = "small" | "medium" | "large";
+    type Size = "verysmall" | "small" | "medium" | "large";
     export let type: Type = "normal";
     export let size: Size = "medium";
 </script>
 
-<button on:click {disabled} class={["unstyled", type, size].join(" ")}
-    ><slot /></button
->
+<button on:click {disabled} class={["unstyled", type, size].join(" ")}>
+    <slot />
+</button>
 
 <style lang="less">
     button {
@@ -23,6 +23,10 @@
     .small {
         font-size: 1rem;
         padding: 0.5rem 1rem;
+    }
+    .verysmall {
+        font-size: 0.95rem;
+        padding: 0.4rem 0.8rem;
     }
     .push {
         --shadow-amount: 5px;
@@ -49,7 +53,7 @@
 
     .normal {
         background-color: transparent;
-        border-color: darkcyan !important;
+        border-color: darkcyan;
 
         &:hover:not(:disabled) {
             background-color: rgba(255, 255, 255, 0.05);
@@ -59,7 +63,20 @@
         }
         &:disabled {
             filter: brightness(75%);
-            box-shadow: none;
+        }
+    }
+
+    .text {
+        border-color: transparent;
+        background-color: transparent;
+        &:hover:not(:disabled) {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        &:active:not(:disabled) {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        &:disabled {
+            filter: brightness(75%);
         }
     }
 </style>

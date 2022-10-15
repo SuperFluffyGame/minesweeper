@@ -34,15 +34,29 @@ currentGameIndex.subscribe(i => {
     }
 });
 
-export let used_save_slots: Writable<number[] | null> = writable(null);
+export interface SaveSlot {
+    index: number;
+    selected: boolean;
+}
+
+export let used_save_slots: Writable<SaveSlot[] | null> = writable(null);
 used_save_slots.subscribe(v => {
     if (typeof window !== "undefined" && v != null) {
-        localStorage[MINESWEEPER_SAVE_SLOTS] = JSON.stringify(v);
+        localStorage[MINESWEEPER_SAVE_SLOTS] = JSON.stringify(
+            v.map(slot => slot.index)
+        );
     }
 });
 
 if (typeof window !== "undefined") {
     used_save_slots.set(
-        JSON.parse(localStorage[MINESWEEPER_SAVE_SLOTS] ?? "[]")
+        JSON.parse(localStorage[MINESWEEPER_SAVE_SLOTS] ?? "[]").map(
+            (index: number) => {
+                return {
+                    index,
+                    selected: false,
+                } as SaveSlot;
+            }
+        )
     );
 }
