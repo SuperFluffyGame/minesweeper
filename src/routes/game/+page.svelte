@@ -54,7 +54,11 @@
                 Back
             </Button>
         </div> -->
-        <Board />
+        {#if $game}
+            <Board game={$game} />
+        {:else}
+            <p>Loading...</p>
+        {/if}
 
         <dialog class="aftergame-modal" bind:this={modalEl}>
             <div class="modal-main">

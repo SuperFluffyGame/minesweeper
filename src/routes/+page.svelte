@@ -38,7 +38,6 @@
     const deleteSelected = () => {
         if (!showSaveGameSelect) return;
 
-        $used_save_slots?.forEach(console.log);
         while (true) {
             const indexOfSelected = $used_save_slots!.findIndex(
                 slot => slot.selected

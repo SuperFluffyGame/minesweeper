@@ -1,7 +1,5 @@
 ## TODO next
 
-1. text in cells make better.
-
 ## TODO in no particular order
 
 1. Themes (light theme first)
@@ -22,3 +20,4 @@
 4. Multiple Select on save games, to delete multiple at a time.
 5. dedicated back button on game screen (made it a clickable title instead)
 6. make all mines show up, even covered ones, with miniboard showMines
+7. text in cells make better.

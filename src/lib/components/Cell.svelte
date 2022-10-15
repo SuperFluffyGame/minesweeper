@@ -7,6 +7,7 @@
     import { openCell, flagCell } from "../game/input";
     import { type Cell, CellState, CellType } from "../game/new";
     import { game } from "../stores";
+    import { onMount } from "svelte";
 
     export let cell: Cell;
     export let index: number;
@@ -25,12 +26,15 @@
             return g;
         });
     };
+
+    export let fontSize: number;
 </script>
 
 <div
     class="wrapper {cell.state}"
     on:click={clickCell}
     on:contextmenu|preventDefault={rightClickCell}
+    style:font-size="{fontSize}px"
 >
     {#if cell.type === CellType.Mine}
         <img alt="M" src={redMineJpg} />
@@ -65,7 +69,7 @@
         font-family: monospace;
         overflow: hidden;
 
-        font-size: 2rem;
+        /* font-size: 2rem; */
     }
 
     .cover {

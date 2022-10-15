@@ -1,9 +1,4 @@
 import { randomInt } from "$lib/utils";
-import { currentGameIndex, used_save_slots } from "$lib/stores";
-import {
-    MINESWEEPER_SAVE_SLOTS,
-    saveLocalStorageGame,
-} from "$lib/game/localStorage";
 
 export const enum CellState {
     Closed = "closed",
@@ -109,7 +104,10 @@ export const newGame = (boardSize: BoardSize) => {
 export const setNewMine = (game: Game, excludedCells: number[] = []) => {
     const availCells: number[] = [];
     for (let i = 0; i < game.width * game.height; i++) {
-        if (game.board[i].type === CellType.Empty) {
+        if (
+            game.board[i].type === CellType.Empty &&
+            excludedCells.indexOf(i) === -1
+        ) {
             availCells.push(i);
         }
     }

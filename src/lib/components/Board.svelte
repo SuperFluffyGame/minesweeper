@@ -1,21 +1,28 @@
 <script lang="ts">
     import Cell from "$lib/components/Cell.svelte";
-    import { game } from "$lib/stores";
+    import { onMount } from "svelte";
+    import type { Game } from "$lib/game/new";
+
+    export let game: Game;
+    let boardElem: HTMLDivElement;
+    let fontSize = 0;
+    onMount(() => {
+        new ResizeObserver(() => {
+            fontSize = (boardElem.clientWidth / game.width) * 0.8;
+        }).observe(boardElem);
+    });
 </script>
 
 <div
     class="board"
     style={`grid-template-columns: repeat(${
-        $game?.width ?? 2
-    }, 1fr); grid-template-rows: repeat(${$game?.height ?? 2}, 1fr);`}
+        game.width ?? 2
+    }, 1fr); grid-template-rows: repeat(${game.height ?? 2}, 1fr);`}
+    bind:this={boardElem}
 >
-    {#if $game}
-        {#each $game.board as cell, i}
-            <Cell {cell} index={i} />
-        {/each}
-    {:else}
-        Loading...
-    {/if}
+    {#each game.board as cell, i}
+        <Cell {cell} index={i} {fontSize} />
+    {/each}
 </div>
 
 <style>

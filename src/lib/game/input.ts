@@ -25,21 +25,22 @@ export const openCell = (game: Game, index: number) => {
     // if its first move and you clicked a mine, move it somewhere else
     if (game.firstMove) {
         // make it exclude the 3x3 cells around the clicked area, so they don't get set to a mine.
-        const excludedCells = [];
+        const excludedCells: number[] = [];
         for (let i = 0; i < 9; i++) {
-            console.log(cell.type === CellType.Mine);
             const offsetX = (i % 3) - 1;
             const offsetY = Math.floor(i / 3) - 1;
-            excludedCells.push((y + offsetY) * game.width + (x + offsetX));
+            const neighborIndex = (y + offsetY) * game.width + (x + offsetX);
+            excludedCells.push(neighborIndex);
         }
         // for each mine in the 3x3 area, reset it and put a new mine somewhere else
         for (let i = 0; i < 9; i++) {
             const offsetX = (i % 3) - 1;
             const offsetY = Math.floor(i / 3) - 1;
-            const index = (y + offsetY) * game.width + (x + offsetX);
-            const surroundingCell = game.board[index];
-            if (surroundingCell?.type === CellType.Mine) {
-                surroundingCell.type = CellType.Empty;
+            const neighborIndex = (y + offsetY) * game.width + (x + offsetX);
+            const neighborCell = game.board[neighborIndex];
+
+            if (neighborCell?.type === CellType.Mine) {
+                neighborCell.type = CellType.Empty;
                 setNewMine(game, excludedCells);
             }
         }
