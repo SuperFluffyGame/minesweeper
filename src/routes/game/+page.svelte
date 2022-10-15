@@ -1,5 +1,6 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
+    import BackButtonSvg from "$lib/assets/back_arrow.svg";
     import {
         BoardSizes,
         GameState,
@@ -14,6 +15,7 @@
     import MiniBoard from "$lib/components/MiniBoard.svelte";
     import Checkbox from "$lib/components/Checkbox.svelte";
     import SidebarLayout from "$lib/components/SidebarLayout.svelte";
+    import Button from "$lib/components/Button.svelte";
     let modalEl: HTMLDialogElement;
 
     game.subscribe(g => {
@@ -47,7 +49,13 @@
 
 <SidebarLayout>
     <div class="wrapper" slot="content">
+        <!-- <div class="back-button">
+            <Button type="icon" iconSrc={BackButtonSvg} size="small">
+                Back
+            </Button>
+        </div> -->
         <Board />
+
         <dialog class="aftergame-modal" bind:this={modalEl}>
             <div class="modal-main">
                 {#if $game?.state === GameState.Won}
@@ -90,12 +98,13 @@
 <!-- <p>{JSON.stringify(data)}</p> -->
 <style lang="less">
     .wrapper {
+        position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
 
-        padding: 1rem;
+        margin: 1rem;
     }
 
     .aftergame-modal:modal {
@@ -133,5 +142,10 @@
     }
     .keep-game-wrapper > p {
         margin: 0;
+    }
+    .back-button {
+        // position: absolute;
+        // left: 0;
+        // top: 0;
     }
 </style>

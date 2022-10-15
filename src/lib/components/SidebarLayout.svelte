@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { goto } from "$app/navigation";
+    import { base } from "$app/paths";
     import { version } from "$lib/stores";
     // import { onMount } from "svelte";
     // import { loadFull } from "tsparticles";
@@ -17,11 +19,14 @@
     // let particlesInit = async (engine: any) => {
     //     await loadFirePreset(engine);
     // };
+    const titleClick = () => {
+        goto(`${base}`);
+    };
 </script>
 
 <main class="wrapper">
     <aside class="sidebar">
-        <header>
+        <header on:click={titleClick}>
             <h1 id="title">MineSweeper</h1>
             <h3 id="creator">By SFG and TMH</h3>
         </header>
@@ -44,6 +49,7 @@
     header {
         text-align: center;
         margin: 0.5rem;
+        cursor: pointer;
     }
     header > * {
         margin: 0;

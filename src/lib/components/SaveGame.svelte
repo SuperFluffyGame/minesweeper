@@ -21,6 +21,7 @@
     import { GameState, type Game } from "$lib/game/new";
     import { onMount } from "svelte";
     import Checkbox from "./Checkbox.svelte";
+    import Button from "./Button.svelte";
 
     export let showSelect: boolean = false;
     // $: updateSelection(selected, slot);
@@ -58,24 +59,21 @@
         <p class="size">{game?.width}x{game?.height} ({game?.state})</p>
     </div>
     <div class="right">
-        <button class="delete unstyled" on:click={deleteClick}>
-            <img
-                alt="delete"
-                src={deleteSvg}
-                class="delete"
-                style:stroke="whitesmoke"
-                draggable="false"
-            />
-        </button>
-        <button class="play unstyled" on:click={playClick}>
-            <img
-                alt="play"
-                src={playSvg}
-                class="delete"
-                style:stroke="whitesmoke"
-                draggable="false"
-            />
-        </button>
+        <Button
+            type="icon"
+            iconSrc={deleteSvg}
+            size="large"
+            padding={0.05}
+            on:click={deleteClick}
+        />
+
+        <Button
+            type="icon"
+            iconSrc={playSvg}
+            size="large"
+            padding={0.05}
+            on:click={playClick}
+        />
         {#if showSelect}
             <Checkbox
                 bind:checked={slot.selected}
@@ -86,7 +84,7 @@
     </div>
 </div>
 
-<style>
+<style lang="less">
     p {
         margin: 0;
     }
@@ -106,29 +104,6 @@
         margin-right: 0.5rem;
     }
 
-    button {
-        background-color: transparent;
-        border: none;
-        border-radius: var(--radius);
-        width: 2rem;
-        aspect-ratio: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background-color 75ms linear;
-
-        padding: 0;
-    }
-    button:hover {
-        background-color: rgba(255, 255, 255, 0.05);
-    }
-    button:active {
-        background-color: rgba(255, 255, 255, 0.1);
-    }
-    img {
-        width: 100%;
-    }
-
     .right {
         margin-inline: 0.5rem;
         flex-grow: 1;
@@ -136,21 +111,13 @@
         justify-content: right;
         align-items: center;
         gap: 0.25rem;
+
+        &:nth-child(3) {
+            margin-inline-start: 0.25rem;
+        }
     }
     .info {
         display: flex;
         flex-direction: column;
     }
-
-    /* p input.name {
-        color: whitesmoke;
-        border: 0.1rem solid var(--black4);
-        border-radius: calc(var(--radius) / 2);
-        background-color: transparent;
-        outline: none;
-        font-size: inherit;
-        --padding: 0.25rem;
-        width: calc(100% - var(--padding) * 2);
-        padding: var(--padding);
-    } */
 </style>

@@ -1,12 +1,22 @@
 <script lang="ts">
     export let disabled: boolean = false;
-    type Type = "old" | "push" | "normal" | "text";
-    type Size = "verysmall" | "small" | "medium" | "large";
+    type Type = "old" | "push" | "normal" | "text" | "icon";
+    type Size = "verysmall" | "small" | "medium" | "large" | "verylarge";
     export let type: Type = "normal";
     export let size: Size = "medium";
+    export let iconSrc: string = "";
+    export let padding: number | null = null;
 </script>
 
-<button on:click {disabled} class={["unstyled", type, size].join(" ")}>
+<button
+    on:click
+    {disabled}
+    class={["unstyled", type, size].join(" ")}
+    style:padding="{padding}rem"
+>
+    {#if type === "icon"}
+        <img src={iconSrc} alt="" draggable="false" />
+    {/if}
     <slot />
 </button>
 
@@ -19,14 +29,44 @@
         border-radius: var(--radius);
         transition: background-color 75ms linear, border-color 75ms linear;
         cursor: pointer;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
     .small {
         font-size: 1rem;
         padding: 0.5rem 1rem;
+        img {
+            height: 1.25rem;
+        }
     }
     .verysmall {
         font-size: 0.95rem;
-        padding: 0.4rem 0.8rem;
+        padding: 0.4rem 0.6rem;
+        img {
+            height: 1.05rem;
+        }
+    }
+    .medium {
+        font-size: 1.2rem;
+        padding: 0.75rem 1rem;
+        img {
+            height: 1.5rem;
+        }
+    }
+    .large {
+        font-size: 1.5rem;
+        padding: 0.9rem 1.4rem;
+        img {
+            height: 1.8rem;
+        }
+    }
+    .verylarge {
+        font-size: 1.8rem;
+        padding: 1.25rem 1.75rem;
+        img {
+            height: 2.25rem;
+        }
     }
     .push {
         --shadow-amount: 5px;
@@ -78,5 +118,14 @@
         &:disabled {
             filter: brightness(75%);
         }
+    }
+
+    .icon {
+        .text();
+    }
+    img {
+        width: 100%;
+        aspect-ratio: 1;
+        user-select: none;
     }
 </style>

@@ -30,11 +30,14 @@
     let showSaveGameSelect = false;
 
     const setAll = (v: boolean) => {
+        if (!showSaveGameSelect) return;
         $used_save_slots?.forEach((_, i) => {
             $used_save_slots![i].selected = v;
         });
     };
     const deleteSelected = () => {
+        if (!showSaveGameSelect) return;
+
         $used_save_slots?.forEach(console.log);
         while (true) {
             const indexOfSelected = $used_save_slots!.findIndex(
@@ -174,7 +177,8 @@
         }
     }
     .mass-select {
-        display: flex;
+        display: grid;
+        grid-template-columns: auto 1fr 1fr 1fr;
         align-items: center;
         padding-inline: 0.5rem;
         margin-block-end: 0.5rem;

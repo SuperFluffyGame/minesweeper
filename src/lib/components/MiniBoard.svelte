@@ -4,23 +4,24 @@
     import { onMount } from "svelte";
 
     export let showMines: boolean = false;
-
     export let game: Game;
+
+    const fillStyles = {
+        mine: "red",
+        closed: "navy",
+        empty: "blue",
+        flag: "gold",
+        clickedMine: "violet",
+    };
 
     let canvas: HTMLCanvasElement;
     let context: CanvasRenderingContext2D;
     onMount(() => {
         context = canvas.getContext("2d")!;
         context.imageSmoothingEnabled = false;
-        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.clearRect(0, 0, canvas.width, canvas.height);
     });
-    const fillStyles = {
-        mine: "red",
-        closed: "navy",
-        empty: "blue",
-        flag: "gold",
-        clickedMine: "magenta",
-    };
+
     $: if (context) {
         const cellWidth = canvas.width / game.width;
         const cellHeight = canvas.height / game.height;
@@ -28,10 +29,10 @@
             const cell = game.board[i];
             const x = i % game.width;
             const y = Math.floor(i / game.height);
-            if (cell.state === CellState.Closed) {
-                context.fillStyle = fillStyles.closed;
-            } else if (i === game.lostToCell && showMines) {
+            if (i === game.lostToCell && showMines) {
                 context.fillStyle = fillStyles.clickedMine;
+            } else if (cell.state === CellState.Closed) {
+                context.fillStyle = fillStyles.closed;
             } else if (cell.type === CellType.Mine && showMines) {
                 context.fillStyle = fillStyles.mine;
             } else if (cell.state === CellState.Flagged) {
