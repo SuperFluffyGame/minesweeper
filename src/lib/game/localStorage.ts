@@ -16,3 +16,5 @@ export const saveLocalStorageGame = (i: number, game: Game) => {
 export const deleteLocalStorageGame = (i: number) => {
     localStorage.removeItem(MINESWEEPER_SAVE_GAME + `_${i}`);
 };
+
+export const MINESWEEPER_OVERALL_STATS = "MINESWEEPER_OVERALL_STATS";

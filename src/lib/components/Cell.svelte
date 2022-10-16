@@ -7,7 +7,6 @@
     import { openCell, flagCell } from "../game/input";
     import { type Cell, CellState, CellType } from "../game/new";
     import { game } from "../stores";
-    import { onMount } from "svelte";
 
     export let cell: Cell;
     export let index: number;
@@ -29,6 +28,10 @@
 
     export let fontSize: number;
 </script>
+
+<!-- <svelte:head>
+    <link rel="preload" href={redFlagJpg} type="image/jpeg" />
+</svelte:head> -->
 
 <div
     class="wrapper {cell.state}"
