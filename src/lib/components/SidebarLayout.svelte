@@ -1,7 +1,7 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import { base } from "$app/paths";
-    import { version } from "$lib/stores";
+    import { version } from "$lib/utils";
     // import { onMount } from "svelte";
     // import { loadFull } from "tsparticles";
     // import { loadFirePreset } from "tsparticles-preset-fire";

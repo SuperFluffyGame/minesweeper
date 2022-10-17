@@ -6,9 +6,8 @@
 
 1. Themes (light theme first)
 2. Overall Stats
-3. In-game stats (number flags, mines, etc)
-4. Alternate flag system that just right clicking?
-5. Custom board sizes (I made it possible, just don't have a ui for it)
+3. Alternate flag system that just right clicking?
+4. Custom board sizes (I made it possible, just don't have a ui for it)
 
 ### Partially Done
 
@@ -26,3 +25,4 @@
 5. dedicated back button on game screen (made it a clickable title instead)
 6. make all mines show up, even covered ones, with miniboard showMines
 7. text in cells make better.
+8. In-game stats (number flags, mines, etc)

@@ -1,3 +1,5 @@
+export const version = "v0.3.0";
+
 // FROM MDN
 export function randomInt(min: number, max: number) {
     min = Math.ceil(min);
