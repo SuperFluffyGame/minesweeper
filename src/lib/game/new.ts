@@ -22,6 +22,10 @@ export const enum GameState {
     Lost = "lost",
 }
 
+export interface GameStats {
+    timePlayed: number;
+}
+
 export interface Game {
     board: Cell[];
     width: number;
@@ -31,6 +35,7 @@ export interface Game {
     state: GameState;
     lostToCell: number;
     title: string;
+    stats: GameStats;
 }
 
 export type PossibleBoardSizes = 8 | 12 | 16;
@@ -74,6 +79,7 @@ export const newGame = (boardSize: BoardSize) => {
         state: GameState.Playing,
         lostToCell: -1,
         title: "Save Game ",
+        stats: { timePlayed: 0 },
     };
 
     for (let i = 0; i < boardSize.numMines; i++) {
@@ -81,23 +87,6 @@ export const newGame = (boardSize: BoardSize) => {
     }
     recalcMineNeighbors(game);
 
-    // let availSlots: number[] = localStorage[MINESWEEPER_SAVE_SLOTS];
-    // let lowestSlot: number;
-    // for (let i = 0; ; i++) {
-    //     if (availSlots.indexOf(i) === -1) {
-    //         lowestSlot = i;
-    //         break;
-    //     }
-    // }
-    // game.title += lowestSlot;
-    // saveLocalStorageGame(lowestSlot, game);
-    // currentGameIndex.set(-1);
-    // currentGameIndex.set(lowestSlot);
-    // used_save_slots.update(v => {
-    //     v?.push?.(lowestSlot);
-    //     return v;
-    // });
-    // gameStore.set(game);
     return game;
 };
 

@@ -38,8 +38,10 @@
         deleteGame(slot.index);
     };
     const playClick = () => {
+        currentGameIndex.set(-1);
+
         currentGameIndex.set(slot.index);
-        goto(`${base}/game`);
+        goto(`${base}/play`);
     };
 </script>
 
@@ -63,7 +65,6 @@
             type="icon"
             iconSrc={deleteSvg}
             size="large"
-            padding={0.05}
             on:click={deleteClick}
         />
 
@@ -71,7 +72,6 @@
             type="icon"
             iconSrc={playSvg}
             size="large"
-            padding={0.05}
             on:click={playClick}
         />
         {#if showSelect}

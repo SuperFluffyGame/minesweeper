@@ -20,7 +20,7 @@ export const version = "v0.2.0";
 // }
 
 export let game: Writable<Game | null> = writable(null);
-game.subscribe(g => {
+game.subscribe((g) => {
     if (typeof window !== "undefined" && g != null) {
         let i: number = get(currentGameIndex);
         saveLocalStorageGame(i!, g);
@@ -28,7 +28,7 @@ game.subscribe(g => {
 });
 
 export let currentGameIndex = writable(-1);
-currentGameIndex.subscribe(i => {
+currentGameIndex.subscribe((i) => {
     if (typeof window !== "undefined" && i != null && i != -1) {
         game.set(loadLocalStorageGame(i));
     }
@@ -40,10 +40,10 @@ export interface SaveSlot {
 }
 
 export let used_save_slots: Writable<SaveSlot[] | null> = writable(null);
-used_save_slots.subscribe(v => {
+used_save_slots.subscribe((v) => {
     if (typeof window !== "undefined" && v != null) {
         localStorage[MINESWEEPER_SAVE_SLOTS] = JSON.stringify(
-            v.map(slot => slot.index)
+            v.map((slot) => slot.index)
         );
     }
 });

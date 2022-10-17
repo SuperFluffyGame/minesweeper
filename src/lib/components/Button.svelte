@@ -12,7 +12,7 @@
     on:click
     {disabled}
     class={["unstyled", type, size].join(" ")}
-    style:padding="{padding}rem"
+    style:padding="{padding ?? type === "icon" ? 0 : null}rem"
 >
     {#if type === "icon"}
         <img src={iconSrc} alt="" draggable="false" />
@@ -32,6 +32,7 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+        justify-content: center;
     }
     .small {
         font-size: 1rem;

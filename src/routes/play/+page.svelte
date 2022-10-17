@@ -1,8 +1,9 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import BackButtonSvg from "$lib/assets/back_arrow.svg";
     import {
         BoardSizes,
+        CellState,
+        CellType,
         GameState,
         newGame,
         type PossibleBoardSizes,
@@ -10,34 +11,48 @@
     import Board from "$lib/components/Board.svelte";
     import { currentGameIndex, game } from "$lib/stores";
     import { deleteGame, loadGame } from "$lib/game/save";
-    import { onMount } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import { base } from "$app/paths";
     import MiniBoard from "$lib/components/MiniBoard.svelte";
     import Checkbox from "$lib/components/Checkbox.svelte";
     import SidebarLayout from "$lib/components/SidebarLayout.svelte";
-    import Button from "$lib/components/Button.svelte";
+    import { timeString } from "$lib/utils";
     let modalEl: HTMLDialogElement;
 
-    game.subscribe(g => {
+    game.subscribe((g) => {
         if (g?.state !== GameState.Playing) {
-            modalEl?.showModal?.();
+            try {
+                modalEl?.showModal?.();
+            } catch {}
         }
     });
 
+    let timerInterval: NodeJS.Timer;
     onMount(() => {
         if ($game === null) {
             goto(`${base}`);
         } else if ($game.state !== GameState.Playing) {
             modalEl.showModal();
         }
+
+        timerInterval = setInterval(() => {
+            $game!.stats.timePlayed += 1;
+        }, 1000);
+    });
+    onDestroy(() => {
+        clearInterval(timerInterval);
     });
 
     let keepGame: boolean = true;
 
     const newGameModalClick = () => {
+        clearInterval(timerInterval);
         if (!keepGame) deleteGame($currentGameIndex);
         loadGame(newGame(BoardSizes[$game!.width as PossibleBoardSizes]));
         modalEl.close();
+        timerInterval = setInterval(() => {
+            $game!.stats.timePlayed += 1;
+        }, 1000);
     };
 
     const gotoMenuClick = () => {
@@ -45,15 +60,22 @@
         goto(`${base}`);
         modalEl.close();
     };
+
+    $: numFlags = $game?.board.reduce((numFlags, cell) => {
+        return numFlags + (cell.state === CellState.Flagged ? 1 : 0);
+    }, 0)!;
 </script>
 
 <SidebarLayout>
+    <div class="sidebar" slot="sidebar">
+        <section class="stats">
+            <p style:color={numFlags >= ($game?.numMines ?? 0) ? "red" : null}>
+                {numFlags} / {$game?.numMines}
+            </p>
+            <p>{timeString($game?.stats.timePlayed ?? 0)}</p>
+        </section>
+    </div>
     <div class="wrapper" slot="content">
-        <!-- <div class="back-button">
-            <Button type="icon" iconSrc={BackButtonSvg} size="small">
-                Back
-            </Button>
-        </div> -->
         {#if $game}
             <Board game={$game} />
         {:else}
@@ -147,9 +169,10 @@
     .keep-game-wrapper > p {
         margin: 0;
     }
-    .back-button {
-        // position: absolute;
-        // left: 0;
-        // top: 0;
+
+    .stats {
+        margin: 1rem;
+        text-align: center;
+        font-size: 1.25rem;
     }
 </style>

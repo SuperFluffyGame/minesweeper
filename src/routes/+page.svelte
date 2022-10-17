@@ -24,7 +24,7 @@
     };
     const newGameClick = (boardSize: PossibleBoardSizes) => {
         loadGame(newGame(BoardSizes[boardSize]));
-        goto(`${base}/game`);
+        goto(`${base}/play`);
     };
 
     let showSaveGameSelect = false;
@@ -40,12 +40,12 @@
 
         while (true) {
             const indexOfSelected = $used_save_slots!.findIndex(
-                slot => slot.selected
+                (slot) => slot.selected
             );
             if (indexOfSelected === -1) {
                 break;
             }
-            deleteGame(indexOfSelected);
+            deleteGame($used_save_slots![indexOfSelected].index);
         }
     };
 </script>
@@ -182,5 +182,8 @@
         padding-inline: 0.5rem;
         margin-block-end: 0.5rem;
         gap: 0.5rem;
+        @media screen and (max-width: 700px) {
+            margin-inline: 2.5rem;
+        }
     }
 </style>
