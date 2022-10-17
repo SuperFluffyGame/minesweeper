@@ -22,6 +22,7 @@
     import { onMount } from "svelte";
     import Checkbox from "./Checkbox.svelte";
     import Button from "./Button.svelte";
+    import { timeString } from "$lib/utils";
 
     export let showSelect: boolean = false;
     // $: updateSelection(selected, slot);
@@ -43,6 +44,10 @@
         currentGameIndex.set(slot.index);
         goto(`${base}/play`);
     };
+
+    const timeformatter = new Intl.DateTimeFormat("en-us", {
+        second: "2-digit",
+    });
 </script>
 
 <div class="wrapper">
@@ -58,7 +63,11 @@
             {name}
         </p>
 
-        <p class="size">{game?.width}x{game?.height} ({game?.state})</p>
+        <p class="size">
+            {game?.width}x{game?.height} ({game?.state}, {timeString(
+                game?.stats.timePlayed
+            )})
+        </p>
     </div>
     <div class="right">
         <Button

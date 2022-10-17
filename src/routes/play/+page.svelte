@@ -69,7 +69,13 @@
 <SidebarLayout>
     <div class="sidebar" slot="sidebar">
         <section class="stats">
-            <p style:color={numFlags >= ($game?.numMines ?? 0) ? "red" : null}>
+            <p
+                style:color={numFlags >= ($game?.numMines ?? 0)
+                    ? $game?.state === GameState.Won
+                        ? "green"
+                        : "red"
+                    : null}
+            >
                 {numFlags} / {$game?.numMines}
             </p>
             <p>{timeString($game?.stats.timePlayed ?? 0)}</p>
