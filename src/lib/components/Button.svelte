@@ -125,7 +125,8 @@
         .text();
     }
     img {
-        width: 100%;
+        min-width: 100%;
+
         aspect-ratio: 1;
         user-select: none;
     }

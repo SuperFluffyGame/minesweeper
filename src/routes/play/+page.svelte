@@ -18,26 +18,27 @@
     import SidebarLayout from "$lib/components/SidebarLayout.svelte";
     import { timeString } from "$lib/utils";
     let modalEl: HTMLDialogElement;
+    let timerInterval: NodeJS.Timer | number;
 
-    game.subscribe((g) => {
+    game.subscribe(g => {
         if (g?.state !== GameState.Playing) {
+            clearInterval(timerInterval);
             try {
                 modalEl?.showModal?.();
             } catch {}
         }
     });
 
-    let timerInterval: NodeJS.Timer;
     onMount(() => {
         if ($game === null) {
             goto(`${base}`);
         } else if ($game.state !== GameState.Playing) {
             modalEl.showModal();
         }
-
-        timerInterval = setInterval(() => {
-            $game!.stats.timePlayed += 1;
-        }, 1000);
+        if ($game?.state === GameState.Playing)
+            timerInterval = setInterval(() => {
+                $game!.stats.timePlayed += 1;
+            }, 1000);
     });
     onDestroy(() => {
         clearInterval(timerInterval);

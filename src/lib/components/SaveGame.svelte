@@ -44,10 +44,6 @@
         currentGameIndex.set(slot.index);
         goto(`${base}/play`);
     };
-
-    const timeformatter = new Intl.DateTimeFormat("en-us", {
-        second: "2-digit",
-    });
 </script>
 
 <div class="wrapper">
@@ -64,30 +60,28 @@
         </p>
 
         <p class="size">
-            {game?.width}x{game?.height} ({game?.state}, {timeString(
-                game?.stats.timePlayed
-            )})
+            {game?.width}x{game?.height} ({timeString(game?.stats.timePlayed)}, {game?.state})
         </p>
     </div>
     <div class="right">
         <Button
             type="icon"
             iconSrc={deleteSvg}
-            size="large"
+            size="medium"
             on:click={deleteClick}
         />
 
         <Button
             type="icon"
             iconSrc={playSvg}
-            size="large"
+            size="medium"
             on:click={playClick}
         />
         {#if showSelect}
             <Checkbox
                 bind:checked={slot.selected}
                 borderColor="white"
-                size={1.25}
+                size={1.15}
             />
         {/if}
     </div>
@@ -97,14 +91,19 @@
     p {
         margin: 0;
     }
+    .info {
+        min-width: 0;
+    }
     .size {
         color: var(--black9);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     .wrapper {
         margin: 0.5rem;
         display: flex;
-        align-items: center;
-
+        // align-items: center;
         height: 3rem;
     }
     .miniboard {
@@ -115,18 +114,10 @@
 
     .right {
         margin-inline: 0.5rem;
-        flex-grow: 1;
         display: flex;
+        flex-grow: 1;
         justify-content: right;
         align-items: center;
-        gap: 0.25rem;
-
-        &:nth-child(3) {
-            margin-inline-start: 0.25rem;
-        }
-    }
-    .info {
-        display: flex;
-        flex-direction: column;
+        gap: 0.2rem;
     }
 </style>

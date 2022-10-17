@@ -14,13 +14,16 @@
         style:border-color={borderColor}
     />
     {#if checked}
-        <img src={checkBoxSvg} alt="" transition:fade={{ duration: 50 }} />
+        <img
+            src={checkBoxSvg}
+            alt=""
+            transition:fade|local={{ duration: 50 }}
+        />
     {/if}
 </div>
 
 <style>
     .wrapper {
-        display: inline;
         position: relative;
         display: flex;
         aspect-ratio: 1;
