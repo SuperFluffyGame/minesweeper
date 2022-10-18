@@ -1,6 +1,5 @@
 <script lang="ts">
     import Cell from "$lib/components/Cell.svelte";
-    import { onMount } from "svelte";
     import type { Game } from "$lib/game/new";
 
     export let game: Game;

@@ -12,20 +12,20 @@
     import deleteSvg from "$lib/assets/delete.svg";
     import playSvg from "$lib/assets/play.svg";
 
-    import { deleteGame } from "$lib/game/save";
+    import Checkbox from "./Checkbox.svelte";
+    import Button from "./Button.svelte";
     import MiniBoard from "./MiniBoard.svelte";
+
+    import { deleteGame, loadLocalStorageGame } from "$lib/game/save";
     import { currentGameIndex, type SaveSlot } from "$lib/stores";
     import { goto } from "$app/navigation";
     import { base } from "$app/paths";
-    import { loadLocalStorageGame } from "$lib/game/localStorage";
     import { GameState, type Game } from "$lib/game/new";
     import { onMount } from "svelte";
-    import Checkbox from "./Checkbox.svelte";
-    import Button from "./Button.svelte";
+
     import { timeString } from "$lib/utils";
 
     export let showSelect: boolean = false;
-    // $: updateSelection(selected, slot);
 
     export let slot: SaveSlot;
     let name = `Save Game ${slot.index}`;

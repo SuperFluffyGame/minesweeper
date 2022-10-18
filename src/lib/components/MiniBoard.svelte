@@ -1,6 +1,5 @@
 <script lang="ts">
-    import { CellState, CellType } from "$lib/game/new";
-    import type { Game } from "$lib/game/new";
+    import { CellState, CellType, type Game } from "$lib/game/new";
     import { onMount } from "svelte";
 
     export let showMines: boolean = false;

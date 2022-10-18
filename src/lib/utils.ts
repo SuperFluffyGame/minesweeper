@@ -1,4 +1,6 @@
 export const version = "v0.3.0";
+export const title = "Minesweeper";
+export const creator = "SFG + TMH Games";
 
 // FROM MDN
 export function randomInt(min: number, max: number) {

@@ -1,7 +1,7 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import { base } from "$app/paths";
-    import { version } from "$lib/utils";
+    import { version, title, creator } from "$lib/utils";
     // import { onMount } from "svelte";
     // import { loadFull } from "tsparticles";
     // import { loadFirePreset } from "tsparticles-preset-fire";
@@ -27,8 +27,8 @@
 <main class="wrapper">
     <aside class="sidebar">
         <header on:click={titleClick}>
-            <h1 id="title">MineSweeper</h1>
-            <h3 id="creator">By SFG and TMH</h3>
+            <h1 id="title">{title}</h1>
+            <h3 id="creator">{creator}</h3>
         </header>
         <hr />
         <slot name="sidebar" />
