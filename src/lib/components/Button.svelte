@@ -6,13 +6,15 @@
     export let size: Size = "medium";
     export let iconSrc: string = "";
     export let padding: number | null = null;
+    export let title: string | null = null;
 </script>
 
 <button
     on:click
     {disabled}
     class={["unstyled", type, size].join(" ")}
-    style:padding="{padding ?? type === "icon" ? 0 : null}rem"
+    style:padding="{padding}rem"
+    {title}
 >
     {#if type === "icon"}
         <img src={iconSrc} alt="" draggable="false" />
@@ -126,8 +128,8 @@
     }
     img {
         min-width: 100%;
-
         aspect-ratio: 1;
+
         user-select: none;
     }
 </style>

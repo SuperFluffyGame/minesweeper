@@ -1,21 +1,13 @@
 import { get, writable, type Writable } from "svelte/store";
-import {
-    loadLocalStorageGame,
-    MINESWEEPER_SAVE_SLOTS,
-    saveLocalStorageGame,
-} from "./game/save";
+import { loadLocalStorageGame, saveLocalStorageGame } from "./game/save";
 import type { Game } from "./game/new";
+import {
+    loadLocalStorageStats,
+    saveLocalStorageStats,
+    type Stats,
+} from "./game/stats";
 
-// function forceableStore<T>(initialValue: T) {
-//     let store = writable(initialValue);
-//     return {
-//         ...store,
-//         forceSet: (value: T) => {
-//             store.set(undefined!);
-//             store.set(value);
-//         },
-//     };
-// }
+export const MINESWEEPER_SAVE_SLOTS = "MINESWEEPER_SAVE_SLOTS";
 
 export let game: Writable<Game | null> = writable(null);
 game.subscribe((g) => {
@@ -57,4 +49,14 @@ if (typeof window !== "undefined") {
             }
         )
     );
+}
+
+export const stats: Writable<Stats | null> = writable(null);
+stats.subscribe((v) => {
+    if (typeof window !== "undefined" && v != null) {
+        saveLocalStorageStats(v);
+    }
+});
+if (typeof window !== "undefined") {
+    stats.set(loadLocalStorageStats());
 }

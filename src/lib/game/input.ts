@@ -1,3 +1,4 @@
+import { stats } from "$lib/stores";
 import {
     CellState,
     CellType,
@@ -17,6 +18,11 @@ export const openCell = (game: Game, index: number) => {
     if (cell.state === CellState.Flagged) {
         return;
     }
+    stats.update((v) => {
+        if (!v) return v;
+        v.cellsOpened += 1;
+        return v;
+    });
 
     let x = index % game.width;
     let y = Math.floor(index / game.height);
@@ -73,6 +79,11 @@ export const openCell = (game: Game, index: number) => {
 
     // if mine was opened, lose the game
     if (cell.type === CellType.Mine) {
+        stats.update((v) => {
+            if (!v) return v;
+            v.gamesLost += 1;
+            return v;
+        });
         game.state = GameState.Lost;
         game.lostToCell = index;
         for (let i = 0; i < game.width * game.height; i++) {
@@ -94,11 +105,21 @@ export const openCell = (game: Game, index: number) => {
         }
     }
     if (allMinesOpened) {
+        stats.update((v) => {
+            if (!v) return v;
+            v.gamesWon += 1;
+            return v;
+        });
         game.state = GameState.Won;
     }
 };
 
 export const flagCell = (game: Game, index: number) => {
+    // check if game has not been won or lost
+    if (game.state !== GameState.Playing) {
+        return;
+    }
+
     let cell = game.board[index];
     if (cell.state === CellState.Closed) {
         cell.state = CellState.Flagged;

@@ -1,4 +1,12 @@
 <script lang="ts">
+    import statsSvg from "$lib/assets/stats.svg";
+    import settingsSvg from "$lib/assets/settings.svg";
+
+    import SaveGame from "$lib/components/SaveGame.svelte";
+    import SidebarLayout from "$lib/components/SidebarLayout.svelte";
+    import Button from "$lib/components/Button.svelte";
+    import Checkbox from "$lib/components/Checkbox.svelte";
+
     import {
         BoardSizes,
         newGame,
@@ -6,12 +14,8 @@
     } from "$lib/game/new";
     import { goto } from "$app/navigation";
     import { used_save_slots } from "$lib/stores";
-    import SaveGame from "$lib/components/SaveGame.svelte";
-    import SidebarLayout from "$lib/components/SidebarLayout.svelte";
     import { base } from "$app/paths";
     import { deleteGame, loadGame } from "$lib/game/save";
-    import Button from "$lib/components/Button.svelte";
-    import Checkbox from "$lib/components/Checkbox.svelte";
 
     const easyClick = () => {
         newGameClick(8);
@@ -40,7 +44,7 @@
 
         while (true) {
             const indexOfSelected = $used_save_slots!.findIndex(
-                slot => slot.selected
+                (slot) => slot.selected
             );
             if (indexOfSelected === -1) {
                 break;
@@ -52,6 +56,22 @@
 
 <SidebarLayout>
     <svelte:fragment slot="sidebar">
+        <div class="menus">
+            <Button
+                type="icon"
+                size="large"
+                iconSrc={statsSvg}
+                padding={0.2}
+                title="Stats"
+            />
+            <Button
+                type="icon"
+                size="large"
+                iconSrc={settingsSvg}
+                padding={0.2}
+                title="Settings"
+            />
+        </div>
         <div class="mass-select">
             <Checkbox bind:checked={showSaveGameSelect} borderColor="white" />
             <Button type="text" size="verysmall" on:click={() => setAll(true)}>
@@ -179,11 +199,17 @@
         display: grid;
         grid-template-columns: auto 1fr 1fr 1fr;
         align-items: center;
-        padding-inline: 0.5rem;
+        margin-inline: 0.5rem;
         margin-block-end: 0.5rem;
         gap: 0.5rem;
         @media screen and (max-width: 700px) {
             margin-inline: 2.5rem;
         }
+    }
+    .menus {
+        margin: 0.5rem;
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
     }
 </style>
