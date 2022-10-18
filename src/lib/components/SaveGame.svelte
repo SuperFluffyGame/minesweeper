@@ -98,6 +98,9 @@
     }
     .size {
         color: var(--black9);
+    }
+    .size,
+    .name {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
