@@ -84,7 +84,7 @@
         padding: 0;
         inset: 0;
 
-        transition: background-color 100ms ease-in-out;
+        transition: background-color 75ms ease-in-out;
     }
     .cover:hover {
         background-color: var(--blue1);

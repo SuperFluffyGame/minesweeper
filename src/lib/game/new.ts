@@ -106,8 +106,8 @@ export const setNewMine = (game: Game, excludedCells: number[] = []) => {
 };
 
 export const recalcMineNeighbors = (game: Game) => {
-    for (let x = 0; x < game?.width; x++) {
-        for (let y = 0; y < game?.height; y++) {
+    for (let x = 0; x < game.width; x++) {
+        for (let y = 0; y < game.height; y++) {
             let numNeighborMines = 0;
             // calc num neighbor mines
             for (let k = 0; k < 9; k++) {

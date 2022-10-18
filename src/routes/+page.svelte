@@ -31,7 +31,7 @@
 
     const setAll = (v: boolean) => {
         if (!showSaveGameSelect) return;
-        $used_save_slots?.forEach((_, i) => {
+        $used_save_slots!.forEach((_, i) => {
             $used_save_slots![i].selected = v;
         });
     };
@@ -40,7 +40,7 @@
 
         while (true) {
             const indexOfSelected = $used_save_slots!.findIndex(
-                (slot) => slot.selected
+                slot => slot.selected
             );
             if (indexOfSelected === -1) {
                 break;

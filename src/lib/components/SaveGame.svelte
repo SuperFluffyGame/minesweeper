@@ -30,7 +30,7 @@
     export let slot: SaveSlot;
     let name = `Save Game ${slot.index}`;
 
-    let game: Game;
+    let game: Game | null;
     onMount(() => {
         game = loadLocalStorageGame(slot.index)!;
     });
@@ -60,7 +60,9 @@
         </p>
 
         <p class="size">
-            {game?.width}x{game?.height} ({timeString(game?.stats.timePlayed)}, {game?.state})
+            {game?.width}x{game?.height} ({timeString(
+                game?.stats.timePlayed ?? 0
+            )}, {game?.state})
         </p>
     </div>
     <div class="right">

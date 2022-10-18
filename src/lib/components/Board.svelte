@@ -4,13 +4,13 @@
     import type { Game } from "$lib/game/new";
 
     export let game: Game;
-    let boardElem: HTMLDivElement;
+    let boardElem: HTMLDivElement | null;
     let fontSize = 0;
-    onMount(() => {
-        new ResizeObserver(() => {
-            fontSize = (boardElem.clientWidth / game.width) * 0.8;
-        }).observe(boardElem);
+
+    const observer = new ResizeObserver(() => {
+        fontSize = ((boardElem?.clientWidth ?? 0) / game.width) * 0.8;
     });
+    $: if (boardElem) observer.observe(boardElem);
 </script>
 
 <div

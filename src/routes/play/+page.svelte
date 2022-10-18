@@ -17,14 +17,14 @@
     import Checkbox from "$lib/components/Checkbox.svelte";
     import SidebarLayout from "$lib/components/SidebarLayout.svelte";
     import { timeString } from "$lib/utils";
-    let modalEl: HTMLDialogElement;
+    let modalEl: HTMLDialogElement | null;
     let timerInterval: NodeJS.Timer | number;
 
     game.subscribe(g => {
         if (g?.state !== GameState.Playing) {
             clearInterval(timerInterval);
             try {
-                modalEl?.showModal?.();
+                modalEl?.showModal();
             } catch {}
         }
     });
@@ -33,7 +33,7 @@
         if ($game === null) {
             goto(`${base}`);
         } else if ($game.state !== GameState.Playing) {
-            modalEl.showModal();
+            modalEl!.showModal();
         }
         if ($game?.state === GameState.Playing)
             timerInterval = setInterval(() => {
@@ -50,7 +50,7 @@
         clearInterval(timerInterval);
         if (!keepGame) deleteGame($currentGameIndex);
         loadGame(newGame(BoardSizes[$game!.width as PossibleBoardSizes]));
-        modalEl.close();
+        modalEl!.close();
         timerInterval = setInterval(() => {
             $game!.stats.timePlayed += 1;
         }, 1000);
@@ -59,7 +59,7 @@
     const gotoMenuClick = () => {
         if (!keepGame) deleteGame($currentGameIndex);
         goto(`${base}`);
-        modalEl.close();
+        modalEl!.close();
     };
 
     $: numFlags = $game?.board.reduce((numFlags, cell) => {

@@ -65,7 +65,7 @@ export const openCell = (game: Game, index: number) => {
                 continue;
             }
             const index = neighborY * game.width + neighborX;
-            if (game.board?.[index]?.state === CellState.Closed) {
+            if (game.board?.[index].state === CellState.Closed) {
                 openCell(game, index);
             }
         }
