@@ -71,6 +71,7 @@
             iconSrc={deleteSvg}
             size="medium"
             on:click={deleteClick}
+            padding={0}
         />
 
         <Button
@@ -78,6 +79,7 @@
             iconSrc={playSvg}
             size="medium"
             on:click={playClick}
+            padding={0}
         />
         {#if showSelect}
             <Checkbox
