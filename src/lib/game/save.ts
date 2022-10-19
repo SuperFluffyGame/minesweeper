@@ -25,8 +25,8 @@ export const deleteLocalStorageGame = (i: number) => {
 
 export const deleteGame = (i: number) => {
     used_save_slots.update((slots) => {
-        slots!.splice(
-            slots!.findIndex((slot) => slot.index === i),
+        slots.splice(
+            slots.findIndex((slot) => slot.index === i),
             1
         );
         return slots;
@@ -49,7 +49,7 @@ export const loadGame = (game: Game) => {
     currentGameIndex.set(-1);
     currentGameIndex.set(lowestSlot);
     used_save_slots.update((v) => {
-        v?.push({ index: lowestSlot, selected: false });
+        v.push({ index: lowestSlot, selected: false });
         return v;
     });
     gameStore.set(game);
