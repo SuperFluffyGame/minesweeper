@@ -8,8 +8,6 @@
     import { goto } from "$app/navigation";
     import { base } from "$app/paths";
     import { version, title, creator } from "$lib/utils";
-
-    export let fitContent: boolean = true;
 </script>
 
 <main class="wrapper">
@@ -55,7 +53,7 @@
 
         <slot name="sidebar" />
     </aside>
-    <div class="content" style:width={fitContent ? "fit-content" : null}>
+    <div class="content">
         <slot name="content" />
     </div>
     <footer class="version">{version}</footer>

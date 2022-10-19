@@ -10,26 +10,30 @@
         <SaveGamesSidebar />
     </svelte:fragment>
     <svelte:fragment slot="content">
-        <Card title="Games Played: {$stats.gamesLost + $stats.gamesWon}">
-            <table>
-                <tr>
-                    <td>Won:</td>
-                    <td>{$stats.gamesWon}</td>
-                </tr>
-                <tr>
-                    <td>Lost:</td>
-                    <td>{$stats.gamesLost}</td>
-                </tr>
-            </table>
-        </Card>
-        <Card>
-            <table>
-                <tr>
-                    <td>Cells Opened:</td>
-                    <td>{$stats.cellsOpened}</td>
-                </tr>
-            </table></Card
-        >
+        {#if $stats}
+            <Card title="Games Played: {$stats.gamesLost + $stats.gamesWon}">
+                <table>
+                    <tr>
+                        <td>Won:</td>
+                        <td>{$stats.gamesWon}</td>
+                    </tr>
+                    <tr>
+                        <td>Lost:</td>
+                        <td>{$stats.gamesLost}</td>
+                    </tr>
+                </table>
+            </Card>
+            <Card>
+                <table>
+                    <tr>
+                        <td>Cells Opened:</td>
+                        <td>{$stats.cellsOpened}</td>
+                    </tr>
+                </table></Card
+            >
+        {:else}
+            <Card title="Loading..." />
+        {/if}
     </svelte:fragment>
 </SidebarLayout>
 

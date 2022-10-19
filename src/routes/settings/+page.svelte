@@ -13,35 +13,43 @@
         <SaveGamesSidebar />
     </svelte:fragment>
     <svelte:fragment slot="content">
-        <Card title="Theme">
-            <div class="themes">
-                {#each themes as theme, i (i)}
-                    <ColorSelect
-                        {theme}
-                        selected={$settings.theme === i}
-                        on:click={() => ($settings.theme = i)}
-                    />
-                {/each}
-            </div>
+        {#if $settings}
+            <Card title="Theme">
+                <div class="themes">
+                    {#each themes as theme, i (i)}
+                        <ColorSelect
+                            {theme}
+                            selected={$settings?.theme === i}
+                            on:click={() => {
+                                if (!$settings) return;
+                                $settings.theme = i;
+                            }}
+                        />
+                    {/each}
+                </div>
 
-            <h3>Saturation</h3>
-            <input
-                type="range"
-                name="saturation"
-                id="saturation"
-                class="slider"
-                step="0.5"
-                min="0"
-                max="20"
-                bind:value={$settings.saturation}
-                list="tickmarks"
-            />
-            <datalist id="tickmarks">
-                {#each tickmarks as mark}
-                    <option value={mark} />
-                {/each}
-            </datalist>
-        </Card>
+                <h3>Saturation</h3>
+                <input
+                    type="range"
+                    name="saturation"
+                    id="saturation"
+                    class="slider"
+                    step="0.5"
+                    min="0"
+                    max="20"
+                    bind:value={$settings.saturation}
+                    list="tickmarks"
+                />
+
+                <datalist id="tickmarks">
+                    {#each tickmarks as mark}
+                        <option value={mark} />
+                    {/each}
+                </datalist>
+            </Card>
+        {:else}
+            <Card title="Loading..." />
+        {/if}
     </svelte:fragment>
 </SidebarLayout>
 

@@ -11,6 +11,7 @@
 
 <style lang="less">
     .wrapper {
+        width: fit-content;
         margin: 1rem;
         padding: 1rem;
         background-color: var(--black5);
