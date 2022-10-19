@@ -29,7 +29,7 @@
         color: var(--font-color);
         padding: 0.75rem 1rem;
         border-radius: var(--radius);
-        transition: background-color 75ms linear, border-color 75ms linear;
+        transition: background-color 100ms linear, border-color 100ms linear;
         cursor: pointer;
         display: flex;
         flex-direction: row;
@@ -77,8 +77,8 @@
         border-color: var(--accent) !important;
         background-color: transparent;
         box-shadow: 0 var(--shadow-amount) 2px rgba(0, 0, 0, 0.5);
-        transition: transform 100ms ease-in-out, box-shadow 100ms ease-in-out,
-            background-color 75ms linear;
+        transition: transform 100ms linear, box-shadow 100ms linear,
+            background-color 100ms linear;
 
         &:hover:not(:disabled) {
             background-color: rgba(255, 255, 255, 0.075);

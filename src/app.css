@@ -1,4 +1,3 @@
-
 :root {
     --brand-hue: 200;
     --sat-mul: 5;
@@ -8,13 +7,36 @@
     --accent: darkcyan;
     --cell-hue: 200;
 
-    --dark0: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), calc(5% + var(--light-offset)));
-    --dark1: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), calc(10% + var(--light-offset)));
-    --dark2: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), calc(15% + var(--light-offset)));
-    --dark3: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), calc(20% + var(--light-offset)));
-    --dark4: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), calc(25% + var(--light-offset)));
-    --dark5: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), calc(30% + var(--light-offset)));
-
+    --dark0: hsl(
+        var(--brand-hue),
+        calc(5% * var(--sat-mul)),
+        calc(5% + var(--light-offset))
+    );
+    --dark1: hsl(
+        var(--brand-hue),
+        calc(5% * var(--sat-mul)),
+        calc(10% + var(--light-offset))
+    );
+    --dark2: hsl(
+        var(--brand-hue),
+        calc(5% * var(--sat-mul)),
+        calc(15% + var(--light-offset))
+    );
+    --dark3: hsl(
+        var(--brand-hue),
+        calc(5% * var(--sat-mul)),
+        calc(20% + var(--light-offset))
+    );
+    --dark4: hsl(
+        var(--brand-hue),
+        calc(5% * var(--sat-mul)),
+        calc(25% + var(--light-offset))
+    );
+    --dark5: hsl(
+        var(--brand-hue),
+        calc(5% * var(--sat-mul)),
+        calc(30% + var(--light-offset))
+    );
 
     --black0: #000000;
     --black1: #0d0d0d;
@@ -50,7 +72,6 @@ body {
     padding: 0;
     margin: 0;
     height: max(100%, 100vh);
-
 }
 
 html {
@@ -59,7 +80,6 @@ html {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 
     transition: background-color 100ms linear;
-
 }
 
 /* body {
@@ -78,7 +98,7 @@ button:not(.unstyled) {
     color: var(--font-color);
     padding: 0.75rem;
     border-radius: var(--radius);
-    transition: background-color 75ms linear, border-color 75ms linear;
+    transition: background-color 100ms linear, border-color 100ms linear;
 
     cursor: pointer;
 }

@@ -13,14 +13,14 @@
 
     const clickCell = (e: MouseEvent) => {
         if (e.button === 0) {
-            game.update((g) => {
+            game.update(g => {
                 openCell(g!, index);
                 return g;
             });
         }
     };
     const rightClickCell = () => {
-        game.update((g) => {
+        game.update(g => {
             flagCell(g!, index);
             return g;
         });
@@ -84,7 +84,7 @@
         padding: 0;
         inset: 0;
 
-        transition: background-color 75ms ease-in-out;
+        transition: background-color 100ms linear;
     }
     .cover:hover {
         background-color: hsl(var(--cell-hue), 40%, 30%);

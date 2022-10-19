@@ -24,5 +24,7 @@
         border-radius: var(--radius);
         display: grid;
         grid-template-columns: repeat(2, 1fr);
+
+        transition: border-color 100ms linear;
     }
 </style>
