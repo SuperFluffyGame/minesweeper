@@ -71,7 +71,7 @@
             iconSrc={deleteSvg}
             size="medium"
             on:click={deleteClick}
-            padding={0}
+            padding={0.1}
         />
 
         <Button
@@ -79,7 +79,7 @@
             iconSrc={playSvg}
             size="medium"
             on:click={playClick}
-            padding={0}
+            padding={0.1}
         />
         {#if showSelect}
             <Checkbox
@@ -108,8 +108,9 @@
         white-space: nowrap;
     }
     .wrapper {
-        margin: 0.5rem;
+        // margin: 0.5rem;
         display: flex;
+
         // align-items: center;
         height: 3rem;
     }

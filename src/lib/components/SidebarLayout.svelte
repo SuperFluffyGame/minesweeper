@@ -1,45 +1,58 @@
 <script lang="ts">
+    import statsSvg from "$lib/assets/stats.svg";
+    import settingsSvg from "$lib/assets/settings.svg";
+    import homeSvg from "$lib/assets/home.svg";
+
+    import Button from "$lib/components/Button.svelte";
+
     import { goto } from "$app/navigation";
     import { base } from "$app/paths";
     import { version, title, creator } from "$lib/utils";
-    // import { onMount } from "svelte";
-    // import { loadFull } from "tsparticles";
-    // import { loadFirePreset } from "tsparticles-preset-fire";
-
-    // const particleOptions = {
-    //     preset: "fire",
-    // };
-
-    // let ParticlesComponent: any;
-    // onMount(async () => {
-    //     const module = await import("svelte-particles");
-    //     ParticlesComponent = module.default;
-    // });
-
-    // let particlesInit = async (engine: any) => {
-    //     await loadFirePreset(engine);
-    // };
-    const titleClick = () => {
-        goto(`${base}`);
-    };
 </script>
 
 <main class="wrapper">
     <aside class="sidebar">
-        <header on:click={titleClick}>
+        <header>
             <h1 id="title">{title}</h1>
             <h3 id="creator">{creator}</h3>
         </header>
+
+        <div class="menus">
+            <Button
+                type="icon"
+                size="large"
+                iconSrc={homeSvg}
+                padding={0.2}
+                title="Home"
+                on:click={() => {
+                    goto(`${base}`);
+                }}
+            />
+            <Button
+                type="icon"
+                size="large"
+                iconSrc={statsSvg}
+                padding={0.2}
+                title="Stats"
+                on:click={() => {
+                    goto(`${base}/stats`);
+                }}
+            />
+            <Button
+                type="icon"
+                size="large"
+                iconSrc={settingsSvg}
+                padding={0.2}
+                title="Settings"
+                on:click={() => {
+                    goto(`${base}/settings`);
+                }}
+            />
+        </div>
         <hr />
+
         <slot name="sidebar" />
     </aside>
-
-    <!-- <svelte:component
-        this={ParticlesComponent}
-        {particlesInit}
-        options={particleOptions}
-        id="tsparticles"
-    /> -->
 
     <slot name="content" class="content" />
     <footer class="version">{version}</footer>
@@ -49,7 +62,6 @@
     header {
         text-align: center;
         margin: 0.5rem;
-        cursor: pointer;
     }
     header > * {
         margin: 0;
@@ -92,6 +104,8 @@
     hr {
         border: none;
         border-block: 1px solid darkcyan;
+        background-color: darkcyan;
+
         width: 100%;
         margin-block-end: 1rem;
     }
@@ -102,5 +116,12 @@
             flex-direction: column;
             height: auto;
         }
+    }
+
+    .menus {
+        /* margin: 0.5rem; */
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
     }
 </style>
