@@ -17,7 +17,7 @@
         border-radius: var(--radius);
         box-shadow: 0 0 1rem #0005;
         > h2 {
-            margin-block: 0.5rem;
+            margin-block: 0.5rem 1rem;
         }
     }
 </style>

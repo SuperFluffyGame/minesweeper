@@ -20,7 +20,7 @@
     let modalEl: HTMLDialogElement | null;
     let timerInterval: NodeJS.Timer | number;
 
-    game.subscribe(g => {
+    game.subscribe((g) => {
         if (g?.state !== GameState.Playing) {
             clearInterval(timerInterval);
             try {
@@ -67,7 +67,7 @@
     }, 0)!;
 </script>
 
-<SidebarLayout>
+<SidebarLayout fitContent={false}>
     <div class="sidebar" slot="sidebar">
         <section class="stats">
             <p

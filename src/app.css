@@ -2,15 +2,18 @@
 :root {
     --brand-hue: 200;
     --sat-mul: 5;
+    --light-offset: 0%;
+    --font-color: whitesmoke;
     --brand: hsl(var(--brand-hue), calc(10% * var(--sat-mul)), 50%);
     --accent: darkcyan;
+    --cell-hue: 200;
 
-    --dark0: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), 5%);
-    --dark1: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), 10%);
-    --dark2: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), 15%);
-    --dark3: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), 20%);
-    --dark4: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), 25%);
-    --dark5: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), 30%);
+    --dark0: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), calc(5% + var(--light-offset)));
+    --dark1: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), calc(10% + var(--light-offset)));
+    --dark2: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), calc(15% + var(--light-offset)));
+    --dark3: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), calc(20% + var(--light-offset)));
+    --dark4: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), calc(25% + var(--light-offset)));
+    --dark5: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), calc(30% + var(--light-offset)));
 
 
     --black0: #000000;
@@ -46,19 +49,19 @@ html,
 body {
     padding: 0;
     margin: 0;
+    height: max(100%, 100vh);
+
 }
 
 html {
     background-color: var(--black3);
-    color: whitesmoke;
+    color: var(--font-color);
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 
-    /* font-size: calc(max(1vh, 1vw) * 1.25); */
+    transition: background-color 100ms linear;
+
 }
-html,
-body {
-    height: max(100%, 100vh);
-}
+
 /* body {
     height: 100vh; 
     display: flex;
@@ -72,7 +75,7 @@ button:not(.unstyled) {
     font-size: 1.2rem;
     background-color: var(--black6);
     border: 0.2rem solid var(--black5);
-    color: whitesmoke;
+    color: var(--font-color);
     padding: 0.75rem;
     border-radius: var(--radius);
     transition: background-color 75ms linear, border-color 75ms linear;
@@ -102,7 +105,7 @@ dialog {
     align-items: center;
     flex-direction: column;
 
-    color: whitesmoke;
+    color: var(--font-color);
     border-color: var(--black1);
     background-color: var(--black4);
     border-radius: var(--radius);

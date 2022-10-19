@@ -26,7 +26,7 @@
     button {
         font-size: 1.2rem;
         border: 0.2rem solid;
-        color: whitesmoke;
+        color: var(--font-color);
         padding: 0.75rem 1rem;
         border-radius: var(--radius);
         transition: background-color 75ms linear, border-color 75ms linear;

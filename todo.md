@@ -1,6 +1,10 @@
 ## TODO next
 
-1. make assets preloaded ( don't know if it does anything)
+<!-- 1. make assets preloaded ( don't know if it does anything) -->
+
+1. Light theme support
+2. Make all loading from localstorage safe with null coalescing
+3.
 
 ## TODO in no particular order
 

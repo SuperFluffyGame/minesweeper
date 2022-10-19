@@ -8,6 +8,8 @@
     import { goto } from "$app/navigation";
     import { base } from "$app/paths";
     import { version, title, creator } from "$lib/utils";
+
+    export let fitContent: boolean = true;
 </script>
 
 <main class="wrapper">
@@ -53,7 +55,7 @@
 
         <slot name="sidebar" />
     </aside>
-    <div class="content">
+    <div class="content" style:width={fitContent ? "fit-content" : null}>
         <slot name="content" />
     </div>
     <footer class="version">{version}</footer>
@@ -128,7 +130,6 @@
 
     .content {
         overflow-y: auto;
-        width: fit-content;
 
         @media screen and (max-width: 700px) {
             // display: flex;
@@ -136,6 +137,7 @@
             // align-items: center;
             text-align: center;
             margin: auto;
+            width: auto;
         }
     }
 </style>

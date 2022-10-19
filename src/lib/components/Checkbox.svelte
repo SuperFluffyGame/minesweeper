@@ -34,13 +34,12 @@
         margin: 0;
         width: 100%;
         aspect-ratio: 1;
-        transition: background-color 50ms ease-in-out;
         cursor: pointer;
         border: 0.1rem solid;
         border-radius: calc(var(--radius) / 2);
     }
     input[type="checkbox"]:checked {
-        background-color: var(--blue6);
+        background-color: var(--accent);
     }
     img {
         position: absolute;
