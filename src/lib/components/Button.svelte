@@ -74,7 +74,7 @@
     .push {
         --shadow-amount: 5px;
         --push-amount: 3px;
-        border-color: darkcyan !important;
+        border-color: var(--accent) !important;
         background-color: transparent;
         box-shadow: 0 var(--shadow-amount) 2px rgba(0, 0, 0, 0.5);
         transition: transform 100ms ease-in-out, box-shadow 100ms ease-in-out,
@@ -96,7 +96,7 @@
 
     .normal {
         background-color: transparent;
-        border-color: darkcyan;
+        border-color: var(--accent);
 
         &:hover:not(:disabled) {
             background-color: rgba(255, 255, 255, 0.05);

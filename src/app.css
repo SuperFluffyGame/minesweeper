@@ -1,11 +1,31 @@
+
 :root {
+    --brand-hue: 200;
+    --sat-mul: 5;
+    --brand: hsl(var(--brand-hue), calc(10% * var(--sat-mul)), 50%);
+    --accent: darkcyan;
+
+    --dark0: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), 5%);
+    --dark1: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), 10%);
+    --dark2: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), 15%);
+    --dark3: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), 20%);
+    --dark4: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), 25%);
+    --dark5: hsl(var(--brand-hue), calc(5% * var(--sat-mul)), 30%);
+
+
     --black0: #000000;
     --black1: #0d0d0d;
-    --black2: #1a1a1a;
-    --black3: #262626;
-    --black4: #333333;
-    --black5: #444444;
-    --black6: #555555;
+    /* --black2: #1a1a1a; */
+    --black2: var(--dark1);
+    /* --black3: #262626; */
+    --black3: var(--dark2);
+    /* --black4: #333333; */
+    --black4: var(--dark3);
+    /* --black5: #444444; */
+    --black5: var(--dark4);
+    /* --black6: #555555; */
+    --black6: var(--dark5);
+
     --black7: #666666;
     --black8: #777777;
     --black9: #888888;

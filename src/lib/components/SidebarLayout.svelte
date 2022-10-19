@@ -53,12 +53,13 @@
 
         <slot name="sidebar" />
     </aside>
-
-    <slot name="content" class="content" />
+    <div class="content">
+        <slot name="content" />
+    </div>
     <footer class="version">{version}</footer>
 </main>
 
-<style>
+<style lang="less">
     header {
         text-align: center;
         margin: 0.5rem;
@@ -103,8 +104,8 @@
 
     hr {
         border: none;
-        border-block: 1px solid darkcyan;
-        background-color: darkcyan;
+        border-block: 1px solid var(--accent);
+        background-color: var(--accent);
 
         width: 100%;
         margin-block-end: 1rem;
@@ -123,5 +124,18 @@
         display: flex;
         gap: 0.5rem;
         justify-content: center;
+    }
+
+    .content {
+        overflow-y: auto;
+        width: fit-content;
+
+        @media screen and (max-width: 700px) {
+            // display: flex;
+            // flex-direction: column;
+            // align-items: center;
+            text-align: center;
+            margin: auto;
+        }
     }
 </style>
