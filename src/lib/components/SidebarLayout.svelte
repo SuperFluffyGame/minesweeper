@@ -137,7 +137,7 @@
             // align-items: center;
             text-align: center;
             margin: auto;
-            width: auto;
+            width: 100%;
         }
     }
 </style>

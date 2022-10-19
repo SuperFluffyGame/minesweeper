@@ -38,6 +38,9 @@
         min-width: 15rem;
     }
     tr {
+        > :first-child {
+            text-align: left;
+        }
         > td:nth-child(2) {
             text-align: right;
         }
