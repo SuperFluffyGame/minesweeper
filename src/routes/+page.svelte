@@ -83,10 +83,29 @@
 </SidebarLayout>
 
 <style lang="less">
+    .presets,
+    .custom {
+        margin: 1rem;
+        padding: 1rem;
+        background-color: var(--black5);
+        border-radius: var(--radius);
+        box-shadow: 0 0 1rem #0005;
+    }
+    :where(.presets, .custom) > h2 {
+        margin-block: 0.5rem;
+    }
+
     table {
         border-collapse: collapse;
     }
-
+    @media screen and (max-width: 700px) {
+        table {
+            margin: auto;
+        }
+        h2 {
+            text-align: center;
+        }
+    }
     td,
     thead {
         border-bottom: 2px solid var(--black2);
@@ -108,8 +127,8 @@
     }
 
     .content {
-        margin: 1rem;
         overflow-y: auto;
+        width: fit-content;
 
         @media screen and (max-width: 700px) {
             display: flex;
