@@ -17,8 +17,8 @@ export const themes: Theme[] = [
     { hue: 200, accent: "darkcyan", cellHue: 200, light: false },
     { hue: 100, accent: "green", cellHue: 100, light: false },
     { hue: 300, accent: "darkviolet", cellHue: 300, light: false },
-    { hue: 0, accent: "coral", cellHue: 0, light: false },
-    { hue: 50, accent: "gold", cellHue: 70, light: false },
+    { hue: 0, accent: "brown", cellHue: 0, light: false },
+    { hue: 50, accent: "orange", cellHue: 70, light: true },
 ];
 
 export const loadLocalStorageSettings = () => {

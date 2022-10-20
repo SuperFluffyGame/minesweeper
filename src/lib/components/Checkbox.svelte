@@ -2,17 +2,11 @@
     import { fade } from "svelte/transition";
     import checkBoxSvg from "$lib/assets/check.svg";
     export let checked: boolean;
-    export let borderColor: string = "black";
     export let size: number = 1.5;
 </script>
 
 <div class="wrapper" style:width="{size}rem" style:height="{size}rem">
-    <input
-        type="checkbox"
-        {...$$props}
-        bind:checked
-        style:border-color={borderColor}
-    />
+    <input type="checkbox" {...$$props} bind:checked />
     {#if checked}
         <img
             src={checkBoxSvg}
@@ -35,7 +29,7 @@
         width: 100%;
         aspect-ratio: 1;
         cursor: pointer;
-        border: 0.1rem solid;
+        border: 0.1rem solid var(--font-color);
         border-radius: calc(var(--radius) / 2);
     }
     input[type="checkbox"]:checked {

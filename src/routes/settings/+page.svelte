@@ -60,7 +60,7 @@
     }
     .slider {
         width: 100%;
-        // accent-color: var(--accent);
+        accent-color: var(--accent);
     }
     h3 {
         margin-block-end: 0;

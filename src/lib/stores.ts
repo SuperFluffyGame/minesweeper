@@ -78,5 +78,16 @@ settings.subscribe(v => {
         "" + theme.cellHue
     );
 
+    if (theme.light) {
+        document.documentElement.style.setProperty("--light-offset", "60%");
+        document.documentElement.style.setProperty("--font-color", "black");
+    } else {
+        document.documentElement.style.setProperty("--light-offset", "0%");
+        document.documentElement.style.setProperty(
+            "--font-color",
+            "whitesmoke"
+        );
+    }
+
     saveLocalStorageSettings(v);
 });

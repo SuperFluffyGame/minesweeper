@@ -1,4 +1,4 @@
-export const version = "v0.3.0";
+export const version = "";
 export const title = "Minesweeper";
 export const creator = "SFG + TMH Games";
 
