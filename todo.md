@@ -2,24 +2,14 @@
 
 <!-- 1. make assets preloaded ( don't know if it does anything) -->
 
-1. Light theme support
-2. Make all loading from localstorage safe with null coalescing
-3. Make store for theme as well as the themeIndex
-4. Make cell cover color be dependent on the theme's light value
+1. Make all loading from localstorage safe with null coalescing
+2. Make cell cover color be dependent on the theme's light value
+3. clicking on numbers opens safe spots around if flagged properly
 
 ## TODO in no particular order
 
-1. Themes (light theme first)
-2. Overall Stats
-3. Alternate flag system that just right clicking?
-4. Custom board sizes (I made it possible, just don't have a ui for it)
-
-### Partially Done
-
-1. Better style and colors
-    - Tired of looking at gray
-    - Color gradients for more lively appearance?
-2. Art (mines, flags, some icons)
+1. Alternate flag system that just right clicking?
+2. Custom board sizes (I made it possible, just don't have a ui for it)
 
 ### Done
 
@@ -31,3 +21,9 @@
 6. make all mines show up, even covered ones, with miniboard showMines
 7. text in cells make better.
 8. In-game stats (number flags, mines, etc)
+9. Themes (light theme first)
+10. Overall Stats
+11. Light theme support
+12. make stats and settings ssr
+13. Make store for theme as well as the themeIndex
+14. make cell background constant depending on theme.

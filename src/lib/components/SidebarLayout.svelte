@@ -8,6 +8,8 @@
     import { goto } from "$app/navigation";
     import { base } from "$app/paths";
     import { version, title, creator } from "$lib/utils";
+
+    export let fullContent = true;
 </script>
 
 <main class="wrapper">
@@ -53,7 +55,7 @@
 
         <slot name="sidebar" />
     </aside>
-    <div class="content">
+    <div class="content" class:full={fullContent}>
         <slot name="content" />
     </div>
     <footer class="version">{version}</footer>
@@ -128,6 +130,10 @@
 
     .content {
         overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: fit-content;
 
         @media screen and (max-width: 700px) {
             // display: flex;
@@ -137,5 +143,9 @@
             margin: auto;
             width: 100%;
         }
+    }
+
+    .full {
+        width: 100%;
     }
 </style>

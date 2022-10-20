@@ -20,5 +20,12 @@
         > h2 {
             margin-block: 0.5rem 1rem;
         }
+
+        @media screen and (max-width: 700px) {
+            width: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
     }
 </style>

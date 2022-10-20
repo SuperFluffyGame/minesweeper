@@ -67,7 +67,7 @@
     }, 0)!;
 </script>
 
-<SidebarLayout fitContent={false}>
+<SidebarLayout fullContent>
     <div class="sidebar" slot="sidebar">
         <section class="stats">
             <p

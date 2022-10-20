@@ -1,6 +1,5 @@
 <script lang="ts">
-    import { themes } from "$lib/settings";
-    import { settings } from "$lib/stores";
+    import { theme } from "$lib/stores";
 
     export let disabled: boolean = false;
     type Type = "old" | "push" | "normal" | "text" | "icon";
@@ -15,12 +14,7 @@
 <button
     on:click
     {disabled}
-    class={[
-        "unstyled",
-        type,
-        size,
-        themes[$settings?.theme]?.light ? "light" : "dark",
-    ].join(" ")}
+    class={["unstyled", type, size, $theme?.light ? "light" : "dark"].join(" ")}
     style:padding="{padding}rem"
     {title}
 >
@@ -29,7 +23,7 @@
             src={iconSrc}
             alt=""
             draggable="false"
-            style:filter={themes[$settings?.theme]?.light ? "invert()" : null}
+            style:filter={$theme?.light ? "invert()" : null}
         />
     {/if}
     <slot />

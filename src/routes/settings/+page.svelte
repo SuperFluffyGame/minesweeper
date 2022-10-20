@@ -6,6 +6,13 @@
 
     import { themes, tickmarks } from "$lib/settings";
     import { settings } from "$lib/stores";
+
+    let saturation = $settings?.saturation ?? 10;
+    $: settings.update((v) => {
+        if (!v) return null;
+        v.saturation = saturation;
+        return v;
+    });
 </script>
 
 <SidebarLayout>
@@ -13,43 +20,39 @@
         <SaveGamesSidebar />
     </svelte:fragment>
     <svelte:fragment slot="content">
-        {#if $settings}
-            <Card title="Theme">
-                <div class="themes">
-                    {#each themes as theme, i (i)}
-                        <ColorSelect
-                            {theme}
-                            selected={$settings?.theme === i}
-                            on:click={() => {
-                                if (!$settings) return;
-                                $settings.theme = i;
-                            }}
-                        />
-                    {/each}
-                </div>
+        <Card title="Theme">
+            <div class="themes">
+                {#each themes as theme, i (i)}
+                    <ColorSelect
+                        {theme}
+                        selected={$settings?.theme === i}
+                        on:click={() => {
+                            if (!$settings) return;
+                            $settings.theme = i;
+                        }}
+                    />
+                {/each}
+            </div>
 
-                <h3>Saturation</h3>
-                <input
-                    type="range"
-                    name="saturation"
-                    id="saturation"
-                    class="slider"
-                    step="0.5"
-                    min="0"
-                    max="20"
-                    bind:value={$settings.saturation}
-                    list="tickmarks"
-                />
+            <h3>Saturation</h3>
+            <input
+                type="range"
+                name="saturation"
+                id="saturation"
+                class="slider"
+                step="0.5"
+                min="0"
+                max="20"
+                bind:value={saturation}
+                list="tickmarks"
+            />
 
-                <datalist id="tickmarks">
-                    {#each tickmarks as mark}
-                        <option value={mark} />
-                    {/each}
-                </datalist>
-            </Card>
-        {:else}
-            <Card title="Loading..." />
-        {/if}
+            <datalist id="tickmarks">
+                {#each tickmarks as mark}
+                    <option value={mark} />
+                {/each}
+            </datalist>
+        </Card>
     </svelte:fragment>
 </SidebarLayout>
 

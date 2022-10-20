@@ -11,12 +11,13 @@ import {
     saveLocalStorageSettings,
     type Settings,
     themes,
+    type Theme,
 } from "./settings";
 
 export const MINESWEEPER_SAVE_SLOTS = "MINESWEEPER_SAVE_SLOTS";
 
 export let game: Writable<Game | null> = writable(null);
-game.subscribe(g => {
+game.subscribe((g) => {
     if (typeof window !== "undefined" && g != null) {
         let i: number = get(currentGameIndex);
         saveLocalStorageGame(i!, g);
@@ -24,7 +25,7 @@ game.subscribe(g => {
 });
 
 export let currentGameIndex = writable(-1);
-currentGameIndex.subscribe(i => {
+currentGameIndex.subscribe((i) => {
     if (i !== -1) game.set(loadLocalStorageGame(i));
 });
 
@@ -46,10 +47,10 @@ if (typeof window !== "undefined") {
         )
     );
 }
-used_save_slots.subscribe(v => {
+used_save_slots.subscribe((v) => {
     if (typeof window === "undefined" || v == null) return;
     localStorage[MINESWEEPER_SAVE_SLOTS] = JSON.stringify(
-        v.map(slot => slot.index)
+        v.map((slot) => slot.index)
     );
 });
 
@@ -57,7 +58,7 @@ export const stats: Writable<Stats | null> = writable();
 if (typeof window !== "undefined") {
     stats.set(loadLocalStorageStats());
 }
-stats.subscribe(v => {
+stats.subscribe((v) => {
     if (typeof window === "undefined" || v == null) return;
     saveLocalStorageStats(v);
 });
@@ -66,7 +67,7 @@ export const settings: Writable<Settings | null> = writable();
 if (typeof window !== "undefined") {
     settings.set(loadLocalStorageSettings());
 }
-settings.subscribe(v => {
+settings.subscribe((v) => {
     if (typeof window === "undefined" || v == null) return;
 
     const theme = themes[v.theme];
@@ -90,4 +91,10 @@ settings.subscribe(v => {
     }
 
     saveLocalStorageSettings(v);
+});
+
+export const theme: Writable<Theme | null> = writable(null);
+settings.subscribe((v) => {
+    if (!v) return;
+    theme.set(themes[v.theme]);
 });

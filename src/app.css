@@ -1,6 +1,6 @@
 :root {
     --brand-hue: 200;
-    --sat-mul: 5;
+    --sat-mul: 10;
     --light-offset: 0%;
     --font-color: whitesmoke;
     --brand: hsl(var(--brand-hue), calc(10% * var(--sat-mul)), 50%);
