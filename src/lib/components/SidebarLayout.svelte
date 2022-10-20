@@ -9,7 +9,7 @@
     import { base } from "$app/paths";
     import { version, title, creator } from "$lib/utils";
 
-    export let fullContent = true;
+    export let fullContent = false;
 </script>
 
 <main class="wrapper">
@@ -130,9 +130,9 @@
 
     .content {
         overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
+        // display: flex;
+        // flex-direction: column;
+        // align-items: stretch;
         width: fit-content;
 
         @media screen and (max-width: 700px) {
