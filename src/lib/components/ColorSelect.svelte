@@ -26,5 +26,6 @@
         grid-template-columns: repeat(2, 1fr);
 
         transition: border-color 100ms linear;
+        cursor: pointer;
     }
 </style>

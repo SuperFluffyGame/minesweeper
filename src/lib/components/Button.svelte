@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { themes } from "$lib/settings";
+    import { settings } from "$lib/stores";
+
     export let disabled: boolean = false;
     type Type = "old" | "push" | "normal" | "text" | "icon";
     type Size = "verysmall" | "small" | "medium" | "large" | "verylarge";
@@ -12,12 +15,22 @@
 <button
     on:click
     {disabled}
-    class={["unstyled", type, size].join(" ")}
+    class={[
+        "unstyled",
+        type,
+        size,
+        themes[$settings?.theme]?.light ? "light" : "dark",
+    ].join(" ")}
     style:padding="{padding}rem"
     {title}
 >
     {#if type === "icon"}
-        <img src={iconSrc} alt="" draggable="false" />
+        <img
+            src={iconSrc}
+            alt=""
+            draggable="false"
+            style:filter={themes[$settings?.theme]?.light ? "invert()" : null}
+        />
     {/if}
     <slot />
 </button>
@@ -95,31 +108,35 @@
     }
 
     .normal {
-        background-color: transparent;
+        .text();
         border-color: var(--accent);
-
-        &:hover:not(:disabled) {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-        &:active:not(:disabled) {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        &:disabled {
-            filter: brightness(75%);
-        }
     }
 
     .text {
         border-color: transparent;
         background-color: transparent;
-        &:hover:not(:disabled) {
-            background-color: rgba(255, 255, 255, 0.05);
+
+        &.dark {
+            &:hover:not(:disabled) {
+                background-color: rgba(255, 255, 255, 0.05);
+            }
+            &:active:not(:disabled) {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+            &:disabled {
+                filter: brightness(75%);
+            }
         }
-        &:active:not(:disabled) {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        &:disabled {
-            filter: brightness(75%);
+        &.light {
+            &:hover:not(:disabled) {
+                background-color: rgba(0, 0, 0, 0.05);
+            }
+            &:active:not(:disabled) {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+            &:disabled {
+                filter: brightness(75%);
+            }
         }
     }
 

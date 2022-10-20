@@ -76,7 +76,7 @@
     }
 
     .cover {
-        background-color: hsl(var(--cell-hue), 40%, 40%);
+        background-color: hsl(var(--cell-hue), 100%, 40%);
         cursor: pointer;
 
         position: absolute;
@@ -87,7 +87,7 @@
         transition: background-color 100ms linear;
     }
     .cover:hover {
-        background-color: hsl(var(--cell-hue), 40%, 30%);
+        background-color: hsl(var(--cell-hue), 100%, 30%);
     }
 
     img {
