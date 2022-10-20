@@ -5,6 +5,7 @@
 1. Make all loading from localstorage safe with null coalescing
 2. Make cell cover color be dependent on the theme's light value
 3. clicking on numbers opens safe spots around if flagged properly
+4. if all flags are placed correctly, the number should be green.
 
 ## TODO in no particular order
 
