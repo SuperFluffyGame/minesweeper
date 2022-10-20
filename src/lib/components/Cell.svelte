@@ -7,6 +7,7 @@
     import { openCell, flagCell } from "../game/input";
     import { type Cell, CellState, CellType } from "../game/new";
     import { game } from "../stores";
+    import { themes } from "$lib/settings";
 
     export let cell: Cell;
     export let index: number;
@@ -57,7 +58,7 @@
     {/if}
 </div>
 
-<style>
+<style lang="less">
     .wrapper {
         aspect-ratio: 1;
         padding: 0;
@@ -76,7 +77,7 @@
     }
 
     .cover {
-        background-color: hsl(var(--cell-hue), 100%, 40%);
+        background-color: hsl(var(--cell-hue), 100%, 30%);
         cursor: pointer;
 
         position: absolute;
@@ -87,7 +88,7 @@
         transition: background-color 100ms linear;
     }
     .cover:hover {
-        background-color: hsl(var(--cell-hue), 100%, 30%);
+        background-color: hsl(var(--cell-hue), 100%, 25%);
     }
 
     img {

@@ -10,7 +10,7 @@ const config = {
     kit: {
         paths: {
             assets: "",
-            base: "/minesweeper",
+            base: "/minesweeper/dev",
         },
         adapter: adapter(),
     },

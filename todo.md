@@ -4,7 +4,8 @@
 
 1. Light theme support
 2. Make all loading from localstorage safe with null coalescing
-3.
+3. Make store for theme as well as the themeIndex
+4. Make cell cover color be dependent on the theme's light value
 
 ## TODO in no particular order
 
