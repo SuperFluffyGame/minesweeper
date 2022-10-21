@@ -3,7 +3,6 @@
 <!-- 1. make assets preloaded ( don't know if it does anything) -->
 
 1. Make all loading from localstorage safe with null coalescing (prob not gonna do since no more breaking changes)
-2. clicking on numbers opens safe spots around if flagged properly
 
 ## TODO in no particular order
 
@@ -28,3 +27,4 @@
 14. make cell background constant depending on theme.
 15. make cell color respond correctly to light theme
 16. if all flags are placed correctly, the left side stat should be green.
+17. clicking on numbers opens safe spots around if flagged properly
