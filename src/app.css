@@ -126,7 +126,7 @@ dialog {
     flex-direction: column;
 
     color: var(--font-color);
-    border-color: var(--black1);
+    border: 0.1rem solid var(--font-color);
     background-color: var(--black4);
     border-radius: var(--radius);
 }

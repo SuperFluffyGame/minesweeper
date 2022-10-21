@@ -3,6 +3,7 @@
     import type { Game } from "$lib/game/new";
 
     export let game: Game;
+    export let defaultAction: "open" | "flag";
     let boardElem: HTMLDivElement | null;
     let fontSize = 0;
 
@@ -20,17 +21,21 @@
     bind:this={boardElem}
 >
     {#each game.board as cell, i}
-        <Cell {cell} index={i} {fontSize} />
+        <Cell {cell} index={i} {fontSize} {defaultAction} />
     {/each}
 </div>
 
-<style>
+<style lang="less">
     .board {
         display: grid;
-        width: min(90vh, 90vw, 100%);
+        width: clamp(20rem, 90vmin, 100%);
         user-select: none;
         border: 0.1px solid var(--black1);
         border-radius: var(--radius);
         overflow: hidden;
+
+        @media screen and (max-width: 700px) {
+            width: 100%;
+        }
     }
 </style>

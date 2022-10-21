@@ -11,12 +11,17 @@
 <script lang="ts">
     import deleteSvg from "$lib/assets/delete.svg";
     import playSvg from "$lib/assets/play.svg";
+    import editSvg from "$lib/assets/edit.svg";
 
     import Checkbox from "./Checkbox.svelte";
     import Button from "./Button.svelte";
     import MiniBoard from "./MiniBoard.svelte";
 
-    import { deleteGame, loadLocalStorageGame } from "$lib/game/save";
+    import {
+        deleteGame,
+        loadLocalStorageGame,
+        saveLocalStorageGame,
+    } from "$lib/game/save";
     import { currentGameIndex, type SaveSlot } from "$lib/stores";
     import { goto } from "$app/navigation";
     import { base } from "$app/paths";
@@ -24,11 +29,11 @@
     import { onMount } from "svelte";
 
     import { timeString } from "$lib/utils";
+    import { fade } from "svelte/transition";
 
     export let showSelect: boolean = false;
 
     export let slot: SaveSlot;
-    let name = `Save Game ${slot.index}`;
 
     let game: Game | null;
     onMount(() => {
@@ -44,6 +49,19 @@
         currentGameIndex.set(slot.index);
         goto(`${base}/play`);
     };
+
+    let renameDialogEl: HTMLDialogElement;
+    let titleInputValue = "";
+
+    const renameClick = () => {
+        renameDialogEl.showModal();
+        titleInputValue = "";
+    };
+    const changeTitle = () => {
+        game!.title = titleInputValue;
+        saveLocalStorageGame(slot.index, game!);
+        renameDialogEl.close();
+    };
 </script>
 
 <div class="wrapper">
@@ -56,7 +74,14 @@
     </div>
     <div class="info">
         <p class="name">
-            {name}
+            <Button
+                type="icon"
+                iconSrc={editSvg}
+                padding={0}
+                size="small"
+                on:click={renameClick}
+            />
+            {game?.title}
         </p>
 
         <p class="size">
@@ -89,6 +114,25 @@
             />
         {/if}
     </div>
+
+    <dialog class="rename-dialog" bind:this={renameDialogEl}>
+        <h2>Rename {game?.title}</h2>
+        <form on:submit|preventDefault={changeTitle}>
+            <input
+                type="text"
+                name="game-title"
+                id="game-title"
+                minlength="1"
+                maxlength="20"
+                required
+                bind:value={titleInputValue}
+            />
+            <div class="buttons-container">
+                <Button on:click={() => renameDialogEl.close()}>Cancel</Button>
+                <Button submit>Change</Button>
+            </div>
+        </form>
+    </dialog>
 </div>
 
 <style lang="less">
@@ -100,6 +144,11 @@
     }
     .size {
         color: var(--black9);
+    }
+    .name {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 0.25rem;
     }
     .size,
     .name {
@@ -127,5 +176,13 @@
         justify-content: right;
         align-items: center;
         gap: 0.2rem;
+    }
+
+    .rename-dialog {
+        > form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
     }
 </style>

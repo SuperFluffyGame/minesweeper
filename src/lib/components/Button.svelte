@@ -9,6 +9,7 @@
     export let iconSrc: string = "";
     export let padding: number | null = null;
     export let title: string | null = null;
+    export let submit = false;
 </script>
 
 <button
@@ -17,6 +18,7 @@
     class={["unstyled", type, size, $theme?.light ? "light" : "dark"].join(" ")}
     style:padding="{padding}rem"
     {title}
+    type={submit ? "submit" : "button"}
 >
     {#if type === "icon"}
         <img

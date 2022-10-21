@@ -10,11 +10,16 @@
 
     export let cell: Cell;
     export let index: number;
+    export let defaultAction: "flag" | "open";
 
     const clickCell = (e: MouseEvent) => {
         if (e.button === 0) {
             game.update(g => {
-                openCell(g!, index);
+                if (defaultAction === "open") {
+                    openCell(g!, index);
+                } else if (defaultAction === "flag") {
+                    flagCell(g!, index);
+                }
                 return g;
             });
         }
@@ -100,9 +105,9 @@
         }
 
         &.light {
-            background-color: hsl(var(--cell-hue), 100%, 42.5%);
+            background-color: hsl(var(--cell-hue), 100%, 40%);
             &:hover {
-                background-color: hsl(var(--cell-hue), 100%, 47.5%);
+                background-color: hsl(var(--cell-hue), 100%, 45%);
             }
         }
     }

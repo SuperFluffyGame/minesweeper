@@ -3,11 +3,6 @@
 <!-- 1. make assets preloaded ( don't know if it does anything) -->
 
 1. Make all loading from localstorage safe with null coalescing (prob not gonna do since no more breaking changes)
-2. Info screen for how to play and credits.
-
-## TODO in no particular order
-
-1. Alternate flag system that just right clicking?
 2. Custom board sizes (I made it possible, just don't have a ui for it)
 
 ### Done
@@ -29,3 +24,6 @@
 15. make cell color respond correctly to light theme
 16. if all flags are placed correctly, the left side stat should be green.
 17. clicking on numbers opens safe spots around if flagged properly
+18. Info screen for how to play and credits.
+19. edit save game name
+20. make toggle for default click action

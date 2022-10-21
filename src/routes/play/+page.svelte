@@ -1,22 +1,26 @@
 <script lang="ts">
+    import mineImg from "$lib/assets/red_mine.jpg";
+    import flagImg from "$lib/assets/red_flag.jpg";
+
+    import MiniBoard from "$lib/components/MiniBoard.svelte";
+    import Checkbox from "$lib/components/Checkbox.svelte";
+    import SidebarLayout from "$lib/components/SidebarLayout.svelte";
+    import Board from "$lib/components/Board.svelte";
+
     import { goto } from "$app/navigation";
     import {
         BoardSizes,
         CellState,
-        CellType,
         GameState,
         newGame,
         type PossibleBoardSizes,
     } from "$lib/game/new";
-    import Board from "$lib/components/Board.svelte";
     import { currentGameIndex, game } from "$lib/stores";
     import { deleteGame, loadGame } from "$lib/game/save";
     import { onDestroy, onMount } from "svelte";
     import { base } from "$app/paths";
-    import MiniBoard from "$lib/components/MiniBoard.svelte";
-    import Checkbox from "$lib/components/Checkbox.svelte";
-    import SidebarLayout from "$lib/components/SidebarLayout.svelte";
     import { timeString } from "$lib/utils";
+
     let modalEl: HTMLDialogElement | null;
     let timerInterval: NodeJS.Timer | number;
 
@@ -77,10 +81,30 @@
     } else {
         numFlagsColor = null;
     }
+
+    let selectedAction: "open" | "flag" = "open";
 </script>
 
 <SidebarLayout fullContent>
     <div class="sidebar" slot="sidebar">
+        <h3>{$game?.title}</h3>
+
+        <div class="default-action">
+            <div
+                class="default-action-child"
+                class:selected={selectedAction === "open"}
+                on:click={() => (selectedAction = "open")}
+            >
+                <img src={mineImg} alt="" draggable="false" />
+            </div>
+            <div
+                class="default-action-child"
+                class:selected={selectedAction === "flag"}
+                on:click={() => (selectedAction = "flag")}
+            >
+                <img src={flagImg} alt="" draggable="false" />
+            </div>
+        </div>
         <section class="stats">
             <p style:color={numFlagsColor}>
                 {numFlags} / {$game?.numMines}
@@ -90,7 +114,7 @@
     </div>
     <div class="wrapper" slot="content">
         {#if $game}
-            <Board game={$game} />
+            <Board game={$game} defaultAction={selectedAction} />
         {:else}
             <p>Loading...</p>
         {/if}
@@ -136,6 +160,36 @@
 
 <!-- <p>{JSON.stringify(data)}</p> -->
 <style lang="less">
+    .default-action {
+        margin: auto;
+        width: fit-content;
+        // aspect-ratio: 2 / 1;
+        background-color: var(--black4);
+        padding: 0.5rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+        border-radius: var(--radius);
+    }
+    .default-action-child {
+        cursor: pointer;
+        border: 0.2rem solid transparent;
+        background-color: var(--black6);
+        padding: 0.5rem;
+        border-radius: calc(var(--radius) / 2);
+        height: 1.75rem;
+
+        transition: border-color 75ms linear;
+
+        > img {
+            user-select: none;
+            height: 100%;
+        }
+        &.selected {
+            border-color: var(--accent);
+        }
+    }
+
     .wrapper {
         position: relative;
         display: flex;
@@ -182,10 +236,11 @@
     .keep-game-wrapper > p {
         margin: 0;
     }
+    .sidebar {
+        text-align: center;
+    }
 
     .stats {
-        margin: 1rem;
-        text-align: center;
-        font-size: 1.25rem;
+        font-size: 1.15rem;
     }
 </style>

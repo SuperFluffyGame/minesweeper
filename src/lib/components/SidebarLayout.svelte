@@ -2,6 +2,7 @@
     import statsSvg from "$lib/assets/stats.svg";
     import settingsSvg from "$lib/assets/settings.svg";
     import homeSvg from "$lib/assets/home.svg";
+    import infoSvg from "$lib/assets/info.svg";
 
     import Button from "$lib/components/Button.svelte";
 
@@ -50,13 +51,25 @@
                     goto(`${base}/settings`);
                 }}
             />
+            <Button
+                type="icon"
+                size="large"
+                iconSrc={infoSvg}
+                padding={0.2}
+                title="Info"
+                on:click={() => {
+                    goto(`${base}/info`);
+                }}
+            />
         </div>
         <hr />
 
         <slot name="sidebar" />
     </aside>
-    <div class="content" class:full={fullContent}>
-        <slot name="content" />
+    <div class="full-content">
+        <div class="fit-content" class:full={fullContent}>
+            <slot name="content" />
+        </div>
     </div>
     <footer class="version">{version}</footer>
 </main>
@@ -128,8 +141,11 @@
         justify-content: center;
     }
 
-    .content {
+    .full-content {
+        width: 100%;
         overflow-y: auto;
+    }
+    .fit-content {
         // display: flex;
         // flex-direction: column;
         // align-items: stretch;
