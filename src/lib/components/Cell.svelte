@@ -6,21 +6,21 @@
 
     import { openCell, flagCell } from "../game/input";
     import { type Cell, CellState, CellType } from "../game/new";
-    import { game } from "../stores";
+    import { game, theme } from "../stores";
 
     export let cell: Cell;
     export let index: number;
 
     const clickCell = (e: MouseEvent) => {
         if (e.button === 0) {
-            game.update((g) => {
+            game.update(g => {
                 openCell(g!, index);
                 return g;
             });
         }
     };
     const rightClickCell = () => {
-        game.update((g) => {
+        game.update(g => {
             flagCell(g!, index);
             return g;
         });
@@ -38,6 +38,8 @@
     on:click={clickCell}
     on:contextmenu|preventDefault={rightClickCell}
     style:font-size="{fontSize}px"
+    style:cursor={cell.numNeighborMines !== 0 ? "pointer" : null}
+    class:light={$theme?.light}
 >
     {#if cell.type === CellType.Mine}
         <img alt="M" src={redMineJpg} />
@@ -45,7 +47,11 @@
         {cell.numNeighborMines}
     {/if}
     {#if cell.state !== CellState.Opened}
-        <div class="cover" out:fade|local={{ duration: 100 }} />
+        <div
+            class="cover"
+            out:fade|local={{ duration: 100 }}
+            class:light={$theme?.light}
+        />
     {/if}
     {#if cell.state === CellState.Flagged}
         <img
@@ -63,7 +69,7 @@
         padding: 0;
         margin: 0;
         position: relative;
-        background-color: hsl(var(--cell-hue), 50%, 25%);
+        background-color: hsl(var(--cell-hue), 60%, 25%);
         border: 1px solid var(--black1);
         display: flex;
         justify-content: center;
@@ -73,6 +79,9 @@
         overflow: hidden;
 
         /* font-size: 2rem; */
+        &.light {
+            background-color: hsl(var(--cell-hue), 60%, 65%);
+        }
     }
 
     .cover {
@@ -85,9 +94,17 @@
         inset: 0;
 
         transition: background-color 100ms linear;
-    }
-    .cover:hover {
-        background-color: hsl(var(--cell-hue), 100%, 25%);
+
+        &:hover {
+            background-color: hsl(var(--cell-hue), 100%, 25%);
+        }
+
+        &.light {
+            background-color: hsl(var(--cell-hue), 100%, 42.5%);
+            &:hover {
+                background-color: hsl(var(--cell-hue), 100%, 47.5%);
+            }
+        }
     }
 
     img {

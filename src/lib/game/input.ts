@@ -15,17 +15,125 @@ export const openCell = (game: Game, index: number) => {
     }
 
     const cell = game.board[index];
+    let x = index % game.width;
+    let y = Math.floor(index / game.height);
+
+    // if cell is already flagged, return
     if (cell.state === CellState.Flagged) {
         return;
     }
-    stats.update((v) => {
+    if (cell.state === CellState.Opened && cell.numNeighborMines !== 0) {
+        // clicked a number cell
+
+        let neighborFlags = 0;
+        let neighborOpenCells = 0;
+
+        // get number of neighbor flags
+        for (let i = 0; i < 9; i++) {
+            const offsetX = (i % 3) - 1;
+            const offsetY = Math.floor(i / 3) - 1;
+
+            const neighborX = offsetX + x;
+            const neighborY = offsetY + y;
+            if (
+                neighborX < 0 ||
+                neighborX >= game.width ||
+                neighborY < 0 ||
+                neighborY >= game.height
+            ) {
+                continue;
+            }
+
+            const neighborIndex = neighborY * game.width + neighborX;
+            const neighborCell = game.board[neighborIndex];
+            if (neighborCell?.state === CellState.Flagged) {
+                neighborFlags++;
+            }
+        }
+        // get number of empty neighbors
+        for (let i = 0; i < 9; i++) {
+            const offsetX = (i % 3) - 1;
+            const offsetY = Math.floor(i / 3) - 1;
+
+            const neighborX = offsetX + x;
+            const neighborY = offsetY + y;
+            if (
+                neighborX < 0 ||
+                neighborX >= game.width ||
+                neighborY < 0 ||
+                neighborY >= game.height
+            ) {
+                continue;
+            }
+
+            const neighborIndex = neighborY * game.width + neighborX;
+            const neighborCell = game.board[neighborIndex];
+            if (neighborCell?.state === CellState.Closed) {
+                neighborOpenCells++;
+            }
+        }
+
+        // open all neighbors
+        if (neighborFlags === cell.numNeighborMines) {
+            for (let i = 0; i < 9; i++) {
+                const offsetX = (i % 3) - 1;
+                const offsetY = Math.floor(i / 3) - 1;
+
+                const neighborX = offsetX + x;
+                const neighborY = offsetY + y;
+                if (
+                    neighborX < 0 ||
+                    neighborX >= game.width ||
+                    neighborY < 0 ||
+                    neighborY >= game.height
+                ) {
+                    continue;
+                }
+
+                const neighborIndex = neighborY * game.width + neighborX;
+                const neighborCell = game.board[neighborIndex];
+                if (neighborCell?.state === CellState.Closed) {
+                    openCell(game, neighborIndex);
+                }
+            }
+            return;
+        }
+        //  flag all neighbors
+        else if (neighborOpenCells + neighborFlags === cell.numNeighborMines) {
+            for (let i = 0; i < 9; i++) {
+                const offsetX = (i % 3) - 1;
+                const offsetY = Math.floor(i / 3) - 1;
+
+                const neighborX = offsetX + x;
+                const neighborY = offsetY + y;
+                if (
+                    neighborX < 0 ||
+                    neighborX >= game.width ||
+                    neighborY < 0 ||
+                    neighborY >= game.height
+                ) {
+                    continue;
+                }
+
+                const neighborIndex = neighborY * game.width + neighborX;
+                const neighborCell = game.board[neighborIndex];
+                if (neighborCell?.state === CellState.Closed) {
+                    flagCell(game, neighborIndex);
+                }
+            }
+            return;
+        } else {
+            return;
+        }
+    } else if (cell.state === CellState.Opened) {
+        return;
+    }
+
+    stats.update(v => {
         if (!v) return v;
         v.cellsOpened += 1;
         return v;
     });
-
-    let x = index % game.width;
-    let y = Math.floor(index / game.height);
 
     cell.state = CellState.Opened;
     // if its first move and you clicked a mine, move it somewhere else
@@ -79,7 +187,7 @@ export const openCell = (game: Game, index: number) => {
 
     // if mine was opened, lose the game
     if (cell.type === CellType.Mine) {
-        stats.update((v) => {
+        stats.update(v => {
             if (!v) return v;
             v.gamesLost += 1;
             return v;
@@ -105,7 +213,7 @@ export const openCell = (game: Game, index: number) => {
         }
     }
     if (allMinesOpened) {
-        stats.update((v) => {
+        stats.update(v => {
             if (!v) return v;
             v.gamesWon += 1;
             return v;

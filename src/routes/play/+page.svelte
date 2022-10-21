@@ -20,7 +20,7 @@
     let modalEl: HTMLDialogElement | null;
     let timerInterval: NodeJS.Timer | number;
 
-    game.subscribe((g) => {
+    game.subscribe(g => {
         if (g?.state !== GameState.Playing) {
             clearInterval(timerInterval);
             try {
@@ -65,18 +65,24 @@
     $: numFlags = $game?.board.reduce((numFlags, cell) => {
         return numFlags + (cell.state === CellState.Flagged ? 1 : 0);
     }, 0)!;
+
+    let numFlagsColor: string | null;
+    $: if (numFlags > ($game?.numMines ?? 0)) {
+        numFlagsColor = "red";
+    } else if (
+        numFlags === ($game?.numMines ?? 0) &&
+        $game?.state === GameState.Won
+    ) {
+        numFlagsColor = "green";
+    } else {
+        numFlagsColor = null;
+    }
 </script>
 
 <SidebarLayout fullContent>
     <div class="sidebar" slot="sidebar">
         <section class="stats">
-            <p
-                style:color={numFlags >= ($game?.numMines ?? 0)
-                    ? $game?.state === GameState.Won
-                        ? "green"
-                        : "red"
-                    : null}
-            >
+            <p style:color={numFlagsColor}>
                 {numFlags} / {$game?.numMines}
             </p>
             <p>{timeString($game?.stats.timePlayed ?? 0)}</p>

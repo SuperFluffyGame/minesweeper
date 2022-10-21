@@ -2,10 +2,8 @@
 
 <!-- 1. make assets preloaded ( don't know if it does anything) -->
 
-1. Make all loading from localstorage safe with null coalescing
-2. Make cell cover color be dependent on the theme's light value
-3. clicking on numbers opens safe spots around if flagged properly
-4. if all flags are placed correctly, the number should be green.
+1. Make all loading from localstorage safe with null coalescing (prob not gonna do since no more breaking changes)
+2. clicking on numbers opens safe spots around if flagged properly
 
 ## TODO in no particular order
 
@@ -28,3 +26,5 @@
 12. make stats and settings ssr
 13. Make store for theme as well as the themeIndex
 14. make cell background constant depending on theme.
+15. make cell color respond correctly to light theme
+16. if all flags are placed correctly, the left side stat should be green.
