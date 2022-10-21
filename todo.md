@@ -3,6 +3,7 @@
 <!-- 1. make assets preloaded ( don't know if it does anything) -->
 
 1. Make all loading from localstorage safe with null coalescing (prob not gonna do since no more breaking changes)
+2. Info screen for how to play and credits.
 
 ## TODO in no particular order
 
