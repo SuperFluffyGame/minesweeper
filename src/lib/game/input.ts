@@ -221,6 +221,7 @@ const winGame = (game: Game) => {
             return v;
         }
         v.times?.[game.sizeDesc].push(game.stats.timePlayed);
+        v.times?.[game.sizeDesc].sort((a, b) => a - b);
         return v;
     });
     game.state = GameState.Won;
