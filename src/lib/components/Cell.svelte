@@ -12,23 +12,43 @@
     export let index: number;
     export let defaultAction: "flag" | "open";
 
-    const clickCell = (e: MouseEvent) => {
-        if (e.button === 0) {
-            game.update(g => {
-                if (defaultAction === "open") {
-                    openCell(g!, index);
-                } else if (defaultAction === "flag") {
-                    flagCell(g!, index);
-                }
-                return g;
-            });
-        }
+    const clickCell = () => {
+        game.update(g => {
+            if (defaultAction === "open") {
+                openCell(g!, index);
+            } else if (defaultAction === "flag") {
+                flagCell(g!, index);
+            }
+            return g;
+        });
     };
     const rightClickCell = () => {
         game.update(g => {
             flagCell(g!, index);
             return g;
         });
+    };
+
+    let heldTimeout: NodeJS.Timeout | number;
+    let timeoutExpired = false;
+    const pointerDown = (e: PointerEvent) => {
+        if (e.button === 2) {
+            rightClickCell();
+            return;
+        }
+        heldTimeout = setTimeout(() => {
+            rightClickCell();
+            timeoutExpired = true;
+        }, 500);
+    };
+    const pointerUp = (e: PointerEvent) => {
+        if (e.button === 2) {
+            return;
+        }
+        clearTimeout(heldTimeout);
+        if (!timeoutExpired) {
+            clickCell();
+        }
     };
 
     export let fontSize: number;
@@ -40,11 +60,12 @@
 
 <div
     class="wrapper {cell.state}"
-    on:click={clickCell}
-    on:contextmenu|preventDefault={rightClickCell}
+    on:contextmenu|preventDefault={() => {}}
     style:font-size="{fontSize}px"
     style:cursor={cell.numNeighborMines !== 0 ? "pointer" : null}
     class:light={$theme?.light}
+    on:pointerdown={pointerDown}
+    on:pointerup={pointerUp}
 >
     {#if cell.type === CellType.Mine}
         <img alt="M" src={redMineJpg} />

@@ -12,15 +12,9 @@
         <Card title="How To Play">
             <h3>Minesweeper</h3>
             <p>
-                <strong>PC:</strong> Left click to open a cell. Right click to flag
-                a cell. You can use the select buttons on the side panel to change
-                the left click action.
-            </p>
-            <p>
-                <strong>Mobile:</strong> Touch a cell to open it. On some devices
-                you can hold to flag a cell. On devices that don't support this,
-                use the select buttons on the side panel to change the left click
-                action.
+                Left click or touch to open a cell. Right click or hold to flag
+                a cell. You can use the select on the side panel to change the
+                left click or touch default action.
             </p>
 
             <p>
