@@ -10,8 +10,11 @@ import type { Game } from "./new";
 export const MINESWEEPER_SAVE_GAME = "MINESWEEPER_SAVE_GAME";
 
 export const loadLocalStorageGame = (i: number): Game | null => {
-    let saveGame = localStorage[MINESWEEPER_SAVE_GAME + `_${i}`];
-    return saveGame ? JSON.parse(saveGame) : null;
+    let saveGame = JSON.parse(
+        localStorage[MINESWEEPER_SAVE_GAME + `_${i}`] ?? {}
+    ) as { [key: string]: any };
+
+    return saveGame as Game;
 };
 
 export const saveLocalStorageGame = (i: number, game: Game) => {
@@ -24,9 +27,9 @@ export const deleteLocalStorageGame = (i: number) => {
 };
 
 export const deleteGame = (i: number) => {
-    used_save_slots.update((slots) => {
+    used_save_slots.update(slots => {
         slots?.splice(
-            slots.findIndex((slot) => slot.index === i),
+            slots.findIndex(slot => slot.index === i),
             1
         );
         return slots;
@@ -38,7 +41,7 @@ export const loadGame = (game: Game) => {
     let usedSlots: SaveSlot[] = get(used_save_slots)!;
     let lowestSlot: number;
     for (let i = 0; ; i++) {
-        if (usedSlots.findIndex((v) => v.index === i) === -1) {
+        if (usedSlots.findIndex(v => v.index === i) === -1) {
             lowestSlot = i;
             break;
         }
@@ -48,7 +51,7 @@ export const loadGame = (game: Game) => {
     saveLocalStorageGame(lowestSlot, game);
     currentGameIndex.set(-1);
     currentGameIndex.set(lowestSlot);
-    used_save_slots.update((v) => {
+    used_save_slots.update(v => {
         v?.push({ index: lowestSlot, selected: false });
         return v;
     });

@@ -30,6 +30,7 @@ export interface Game {
     board: Cell[];
     width: number;
     height: number;
+    sizeDesc: BoardSizeDesc;
     numMines: number;
     firstMove: boolean;
     state: GameState;
@@ -61,8 +62,9 @@ export interface BoardSize {
     height: number;
     numMines: number;
 }
+export type BoardSizeDesc = "easy" | "medium" | "hard" | "custom";
 
-export const newGame = (boardSize: BoardSize) => {
+export const newGame = (boardSize: BoardSize, sizeDesc: BoardSizeDesc) => {
     const board = Array<Cell>(boardSize.width * boardSize.height);
     for (let i = 0; i < boardSize.height * boardSize.width; i++) {
         board[i] = {
@@ -75,6 +77,7 @@ export const newGame = (boardSize: BoardSize) => {
     const game: Game = {
         board,
         ...boardSize,
+        sizeDesc,
         firstMove: true,
         state: GameState.Playing,
         lostToCell: -1,

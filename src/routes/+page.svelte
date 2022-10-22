@@ -5,6 +5,7 @@
     import {
         BoardSizes,
         newGame,
+        type BoardSizeDesc,
         type PossibleBoardSizes,
     } from "$lib/game/new";
     import { goto } from "$app/navigation";
@@ -12,19 +13,21 @@
     import { loadGame } from "$lib/game/save";
     import SaveGamesSidebar from "$lib/components/SaveGamesSidebar.svelte";
     import Card from "$lib/components/Card.svelte";
-    import { title } from "$lib/utils";
 
     const easyClick = () => {
-        newGameClick(8);
+        newGameClick(8, "easy");
     };
     const mediumClick = () => {
-        newGameClick(12);
+        newGameClick(12, "medium");
     };
     const hardClick = () => {
-        newGameClick(16);
+        newGameClick(16, "hard");
     };
-    const newGameClick = (boardSize: PossibleBoardSizes) => {
-        loadGame(newGame(BoardSizes[boardSize]));
+    const newGameClick = (
+        boardSize: PossibleBoardSizes,
+        sizeDesc: BoardSizeDesc
+    ) => {
+        loadGame(newGame(BoardSizes[boardSize], sizeDesc));
         goto(`${base}/play`);
     };
 </script>
@@ -75,9 +78,6 @@
                     </tr>
                 </tbody>
             </table>
-        </Card>
-        <Card title="Custom">
-            <p>TODO!!!</p>
         </Card>
     </svelte:fragment>
 </SidebarLayout>

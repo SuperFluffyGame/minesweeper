@@ -10,6 +10,8 @@
     export let padding: number | null = null;
     export let title: string | null = null;
     export let submit = false;
+
+    export let style: string | null = null;
 </script>
 
 <button
@@ -19,6 +21,7 @@
     style:padding="{padding}rem"
     {title}
     type={submit ? "submit" : "button"}
+    {style}
 >
     {#if type === "icon"}
         <img

@@ -1,4 +1,5 @@
 import { stats } from "$lib/stores";
+import { get } from "svelte/store";
 import {
     CellState,
     CellType,
@@ -25,10 +26,10 @@ export const openCell = (game: Game, index: number) => {
     if (cell.state === CellState.Opened && cell.numNeighborMines !== 0) {
         // clicked a number cell
 
-        let neighborFlags = 0;
-        let neighborOpenCells = 0;
+        let neighborFlaggedCells = 0;
+        let neighborClosedCells = 0;
 
-        // get number of neighbor flags
+        // get number of neighbor flags and closed cells
         for (let i = 0; i < 9; i++) {
             const offsetX = (i % 3) - 1;
             const offsetY = Math.floor(i / 3) - 1;
@@ -46,35 +47,16 @@ export const openCell = (game: Game, index: number) => {
 
             const neighborIndex = neighborY * game.width + neighborX;
             const neighborCell = game.board[neighborIndex];
-            if (neighborCell?.state === CellState.Flagged) {
-                neighborFlags++;
+            if (neighborCell.state === CellState.Flagged) {
+                neighborFlaggedCells++;
             }
-        }
-        // get number of empty neighbors
-        for (let i = 0; i < 9; i++) {
-            const offsetX = (i % 3) - 1;
-            const offsetY = Math.floor(i / 3) - 1;
-
-            const neighborX = offsetX + x;
-            const neighborY = offsetY + y;
-            if (
-                neighborX < 0 ||
-                neighborX >= game.width ||
-                neighborY < 0 ||
-                neighborY >= game.height
-            ) {
-                continue;
-            }
-
-            const neighborIndex = neighborY * game.width + neighborX;
-            const neighborCell = game.board[neighborIndex];
-            if (neighborCell?.state === CellState.Closed) {
-                neighborOpenCells++;
+            if (neighborCell.state !== CellState.Opened) {
+                neighborClosedCells++;
             }
         }
 
-        // open all neighbors
-        if (neighborFlags === cell.numNeighborMines) {
+        // open all neighbors if number of neighbor cells is equal to cell number
+        if (neighborFlaggedCells === cell.numNeighborMines) {
             for (let i = 0; i < 9; i++) {
                 const offsetX = (i % 3) - 1;
                 const offsetY = Math.floor(i / 3) - 1;
@@ -98,8 +80,8 @@ export const openCell = (game: Game, index: number) => {
             }
             return;
         }
-        //  flag all neighbors
-        else if (neighborOpenCells + neighborFlags === cell.numNeighborMines) {
+        //  flag all neighbors if number of closed cells around are equal to cell number
+        else if (neighborClosedCells === cell.numNeighborMines) {
             for (let i = 0; i < 9; i++) {
                 const offsetX = (i % 3) - 1;
                 const offsetY = Math.floor(i / 3) - 1;
@@ -213,12 +195,7 @@ export const openCell = (game: Game, index: number) => {
         }
     }
     if (allMinesOpened) {
-        stats.update(v => {
-            if (!v) return v;
-            v.gamesWon += 1;
-            return v;
-        });
-        game.state = GameState.Won;
+        winGame(game);
     }
 };
 
@@ -234,4 +211,17 @@ export const flagCell = (game: Game, index: number) => {
     } else if (cell.state === CellState.Flagged) {
         cell.state = CellState.Closed;
     }
+};
+
+const winGame = (game: Game) => {
+    stats.update(v => {
+        if (!v) return v;
+        v.gamesWon += 1;
+        if (game.sizeDesc === "custom") {
+            return v;
+        }
+        v.times?.[game.sizeDesc].push(game.stats.timePlayed);
+        return v;
+    });
+    game.state = GameState.Won;
 };

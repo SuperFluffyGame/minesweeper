@@ -53,7 +53,12 @@
     const newGameModalClick = () => {
         clearInterval(timerInterval);
         if (!keepGame) deleteGame($currentGameIndex);
-        loadGame(newGame(BoardSizes[$game!.width as PossibleBoardSizes]));
+        loadGame(
+            newGame(
+                BoardSizes[$game!.width as PossibleBoardSizes],
+                $game!.sizeDesc
+            )
+        );
         modalEl!.close();
         timerInterval = setInterval(() => {
             $game!.stats.timePlayed += 1;
