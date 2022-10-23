@@ -92,7 +92,7 @@
 
 <SidebarLayout fullContent disableFlex>
     <div class="sidebar" slot="sidebar">
-        <h3>{$game?.title}</h3>
+        <h3>{$game?.title ?? ""}</h3>
 
         <div class="default-action">
             <div
@@ -112,7 +112,7 @@
         </div>
         <section class="stats">
             <p style:color={numFlagsColor}>
-                {numFlags} / {$game?.numMines}
+                {numFlags ?? 0} / {$game?.numMines ?? 0}
             </p>
             <p>{timeString($game?.stats.timePlayed ?? 0)}</p>
         </section>

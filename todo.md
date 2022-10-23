@@ -2,6 +2,7 @@
 
 1. ~~No times text in times not centered~~
 2. ~~Board messed up on full width~~
+3. ~~undefined shown on board page when $game is null~~
 
 ## TODO next
 
