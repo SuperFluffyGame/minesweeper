@@ -90,7 +90,7 @@
     let selectedAction: "open" | "flag" = "open";
 </script>
 
-<SidebarLayout fullContent>
+<SidebarLayout fullContent disableFlex>
     <div class="sidebar" slot="sidebar">
         <h3>{$game?.title}</h3>
 

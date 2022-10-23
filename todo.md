@@ -1,6 +1,7 @@
 ## Final Bugs
 
 1. ~~No times text in times not centered~~
+2. ~~Board messed up on full width~~
 
 ## TODO next
 

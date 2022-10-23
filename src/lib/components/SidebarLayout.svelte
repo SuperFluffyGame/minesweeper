@@ -11,6 +11,7 @@
     import { version, title, creator } from "$lib/utils";
 
     export let fullContent = false;
+    export let disableFlex = false;
 </script>
 
 <main class="wrapper">
@@ -67,7 +68,11 @@
         <slot name="sidebar" />
     </aside>
     <div class="full-content">
-        <div class="fit-content" class:full={fullContent}>
+        <div
+            class="fit-content"
+            class:full={fullContent}
+            class:disable-flex={disableFlex}
+        >
             <slot name="content" />
         </div>
     </div>
@@ -149,8 +154,10 @@
     .fit-content {
         width: fit-content;
 
-        @media screen and (min-width: 1050px) {
-            display: flex;
+        &:not(.disable-flex) {
+            @media screen and (min-width: 1050px) {
+                display: flex;
+            }
         }
 
         @media screen and (max-width: 700px) {
