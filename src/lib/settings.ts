@@ -27,7 +27,7 @@ export const loadLocalStorageSettings = () => {
     } | null;
     const settings: Settings = {
         theme: data?.theme ?? 0,
-        saturation: data?.saturation ?? 10,
+        saturation: data?.saturation ?? 0,
     };
     return settings;
 };

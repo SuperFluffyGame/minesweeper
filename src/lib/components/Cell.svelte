@@ -49,6 +49,7 @@
         if (!timeoutExpired) {
             clickCell();
         }
+        timeoutExpired = false;
     };
 
     export let fontSize: number;

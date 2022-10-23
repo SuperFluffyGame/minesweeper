@@ -112,8 +112,8 @@ export const openCell = (game: Game, index: number) => {
     }
 
     stats.update(v => {
-        if (!v) return v;
-        v.cellsOpened += 1;
+        if (!v || game.sizeDesc === "custom") return v;
+        v[game.sizeDesc].cellsOpened += 1;
         return v;
     });
 
@@ -146,42 +146,12 @@ export const openCell = (game: Game, index: number) => {
 
     // if it has 0 neighbors, open them all
     if (cell.type === CellType.Empty && cell.numNeighborMines === 0) {
-        for (let i = 0; i < 9; i++) {
-            const offsetX = (i % 3) - 1;
-            const offsetY = Math.floor(i / 3) - 1;
-            const neighborX = x + offsetX;
-            const neighborY = y + offsetY;
-            if (
-                neighborX < 0 ||
-                neighborX >= game.width ||
-                neighborY < 0 ||
-                neighborY >= game.height ||
-                (offsetX === 0 && offsetY === 0)
-            ) {
-                continue;
-            }
-            const index = neighborY * game.width + neighborX;
-            if (game.board?.[index].state === CellState.Closed) {
-                openCell(game, index);
-            }
-        }
+        openAllNeighbors(game, x, y);
     }
 
     // if mine was opened, lose the game
     if (cell.type === CellType.Mine) {
-        stats.update(v => {
-            if (!v) return v;
-            v.gamesLost += 1;
-            return v;
-        });
-        game.state = GameState.Lost;
-        game.lostToCell = index;
-        for (let i = 0; i < game.width * game.height; i++) {
-            let c = game.board[i];
-            if (c.type === CellType.Mine) {
-                c.state = CellState.Opened;
-            }
-        }
+        loseGame(game, index);
     }
 
     // if all non mine tiles have been opened, win!
@@ -213,15 +183,61 @@ export const flagCell = (game: Game, index: number) => {
     }
 };
 
+const openAllNeighbors = (game: Game, x: number, y: number) => {
+    for (let i = 0; i < 9; i++) {
+        const offsetX = (i % 3) - 1;
+        const offsetY = Math.floor(i / 3) - 1;
+        const neighborX = x + offsetX;
+        const neighborY = y + offsetY;
+        if (
+            neighborX < 0 ||
+            neighborX >= game.width ||
+            neighborY < 0 ||
+            neighborY >= game.height ||
+            (offsetX === 0 && offsetY === 0)
+        ) {
+            continue;
+        }
+        const index = neighborY * game.width + neighborX;
+        if (game.board?.[index].state === CellState.Closed) {
+            openCell(game, index);
+        }
+    }
+};
+
+const loseGame = (game: Game, i: number) => {
+    stats.update(v => {
+        if (!v || game.sizeDesc === "custom") return v;
+        v[game.sizeDesc].gamesLost += 1;
+        return v;
+    });
+    game.state = GameState.Lost;
+    game.lostToCell = i;
+    for (let i = 0; i < game.width * game.height; i++) {
+        let c = game.board[i];
+        if (c.type === CellType.Mine) {
+            c.state = CellState.Opened;
+        }
+    }
+};
+
 const winGame = (game: Game) => {
     stats.update(v => {
-        if (!v) return v;
-        v.gamesWon += 1;
-        if (game.sizeDesc === "custom") {
-            return v;
+        if (!v || game.sizeDesc === "custom") return v;
+
+        const diffStats = v[game.sizeDesc];
+        diffStats.gamesWon++;
+
+        if (diffStats.times.length > 20) {
+            diffStats.times.shift();
         }
-        v.times?.[game.sizeDesc].push(game.stats.timePlayed);
-        v.times?.[game.sizeDesc].sort((a, b) => a - b);
+        diffStats.times.push(game.stats.timePlayed);
+        diffStats.times.sort((a, b) => a - b);
+
+        diffStats.averageTime =
+            (diffStats.averageTime * (diffStats.gamesWon - 1) +
+                game.stats.timePlayed) /
+            diffStats.gamesWon;
         return v;
     });
     game.state = GameState.Won;

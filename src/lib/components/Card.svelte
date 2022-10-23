@@ -14,10 +14,11 @@
         // width: fit-content;
         margin: 1rem;
         padding: 1rem;
-        background-color: var(--black5);
+        background-color: var(--dark4);
         border-radius: var(--radius);
         box-shadow: 0 0 1rem #0005;
         > h2 {
+            text-align: center;
             margin-block: 0.5rem 1rem;
         }
 

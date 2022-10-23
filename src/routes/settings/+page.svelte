@@ -7,8 +7,8 @@
     import { themes, tickmarks } from "$lib/settings";
     import { settings } from "$lib/stores";
 
-    let saturation = $settings?.saturation ?? 10;
-    $: settings.update((v) => {
+    let saturation = $settings?.saturation ?? 0;
+    $: settings.update(v => {
         if (!v) return null;
         v.saturation = saturation;
         return v;

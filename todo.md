@@ -1,10 +1,12 @@
 ## TODO next
 
-<!-- 1. make assets preloaded ( don't know if it does anything) -->
+-   Nothing!
 
-2. fix click number.
-3. Make all loading from localstorage safe with null coalescing (prob not gonna do since no more breaking changes)
-4. Custom board sizes (I made it possible, just don't have a ui for it)
+### Not Going To Do
+
+1. make assets preloaded ( don't know if it does anything)
+2. Make all loading from localstorage safe with null coalescing (prob not gonna do since no more breaking changes)
+3. Custom board sizes (I made it possible, just don't have a ui for it)
 
 ### Done
 
@@ -30,3 +32,4 @@
 20. make toggle for default click action
 21. leaderboards for each difficulty.
 22. remove unfinished custom game ui.
+23. fix click number (i think done)

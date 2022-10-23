@@ -23,3 +23,10 @@ export function timeString(totalSeconds: number) {
 
     return o;
 }
+
+export const largeNumFormatter = new Intl.NumberFormat("en-us", {
+    compactDisplay: "short",
+    notation: "compact",
+    maximumFractionDigits: 2,
+});
+export const largeNumFormat = largeNumFormatter.format;

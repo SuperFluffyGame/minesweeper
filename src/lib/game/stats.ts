@@ -1,13 +1,16 @@
 export const MINESWEEPER_OVERALL_STATS = "MINESWEEPER_OVERALL_STATS";
-export interface Stats {
+
+interface DifficultyStats {
     gamesWon: number;
     gamesLost: number;
     cellsOpened: number;
-    times: {
-        easy: number[];
-        medium: number[];
-        hard: number[];
-    };
+    times: number[];
+    averageTime: number;
+}
+export interface Stats {
+    easy: DifficultyStats;
+    medium: DifficultyStats;
+    hard: DifficultyStats;
 }
 
 export const loadLocalStorageStats = (): Stats => {
@@ -17,13 +20,26 @@ export const loadLocalStorageStats = (): Stats => {
         [key: string]: any;
     } | null;
     const stats: Stats = {
-        gamesWon: data?.gamesWon ?? 0,
-        gamesLost: data?.gamesLost ?? 0,
-        cellsOpened: data?.cellsOpened ?? 0,
-        times: {
-            easy: data?.times?.easy ?? [],
-            medium: data?.times?.medium ?? [],
-            hard: data?.times?.hard ?? [],
+        easy: {
+            gamesWon: data?.easy?.gamesWon ?? 0,
+            gamesLost: data?.easy?.gamesLost ?? 0,
+            cellsOpened: data?.easy?.cellsOpened ?? 0,
+            times: data?.easy?.times ?? [],
+            averageTime: data?.easy?.averageTime ?? 0,
+        },
+        medium: {
+            gamesWon: data?.medium?.gamesWon ?? 0,
+            gamesLost: data?.medium?.gamesLost ?? 0,
+            cellsOpened: data?.medium?.cellsOpened ?? 0,
+            times: data?.medium?.times ?? [],
+            averageTime: data?.medium?.averageTime ?? 0,
+        },
+        hard: {
+            gamesWon: data?.hard?.gamesWon ?? 0,
+            gamesLost: data?.hard?.gamesLost ?? 0,
+            cellsOpened: data?.hard?.cellsOpened ?? 0,
+            times: data?.hard?.times ?? [],
+            averageTime: data?.hard?.averageTime ?? 0,
         },
     };
     return stats;

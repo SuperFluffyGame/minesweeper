@@ -169,7 +169,7 @@
         margin: auto;
         width: fit-content;
         // aspect-ratio: 2 / 1;
-        background-color: var(--black4);
+        background-color: var(--dark3);
         padding: 0.5rem;
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -179,7 +179,7 @@
     .default-action-child {
         cursor: pointer;
         border: 0.2rem solid transparent;
-        background-color: var(--black6);
+        background-color: var(--dark5);
         padding: 0.5rem;
         border-radius: calc(var(--radius) / 2);
         height: 1.75rem;

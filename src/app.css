@@ -1,6 +1,6 @@
 :root {
     --brand-hue: 200;
-    --sat-mul: 10;
+    --sat-mul: 0;
     --light-offset: 0%;
     --font-color: whitesmoke;
     --brand: hsl(var(--brand-hue), calc(10% * var(--sat-mul)), 50%);
@@ -22,21 +22,9 @@
         calc(5% * var(--sat-mul)),
         calc(15% + var(--light-offset))
     );
-    --dark3: hsl(
-        var(--brand-hue),
-        calc(5% * var(--sat-mul)),
-        calc(20% + var(--light-offset))
-    );
-    --dark4: hsl(
-        var(--brand-hue),
-        calc(5% * var(--sat-mul)),
-        calc(25% + var(--light-offset))
-    );
-    --dark5: hsl(
-        var(--brand-hue),
-        calc(5% * var(--sat-mul)),
-        calc(30% + var(--light-offset))
-    );
+    --dark3: hsl(var(--brand-hue), calc(50%), calc(20% + var(--light-offset)));
+    --dark4: hsl(var(--brand-hue), calc(50%), calc(25% + var(--light-offset)));
+    --dark5: hsl(var(--brand-hue), calc(50%), calc(30% + var(--light-offset)));
 
     --black0: #000000;
     --black1: #0d0d0d;
@@ -61,7 +49,7 @@
     --blue5: #31349b;
     --blue6: #373aae;
 
-    --radius: 0.35rem;
+    --radius: 0.25rem;
 }
 * {
     scrollbar-width: thin;
@@ -75,7 +63,7 @@ body {
 }
 
 html {
-    background-color: var(--black3);
+    background-color: var(--dark2);
     color: var(--font-color);
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 
@@ -93,8 +81,8 @@ body > * {
 
 button:not(.unstyled) {
     font-size: 1.2rem;
-    background-color: var(--black6);
-    border: 0.2rem solid var(--black5);
+    background-color: var(--dark5);
+    border: 0.2rem solid var(--dark4);
     color: var(--font-color);
     padding: 0.75rem;
     border-radius: var(--radius);
@@ -104,16 +92,16 @@ button:not(.unstyled) {
 }
 
 button:hover:not(.unstyled) {
-    background-color: var(--black5);
+    background-color: var(--dark4);
 }
 
 button:active:not(.unstyled) {
-    border: 0.2rem solid var(--black6);
+    border: 0.2rem solid var(--dark5);
 }
 
 button:disabled:not(.unstyled) {
-    background-color: var(--black4);
-    border: 0.2rem solid var(--black5);
+    background-color: var(--dark3);
+    border: 0.2rem solid var(--dark4);
     cursor: not-allowed;
 }
 
@@ -127,7 +115,7 @@ dialog {
 
     color: var(--font-color);
     border: 0.1rem solid var(--font-color);
-    background-color: var(--black4);
+    background-color: var(--dark3);
     border-radius: var(--radius);
 }
 dialog::backdrop {
