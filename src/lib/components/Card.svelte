@@ -1,8 +1,9 @@
 <script lang="ts">
     export let title: string | null = null;
+    export let centered = false;
 </script>
 
-<section class="wrapper">
+<section class="wrapper" class:text-center={centered}>
     {#if title}
         <h2>{title}</h2>
     {/if}
@@ -28,5 +29,9 @@
             flex-direction: column;
             align-items: center;
         }
+    }
+
+    .text-center {
+        text-align: center;
     }
 </style>

@@ -20,7 +20,7 @@
         <SaveGamesSidebar />
     </svelte:fragment>
     <svelte:fragment slot="content">
-        <Card title="Theme">
+        <Card title="Theme" centered>
             <div class="themes">
                 {#each themes as theme, i (i)}
                     <ColorSelect

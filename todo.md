@@ -1,3 +1,7 @@
+## Final Bugs
+
+1. ~~No times text in times not centered~~
+
 ## TODO next
 
 -   Nothing!

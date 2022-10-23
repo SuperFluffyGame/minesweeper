@@ -38,7 +38,7 @@
     </svelte:fragment>
 
     <svelte:fragment slot="content">
-        <Card title="Standard">
+        <Card title="Standard" centered>
             <table>
                 <thead>
                     <th>Difficulty</th>
@@ -95,8 +95,13 @@
     th {
         padding: 0.5rem;
     }
-    td:not(:nth-child(1)) {
-        text-align: center;
+    td {
+        &:not(:nth-child(1)) {
+            text-align: center;
+        }
+        &:nth-child(1) {
+            text-align: left;
+        }
     }
 
     td:nth-child(4) {

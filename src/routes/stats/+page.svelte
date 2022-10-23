@@ -19,7 +19,7 @@
         <SaveGamesSidebar />
     </svelte:fragment>
     <svelte:fragment slot="content">
-        <Card title="Stats">
+        <Card title="Stats" centered>
             <table>
                 <thead>
                     <tr>
@@ -92,7 +92,7 @@
             </table>
         </Card>
 
-        <Card title="Times">
+        <Card title="Times" centered>
             <div class="diff-select">
                 <Button
                     type="text"
